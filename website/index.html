@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Vibe Check — Security Audit for AI-Built Apps</title>
+  <meta name="description" content="30-point security audit that catches the vulnerabilities AI code generators introduce. Free, open-source, MIT-licensed.">
+  <meta property="og:title" content="A Vibe Check — Security Audit for AI-Built Apps">
+  <meta property="og:description" content="Your AI writes code that works. Vibe Check finds what it forgot to secure.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #141218; --bg-raised: #1c1a22; --bg-surface: #24222b; --bg-surface-hover: #2c2a34;
+      --text-primary: #e8e6ed; --text-secondary: #8b8896; --text-muted: #5c5868;
+      --border: #2e2c36; --border-light: #38363f;
+      --accent: #ef4444; --accent-dim: #dc2626; --accent-glow: rgba(239,68,68,0.12);
+      --green: #34d399; --green-dim: rgba(52,211,153,0.12);
+      --yellow: #fbbf24; --yellow-dim: rgba(251,191,36,0.10);
+      --blue: #60a5fa; --blue-dim: rgba(96,165,250,0.10);
+      --font-mono: 'JetBrains Mono','Fira Code',monospace;
+      --font-sans: 'Sora',-apple-system,sans-serif;
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:var(--font-sans);background:var(--bg);color:var(--text-primary);font-size:15px;line-height:1.7;-webkit-font-smoothing:antialiased}
+    .container{max-width:900px;margin:0 auto;padding:0 24px}
+    ::selection{background:var(--accent);color:#fff}
+
+    /* NAV */
+    nav{padding:20px 0;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(20,18,24,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:100}
+    nav .container{display:flex;justify-content:space-between;align-items:center}
+    .nav-logo{font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--text-primary);text-decoration:none;letter-spacing:-0.02em}
+    .nav-logo span{color:var(--accent)}
+    .nav-links{display:flex;gap:24px;align-items:center}
+    .nav-links a{font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);text-decoration:none;transition:color .15s;letter-spacing:.01em}
+    .nav-links a:hover{color:var(--text-primary)}
+    .nav-cta{color:var(--green)!important;background:var(--green-dim);padding:6px 14px;border-radius:6px;border:1px solid rgba(52,211,153,0.15);transition:all .15s}
+    .nav-cta:hover{background:rgba(52,211,153,0.18);border-color:rgba(52,211,153,0.3)}
+
+    /* HERO */
+    .hero{padding:80px 0 60px;position:relative;text-align:center}
+    .hero::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,var(--accent-glow) 0%,transparent 70%);pointer-events:none}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;color:var(--green);background:var(--green-dim);border:1px solid rgba(52,211,153,0.12);padding:6px 14px;border-radius:20px;margin-bottom:24px}
+    .hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .hero h1{font-size:clamp(30px,5vw,48px);line-height:1.12;letter-spacing:-0.035em;font-weight:600;margin-bottom:20px}
+    .hero h1 .dim{color:var(--text-secondary)}
+    .hero h1 .accent{color:var(--accent)}
+    .hero-sub{font-size:16px;color:var(--text-secondary);max-width:520px;margin:0 auto 32px}
+
+    /* SCANNER */
+    .scanner-section{padding:0 0 80px;position:relative}
+    .scanner-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:16px;overflow:hidden;max-width:700px;margin:0 auto}
+    .scanner-input-area{padding:24px;display:flex;gap:10px;border-bottom:1px solid var(--border)}
+    .scanner-input{flex:1;font-family:var(--font-mono);font-size:13px;background:var(--bg);border:1px solid var(--border);color:var(--text-primary);padding:12px 16px;border-radius:8px;outline:none;transition:border-color .15s}
+    .scanner-input:focus{border-color:var(--text-muted)}
+    .scanner-input::placeholder{color:var(--text-muted)}
+    .scanner-btn{font-family:var(--font-mono);font-size:13px;font-weight:500;background:var(--text-primary);color:var(--bg);padding:12px 24px;border-radius:8px;border:none;cursor:pointer;transition:opacity .15s;white-space:nowrap}
+    .scanner-btn:hover{opacity:.9}
+    .scanner-btn:disabled{opacity:.4;cursor:not-allowed}
+    .scanner-status{padding:16px 24px;font-family:var(--font-mono);font-size:12px;color:var(--text-muted);display:none;border-bottom:1px solid var(--border)}
+    .scanner-status.active{display:block}
+    .scanner-log{max-height:120px;overflow-y:auto;padding:16px 24px;font-family:var(--font-mono);font-size:11px;line-height:1.8;color:var(--text-muted);display:none;border-bottom:1px solid var(--border);background:var(--bg)}
+    .scanner-log.active{display:block}
+    .scanner-log .log-ok{color:var(--green)}
+    .scanner-log .log-fail{color:var(--accent)}
+    .scanner-log .log-warn{color:var(--yellow)}
+    .scanner-log .log-info{color:var(--blue)}
+
+    /* RESULTS */
+    .results{display:none;padding:0}
+    .results.active{display:block}
+    .results-scorecard{padding:28px 24px;font-family:var(--font-mono);font-size:13px;line-height:1.9;color:var(--text-muted);overflow-x:auto;white-space:pre;background:var(--bg)}
+    .results-scorecard .bright{color:var(--text-primary);font-weight:500}
+    .results-scorecard .red{color:var(--accent)}
+    .results-scorecard .green{color:var(--green)}
+    .results-scorecard .yellow{color:var(--yellow)}
+    .results-scorecard .blue{color:var(--blue)}
+    .results-findings{padding:20px 24px;max-height:400px;overflow-y:auto}
+    .finding{padding:12px 0;border-bottom:1px solid var(--border)}
+    .finding:last-child{border:none}
+    .finding-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+    .finding-sev{font-family:var(--font-mono);font-size:10px;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase}
+    .finding-sev.critical{background:var(--accent-glow);color:var(--accent)}
+    .finding-sev.high{background:var(--yellow-dim);color:var(--yellow)}
+    .finding-sev.medium{background:var(--blue-dim);color:var(--blue)}
+    .finding-sev.low{background:var(--bg-surface);color:var(--text-muted)}
+    .finding-title{font-family:var(--font-mono);font-size:13px;font-weight:500;color:var(--text-primary)}
+    .finding-detail{font-size:12px;color:var(--text-secondary);line-height:1.6;margin-top:4px}
+    .finding-file{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:4px}
+    .scanner-footer{padding:16px 24px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-align:center}
+    .scanner-footer a{color:var(--green);text-decoration:none}
+
+    /* STATS */
+    .stats{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:24px 0}
+    .stats .container{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .stat{text-align:center;padding:16px}
+    .stat-val{font-family:var(--font-mono);font-size:28px;font-weight:700;letter-spacing:-0.03em;color:var(--text-primary);line-height:1}
+    .stat-val.red{color:var(--accent)}
+    .stat-label{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:8px;letter-spacing:.02em}
+
+    /* SECTIONS */
+    section{padding:80px 0}
+    section+section{border-top:1px solid var(--border)}
+    .section-tag{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px}
+    .section-tag span{color:var(--accent);margin-right:6px}
+    .section-heading{font-size:clamp(24px,3.5vw,34px);font-weight:600;letter-spacing:-0.03em;line-height:1.2;margin-bottom:16px}
+    .section-sub{font-size:15px;color:var(--text-secondary);line-height:1.7;margin-bottom:40px;max-width:560px}
+
+    /* PROBLEMS */
+    .problems{display:grid;gap:2px;border-radius:12px;overflow:hidden}
+    .problem{background:var(--bg-raised);padding:28px;display:grid;grid-template-columns:40px 1fr;gap:16px;transition:background .15s}
+    .problem:hover{background:var(--bg-surface)}
+    .problem-icon{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--accent);padding-top:2px}
+    .problem-title{font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--text-primary);margin-bottom:8px}
+    .problem-desc{font-size:14px;color:var(--text-secondary);line-height:1.7}
+
+    /* CHECKS GRID */
+    .checks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2px;background:var(--border);border-radius:12px;overflow:hidden}
+    .check-cat{background:var(--bg-raised);padding:22px 24px}
+    .check-cat-head{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+    .check-cat-letter{font-family:var(--font-mono);font-size:11px;font-weight:600;color:var(--accent);background:var(--accent-glow);padding:3px 8px;border-radius:4px}
+    .check-cat-name{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--text-secondary)}
+    .check-items{list-style:none;font-size:13px;color:var(--text-secondary);line-height:2}
+    .check-items li::before{content:'›';color:var(--text-muted);margin-right:8px;font-family:var(--font-mono)}
+
+    /* SEVERITY */
+    .severity-row{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;border-radius:12px;overflow:hidden;margin-bottom:24px}
+    .severity-card{padding:24px;text-align:center}
+    .severity-card.critical{background:var(--accent-glow)}.severity-card.high{background:var(--yellow-dim)}.severity-card.medium{background:var(--blue-dim)}.severity-card.low{background:var(--bg-raised)}
+    .severity-val{font-family:var(--font-mono);font-size:24px;font-weight:700}
+    .severity-card.critical .severity-val{color:var(--accent)}.severity-card.high .severity-val{color:var(--yellow)}.severity-card.medium .severity-val{color:var(--blue)}.severity-card.low .severity-val{color:var(--text-muted)}
+    .severity-name{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:4px}
+    .severity-weight{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:2px}
+
+    /* COMPLIANCE */
+    .compliance-grid{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+    .compliance-chip{font-family:var(--font-mono);font-size:12px;padding:8px 16px;border-radius:8px;background:var(--bg-raised);border:1px solid var(--border);color:var(--text-secondary);transition:all .15s}
+
+    /* INSTALL */
+    .install-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:12px}
+    .install-top{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;border-bottom:1px solid var(--border)}
+    .install-label{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase}
+    .install-body{padding:20px;font-family:var(--font-mono);font-size:14px;color:var(--text-primary)}
+    .install-body .prompt{color:var(--green)}
+    .install-body .comment{color:var(--text-muted)}
+
+    /* CTA */
+    .cta-section{text-align:center;padding:100px 0;position:relative}
+    .cta-section::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:500px;height:300px;background:radial-gradient(ellipse,var(--accent-glow) 0%,transparent 70%);pointer-events:none}
+    .cta-section .section-heading{max-width:560px;margin:0 auto 16px}
+    .cta-section .section-sub{max-width:440px;margin:0 auto 36px}
+    .btn-primary{font-family:var(--font-mono);font-size:13px;font-weight:500;background:var(--text-primary);color:var(--bg);padding:12px 24px;border-radius:8px;text-decoration:none;border:none;transition:opacity .15s;display:inline-block}
+    .btn-primary:hover{opacity:.9}
+
+    /* FOOTER */
+    footer{border-top:1px solid var(--border);padding:28px 0}
+    footer .container{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+    .footer-left{font-family:var(--font-mono);font-size:12px;color:var(--text-muted)}
+    .footer-left a{color:var(--text-secondary);text-decoration:none}
+    .footer-links{display:flex;gap:20px}
+    .footer-links a{font-family:var(--font-mono);font-size:12px;color:var(--text-muted);text-decoration:none;transition:color .15s}
+    .footer-links a:hover{color:var(--text-primary)}
+
+    @media(max-width:640px){
+      .hero{padding:56px 0 40px}section{padding:56px 0}
+      .stats .container{grid-template-columns:repeat(3,1fr);gap:8px}.stat{padding:12px 8px}.stat-val{font-size:22px}
+      .checks-grid{grid-template-columns:1fr}.severity-row{grid-template-columns:repeat(2,1fr)}
+      .nav-links{gap:12px}.problem{grid-template-columns:1fr}.problem-icon{display:none}
+      .scanner-input-area{flex-direction:column}
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="#" class="nav-logo">a<span>.</span>vibe<span>.</span>check</a>
+      <div class="nav-links">
+        <a href="#checks">checks</a>
+        <a href="#scoring">scoring</a>
+        <a href="#install">install</a>
+        <a href="https://github.com/namenroh/a-vibe-check" class="nav-cta" target="_blank">GitHub →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="container">
+      <div class="hero-badge">v2.0 — Free — MIT Licensed</div>
+      <h1>Your AI writes code that works.<br><span class="dim">Find what it forgot to</span> <span class="accent">secure.</span></h1>
+      <p class="hero-sub">Paste a public GitHub repo below. Get a 30-point security audit in seconds.</p>
+    </div>
+  </div>
+
+  <!-- SCANNER -->
+  <div class="scanner-section">
+    <div class="container">
+      <div class="scanner-card">
+        <div class="scanner-input-area">
+          <input type="text" class="scanner-input" id="repoInput" placeholder="https://github.com/owner/repo" spellcheck="false" autocomplete="off">
+          <button class="scanner-btn" id="scanBtn" onclick="startScan()">Run A Vibe Check</button>
+        </div>
+        <div class="scanner-status" id="scanStatus"></div>
+        <div class="scanner-log" id="scanLog"></div>
+        <div class="results" id="results">
+          <div class="results-scorecard" id="scorecard"></div>
+          <div class="results-findings" id="findings"></div>
+        </div>
+        <div class="scanner-footer">Public repos only · Runs entirely in your browser · No code is stored or transmitted · <a href="https://github.com/namenroh/a-vibe-check" target="_blank">Full CLI tool on GitHub</a></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="container">
+      <div class="stat"><div class="stat-val">30</div><div class="stat-label">security checks</div></div>
+      <div class="stat"><div class="stat-val">5</div><div class="stat-label">compliance frameworks</div></div>
+      <div class="stat"><div class="stat-val red">20–40</div><div class="stat-label">typical first score · grade F</div></div>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <section>
+    <div class="container">
+      <div class="section-tag"><span>//</span> the problem</div>
+      <h2 class="section-heading">LLMs optimise for "works."<br>They stop before "secure."</h2>
+      <p class="section-sub">AI code generators build fast. They also hardcode API keys, skip auth middleware, disable Row Level Security, and hash passwords with MD5. Every time.</p>
+      <div class="problems">
+        <div class="problem"><div class="problem-icon">01</div><div><div class="problem-title">Secrets in your frontend</div><div class="problem-desc">Stripe secret keys in React components. Supabase service role keys exposed via public endpoints. The model picks the shortest path to working code — through your credentials.</div></div></div>
+        <div class="problem"><div class="problem-icon">02</div><div><div class="problem-title">Auth that looks right but isn't</div><div class="problem-desc">No rate limiting on login. JWTs in localStorage. Tokens that never expire. Passwords hashed with MD5. The login page works. The security behind it doesn't.</div></div></div>
+        <div class="problem"><div class="problem-icon">03</div><div><div class="problem-title">Permissions checked on the wrong side</div><div class="problem-desc">Admin logic in the frontend. Auth middleware on the first three routes but not the rest. Change the user ID in the URL and you own someone else's data.</div></div></div>
+        <div class="problem"><div class="problem-icon">04</div><div><div class="problem-title">Injection bugs solved 20 years ago</div><div class="problem-desc">SQL injection via string concatenation. XSS through dangerouslySetInnerHTML. eval() running user input. The shortest path to working code skips input validation.</div></div></div>
+        <div class="problem"><div class="problem-icon">05</div><div><div class="problem-title">Everything around the app misconfigured</div><div class="problem-desc">CORS wildcard. Debug mode in production. Database ports exposed. Supabase RLS disabled — the same config that caused the Moltbook breach. 1.5M API keys leaked.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHECKS -->
+  <section id="checks">
+    <div class="container">
+      <div class="section-tag"><span>//</span> what it catches</div>
+      <h2 class="section-heading">30 checks · 10 categories</h2>
+      <p class="section-sub">Every check targets a vulnerability pattern AI code generators introduce. Each includes detection commands and fix instructions.</p>
+      <div class="checks-grid">
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">A</span><span class="check-cat-name">Secrets & Credentials</span></div><ul class="check-items"><li>API keys in frontend code</li><li>.env files in git history</li><li>Weak JWT secrets</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">B</span><span class="check-cat-name">Auth & Sessions</span></div><ul class="check-items"><li>No rate limiting on auth</li><li>JWTs in localStorage</li><li>Tokens that never expire</li><li>Sessions not invalidated</li><li>Weak password hashing</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">C</span><span class="check-cat-name">Authorisation</span></div><ul class="check-items"><li>Frontend-only admin auth</li><li>Missing auth middleware</li><li>IDOR vulnerabilities</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">D</span><span class="check-cat-name">Injection & Input</span></div><ul class="check-items"><li>SQL injection</li><li>XSS via unsafe rendering</li><li>Missing input validation</li><li>eval / exec / pickle</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">E</span><span class="check-cat-name">Infrastructure</span></div><ul class="check-items"><li>CORS wildcard</li><li>Running as root</li><li>Database port exposed</li><li>No HTTPS enforcement</li><li>Debug mode in production</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">F</span><span class="check-cat-name">Error Handling</span></div><ul class="check-items"><li>Stack traces in responses</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">G</span><span class="check-cat-name">BaaS & Third-Party</span></div><ul class="check-items"><li>Supabase/Firebase RLS off</li><li>Unsigned payment webhooks</li><li>Hallucinated dependencies</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">H</span><span class="check-cat-name">File Handling</span></div><ul class="check-items"><li>Uploads without MIME check</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">I</span><span class="check-cat-name">Transport & Headers</span></div><ul class="check-items"><li>Open redirects</li><li>Missing security headers</li><li>CSP missing or permissive</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">J</span><span class="check-cat-name">Ops Security</span></div><ul class="check-items"><li>No logging or monitoring</li><li>No backup or recovery</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCORING -->
+  <section id="scoring">
+    <div class="container">
+      <div class="section-tag"><span>//</span> scoring</div>
+      <h2 class="section-heading">Every check weighted by severity</h2>
+      <p class="section-sub">Your score is the percentage of applicable points you pass. N/A checks excluded.</p>
+      <div class="severity-row">
+        <div class="severity-card critical"><div class="severity-val">10</div><div class="severity-name">Critical</div><div class="severity-weight">10 pts · 12 checks</div></div>
+        <div class="severity-card high"><div class="severity-val">7</div><div class="severity-name">High</div><div class="severity-weight">7 pts · 10 checks</div></div>
+        <div class="severity-card medium"><div class="severity-val">4</div><div class="severity-name">Medium</div><div class="severity-weight">4 pts · 7 checks</div></div>
+        <div class="severity-card low"><div class="severity-val">2</div><div class="severity-name">Low</div><div class="severity-weight">2 pts · 1 check</div></div>
+      </div>
+      <p style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted)">
+        <span style="color:var(--accent)">F &lt;60</span> · <span style="color:var(--yellow)">D 60–69</span> · <span style="color:var(--blue)">C 70–79</span> · <span style="color:var(--green)">B 80–89</span> · <span style="color:rgba(52,211,153,0.8)">A 90–100</span> · max: 220 points
+      </p>
+    </div>
+  </section>
+
+  <!-- COMPLIANCE -->
+  <section>
+    <div class="container">
+      <div class="section-tag"><span>//</span> compliance</div>
+      <h2 class="section-heading">Maps to the frameworks that matter</h2>
+      <p class="section-sub">Every failed check links to specific clauses. Turns a technical audit into a business risk conversation.</p>
+      <div class="compliance-grid">
+        <span class="compliance-chip">Privacy Act (APP 11)</span><span class="compliance-chip">OWASP Top 10</span><span class="compliance-chip">SOC 2 Type II</span><span class="compliance-chip">PCI DSS v4.0</span><span class="compliance-chip">GDPR Art. 32</span>
+      </div>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:12px">If you're an Australian business, APP 11 requires "reasonable steps" to protect personal information. These 30 checks are free. Hard to argue they're not reasonable.</p>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section id="install">
+    <div class="container">
+      <div class="section-tag"><span>//</span> get started</div>
+      <h2 class="section-heading">Install the full CLI tool</h2>
+      <p class="section-sub">The web scanner above catches the most common patterns. The full CLI skill runs deeper analysis with framework-specific detection.</p>
+      <div class="install-card">
+        <div class="install-top"><span class="install-label">Claude Code</span></div>
+        <div class="install-body"><span class="prompt">$</span> claude install a-vibe-check</div>
+      </div>
+      <div class="install-card" style="margin-bottom:24px">
+        <div class="install-top"><span class="install-label">Cowork</span></div>
+        <div class="install-body"><span class="comment"># download .skill → drag into session</span></div>
+      </div>
+      <p style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted)">Framework detection: Next.js · React · Express · Django · Flask · Supabase · Firebase · Docker</p>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2 class="section-heading">The scan takes five minutes.<br>The only reason not to run it<br>is if you'd rather not know.</h2>
+      <p class="section-sub">Free forever. MIT-licensed. No upsell.</p>
+      <a href="#" class="btn-primary" onclick="document.getElementById('repoInput').focus();window.scrollTo({top:0,behavior:'smooth'});return false">Scan your repo now ↑</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-left">a-vibe-check v2 · MIT · <a href="https://joshhorneman.com">Josh Horneman</a></div>
+      <div class="footer-links">
+        <a href="https://github.com/namenroh/a-vibe-check" target="_blank">github</a>
+        <a href="https://linkedin.com/in/joshhorneman" target="_blank">linkedin</a>
+        <a href="https://x.com/joshhorneman" target="_blank">x</a>
+      </div>
+    </div>
+  </footer>
+
+<script>
+// ─── CHECK DEFINITIONS ───
+const CHECKS = [
+  // A: Secrets & Credentials
+  { id:1, cat:'A', name:'API keys in frontend code', severity:'critical', weight:10,
+    frontendOnly:true,
+    patterns:[/sk_live_[a-zA-Z0-9]{20,}/,/sk_test_[a-zA-Z0-9]{20,}/,/AKIA[A-Z0-9]{16}/,/ghp_[a-zA-Z0-9]{36}/,/sk-ant-[a-zA-Z0-9-]+/,/sk-proj-[a-zA-Z0-9-]+/,/xox[bpsa]-[a-zA-Z0-9-]+/,/glpat-[a-zA-Z0-9_-]{20}/],
+    fileTypes:['.js','.ts','.jsx','.tsx','.vue','.svelte','.html'],
+    fix:'Move secret keys to server-side environment variables. Proxy through backend API routes.' },
+  { id:2, cat:'A', name:'.env files in repository', severity:'critical', weight:10,
+    treeCheck:true,
+    envPatterns:['.env','.env.local','.env.production','.env.development','.env.staging'],
+    fix:'Add .env* to .gitignore. Rotate all keys that were ever committed.' },
+  { id:3, cat:'A', name:'Weak JWT secret', severity:'critical', weight:10,
+    patterns:[/JWT_SECRET\s*=\s*['"][^'"]{1,20}['"]/i,/secret\s*[:=]\s*['"](?:secret|password|jwt[_-]?secret|your[_-]?secret|123456|changeme|test)['"]/i,/sign\(\s*\w+\s*,\s*['"][^'"]{1,16}['"]/],
+    fileTypes:['.js','.ts','.py','.env','.env.example'],
+    fix:'Generate a 256-bit random secret. Store in environment variables.' },
+  // B: Auth & Sessions
+  { id:4, cat:'B', name:'No rate limiting on auth', severity:'high', weight:7,
+    absenceCheck:true,
+    mustHave:[/rate.?limit/i,/rateLimit/,/throttle/i,/express-rate-limit/,/slowDown/],
+    searchIn:[/login|signin|sign-in|signup|register|forgot.?password|reset.?password/i],
+    fix:'Add rate limiting to all auth endpoints. Lock accounts after 5 failed attempts.' },
+  { id:5, cat:'B', name:'JWTs in localStorage', severity:'medium', weight:4,
+    patterns:[/localStorage\.setItem\s*\(\s*['"](?:token|jwt|auth|access|session)/i,/localStorage\s*\.\s*(?:token|jwt|auth)/i],
+    fileTypes:['.js','.ts','.jsx','.tsx'],
+    fix:'Store tokens in httpOnly secure cookies instead.' },
+  { id:6, cat:'B', name:'Auth tokens never expire', severity:'high', weight:7,
+    absenceCheck:true,
+    mustHave:[/expiresIn/,/exp\s*:/,/maxAge/],
+    searchIn:[/jwt\.sign|jsonwebtoken|sign\(/i],
+    fix:'Set access tokens to 15 min, refresh tokens to 7 days.' },
+  { id:7, cat:'B', name:'Sessions not invalidated on logout', severity:'medium', weight:4,
+    patterns:[/logout|signout|sign.?out/i],
+    logoutCheck:true,
+    fix:'Invalidate sessions server-side on logout. Maintain a token blocklist.' },
+  { id:8, cat:'B', name:'Weak password hashing', severity:'critical', weight:10,
+    patterns:[/createHash\s*\(\s*['"]md5['"]/,/createHash\s*\(\s*['"]sha1['"]/,/hashlib\.md5/,/hashlib\.sha1/,/MessageDigest.*MD5/,/MessageDigest.*SHA-1/],
+    goodPatterns:[/bcrypt|argon2|scrypt|pbkdf2/i],
+    fix:'Use bcrypt (cost 12+), scrypt, or Argon2id. Never MD5 or SHA1 for passwords.' },
+  // C: Authorisation
+  { id:9, cat:'C', name:'Frontend-only admin auth', severity:'critical', weight:10,
+    frontendOnly:true,
+    patterns:[/isAdmin|user\.role\s*===?\s*['"]admin['"]/i,/PrivateRoute|ProtectedRoute|requireAuth/],
+    fileTypes:['.jsx','.tsx','.vue','.svelte'],
+    fix:'Enforce auth on every API endpoint. Frontend checks are for UX only.' },
+  { id:10, cat:'C', name:'Missing auth middleware', severity:'critical', weight:10,
+    routeCheck:true,
+    fix:'Use global auth middleware with explicit public route allowlist.' },
+  { id:11, cat:'C', name:'IDOR on resource endpoints', severity:'critical', weight:10,
+    patterns:[/params\.id|params\[['"]id['"]\]|req\.params/],
+    absenceInSame:[/req\.user\.id|currentUser|session\.user/],
+    fix:'Validate resource ownership on every request. Always filter by authenticated user ID.' },
+  // D: Injection & Input
+  { id:12, cat:'D', name:'SQL injection via string concatenation', severity:'critical', weight:10,
+    patterns:[/`SELECT\s.*\$\{/,/`INSERT\s.*\$\{/,/`UPDATE\s.*\$\{/,/`DELETE\s.*\$\{/,/"SELECT\s.*"\s*\+/,/'SELECT\s.*'\s*\+/,/f"SELECT\s/,/f'SELECT\s/],
+    fix:'Use parameterised queries. Never concatenate user input into SQL.' },
+  { id:13, cat:'D', name:'XSS via unsafe HTML rendering', severity:'high', weight:7,
+    patterns:[/dangerouslySetInnerHTML/,/v-html/,/\{@html/,/\.innerHTML\s*=/,/document\.write\s*\(/],
+    fix:'Use DOMPurify or equivalent. Never render unsanitised user input as HTML.' },
+  { id:14, cat:'D', name:'Missing input validation', severity:'high', weight:7,
+    absenceCheck:true,
+    mustHave:[/zod|yup|joi|validator|express-validator|class-validator|ajv|superstruct|valibot/i],
+    fix:'Validate all input. Use Zod, Joi, or equivalent on both client and server.' },
+  { id:15, cat:'D', name:'Unsafe eval / exec / pickle', severity:'critical', weight:10,
+    patterns:[/\beval\s*\(/,/\bexec\s*\(/,/pickle\.loads?\s*\(/,/yaml\.load\s*\([^)]*\)\s*(?!.*Loader)/,/child_process.*exec/,/new\s+Function\s*\(/],
+    fix:'Never execute untrusted input. Use safe parsers (JSON.parse, yaml.safe_load).' },
+  // E: Infrastructure
+  { id:16, cat:'E', name:'CORS wildcard', severity:'high', weight:7,
+    patterns:[/origin:\s*['"][*]['"]/,/Access-Control-Allow-Origin.*\*/,/cors\(\s*\)/,/CORS\(\s*\)/],
+    fix:'Restrict CORS to your own domain. Whitelist specific origins.' },
+  { id:17, cat:'E', name:'Running as root', severity:'high', weight:7,
+    dockerfileCheck:true,
+    fix:'Add USER directive to Dockerfile. Never run as root.' },
+  { id:18, cat:'E', name:'Database port exposed', severity:'critical', weight:10,
+    patterns:[/ports:\s*\n\s*-\s*['"]?(?:5432|3306|27017|6379|9200)/],
+    fileTypes:['docker-compose.yml','docker-compose.yaml'],
+    fix:'Use internal networking. Never map database ports to host.' },
+  { id:19, cat:'E', name:'No HTTPS enforcement', severity:'high', weight:7,
+    absenceCheck:true,
+    mustHave:[/https|ssl|tls|HSTS|Strict-Transport-Security|force.*ssl|redirect.*https/i],
+    fix:'Enforce HTTPS everywhere. Use HSTS headers.' },
+  { id:20, cat:'E', name:'Debug mode in production', severity:'high', weight:7,
+    patterns:[/DEBUG\s*=\s*True/,/debug\s*:\s*true/i,/NODE_ENV.*development/,/app\.run\(.*debug\s*=\s*True/],
+    fix:'Set debug/development mode off in production config.' },
+  // F: Error Handling
+  { id:21, cat:'F', name:'Stack traces in error responses', severity:'medium', weight:4,
+    patterns:[/err\.stack|error\.stack|traceback|stack.*trace/i,/res\.status\(\d+\)\.json\(\s*\{?\s*(?:error|err|e)\s*[,}:]/],
+    fix:'Return generic errors to client. Log details server-side only.' },
+  // G: BaaS & Third-Party
+  { id:22, cat:'G', name:'Supabase/Firebase RLS disabled', severity:'critical', weight:10,
+    patterns:[/allow\s+read\s*,\s*write.*if\s+true/,/service_role/i],
+    frontendOnly:true,
+    fileTypes:['.js','.ts','.jsx','.tsx','firestore.rules','database.rules.json'],
+    fix:'Enable RLS on all tables. Write row-level policies. Never expose service_role key.' },
+  { id:23, cat:'G', name:'Payment webhook signature not verified', severity:'critical', weight:10,
+    patterns:[/webhook|stripe.*event/i],
+    absenceInSame:[/constructEvent|verify.*signature|verifyWebhookSignature/i],
+    fix:'Verify webhook signatures using the provider library.' },
+  { id:24, cat:'G', name:'Hallucinated / unaudited dependencies', severity:'high', weight:7,
+    packageCheck:true,
+    fix:'Audit all dependencies. Remove unused packages. Run npm audit.' },
+  // H: File Handling
+  { id:25, cat:'H', name:'File uploads without MIME validation', severity:'high', weight:7,
+    patterns:[/upload|multer|formidable|busboy|multipart/i],
+    absenceInSame:[/mime|mimetype|file-type|content-type.*check|fileFilter/i],
+    fix:'Validate MIME type from file headers, not just extension.' },
+  // I: Transport & Headers
+  { id:26, cat:'I', name:'Open redirects', severity:'medium', weight:4,
+    patterns:[/redirect\s*\(\s*req\.(query|params|body)\./,/res\.redirect\s*\(\s*(?:req|request)\./,/window\.location\s*=\s*(?:params|query|searchParams)/],
+    fix:'Only redirect to your own domain. Validate redirect URLs.' },
+  { id:27, cat:'I', name:'Missing security headers', severity:'low', weight:2,
+    absenceCheck:true,
+    mustHave:[/helmet|X-Frame-Options|X-Content-Type-Options|security.*headers/i],
+    fix:'Add Helmet (Express) or set headers manually: X-Frame-Options, X-Content-Type-Options, etc.' },
+  { id:28, cat:'I', name:'CSP missing or permissive', severity:'medium', weight:4,
+    absenceCheck:true,
+    mustHave:[/Content-Security-Policy|contentSecurityPolicy|csp/i],
+    fix:'Set strict CSP: default-src self. Avoid unsafe-inline.' },
+  // J: Operational
+  { id:29, cat:'J', name:'No logging or monitoring', severity:'medium', weight:4,
+    absenceCheck:true,
+    mustHave:[/winston|pino|morgan|bunyan|log4j|logging|logger|sentry|datadog|newrelic/i],
+    fix:'Add structured logging. Log auth events and data modifications.' },
+  { id:30, cat:'J', name:'No backup or recovery plan', severity:'medium', weight:4,
+    absenceCheck:true,
+    mustHave:[/backup|dump|snapshot|replicate|disaster.?recovery/i],
+    fix:'Automate daily backups. Store offsite. Test restores.' },
+];
+
+const CATEGORIES = {
+  A:'Secrets & Credentials', B:'Auth & Sessions', C:'Authorisation',
+  D:'Injection & Input', E:'Infrastructure', F:'Error Handling',
+  G:'BaaS & Third-Party', H:'File Handling', I:'Transport & Headers', J:'Ops Security'
+};
+
+// ─── SCANNER ENGINE ───
+let scanRunning = false;
+
+function parseRepo(url) {
+  const cleaned = url.trim().replace(/\/+$/, '').replace(/\.git$/, '');
+  const m = cleaned.match(/github\.com\/([^\/]+)\/([^\/]+)/);
+  if (m) return { owner: m[1], repo: m[2] };
+  const parts = cleaned.split('/').filter(Boolean);
+  if (parts.length === 2) return { owner: parts[0], repo: parts[1] };
+  return null;
+}
+
+function log(msg, type='') {
+  const el = document.getElementById('scanLog');
+  const cls = type ? ` class="log-${type}"` : '';
+  el.innerHTML += `<div${cls}>${msg}</div>`;
+  el.scrollTop = el.scrollHeight;
+}
+
+function setStatus(msg) {
+  const el = document.getElementById('scanStatus');
+  el.textContent = msg;
+  el.classList.add('active');
+}
+
+async function fetchJSON(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`GitHub API ${r.status}: ${r.statusText}`);
+  return r.json();
+}
+
+async function fetchText(url) {
+  const r = await fetch(url);
+  if (!r.ok) return null;
+  return r.text();
+}
+
+async function startScan() {
+  if (scanRunning) return;
+  const input = document.getElementById('repoInput').value;
+  const parsed = parseRepo(input);
+  if (!parsed) { alert('Enter a valid GitHub repo URL (e.g. https://github.com/owner/repo)'); return; }
+
+  scanRunning = true;
+  const btn = document.getElementById('scanBtn');
+  btn.disabled = true;
+  btn.textContent = 'Scanning...';
+  document.getElementById('scanLog').innerHTML = '';
+  document.getElementById('scanLog').classList.add('active');
+  document.getElementById('results').classList.remove('active');
+
+  try {
+    const { owner, repo } = parsed;
+    setStatus(`Fetching file tree for ${owner}/${repo}...`);
+    log(`› connecting to github.com/${owner}/${repo}`, 'info');
+
+    // Get repo tree
+    const treeData = await fetchJSON(`https://api.github.com/repos/${owner}/${repo}/git/trees/HEAD?recursive=1`);
+    const files = treeData.tree.filter(f => f.type === 'blob');
+    log(`› found ${files.length} files in repository`, 'info');
+
+    // Filter to scannable files
+    const scanExts = ['.js','.ts','.jsx','.tsx','.vue','.svelte','.py','.rb','.go','.php','.java','.env','.env.example','.env.local','.gitignore','.html'];
+    const configFiles = ['docker-compose.yml','docker-compose.yaml','Dockerfile','package.json','requirements.txt','firestore.rules','database.rules.json','vercel.json','netlify.toml'];
+    const scannable = files.filter(f => {
+      const name = f.path.split('/').pop();
+      return scanExts.some(ext => f.path.endsWith(ext)) || configFiles.includes(name);
+    }).filter(f => !f.path.includes('node_modules/') && !f.path.includes('.min.') && !f.path.includes('dist/') && !f.path.includes('build/') && f.size < 200000);
+
+    log(`› ${scannable.length} files to scan (skipping node_modules, dist, build)`, 'info');
+    setStatus(`Downloading ${scannable.length} files for analysis...`);
+
+    // Fetch file contents (batched)
+    const fileContents = {};
+    const batchSize = 10;
+    for (let i = 0; i < scannable.length; i += batchSize) {
+      const batch = scannable.slice(i, i + batchSize);
+      const results = await Promise.all(batch.map(async f => {
+        const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/${f.path}`;
+        const content = await fetchText(rawUrl);
+        return { path: f.path, content };
+      }));
+      results.forEach(r => { if (r.content) fileContents[r.path] = r.content; });
+      const pct = Math.min(100, Math.round(((i + batch.length) / scannable.length) * 100));
+      setStatus(`Downloading files... ${pct}%`);
+    }
+
+    log(`› downloaded ${Object.keys(fileContents).length} files`, 'ok');
+    setStatus('Running 30 security checks...');
+
+    // Run checks
+    const results = runChecks(fileContents, files);
+    displayResults(results, owner, repo);
+
+  } catch (err) {
+    log(`› error: ${err.message}`, 'fail');
+    setStatus('Scan failed. Is this a public repository?');
+  }
+
+  scanRunning = false;
+  btn.disabled = false;
+  btn.textContent = 'Run A Vibe Check';
+}
+
+function runChecks(fileContents, allFiles) {
+  const results = [];
+  const allPaths = allFiles.map(f => f.path);
+  const allContent = Object.entries(fileContents);
+  const pkgJson = fileContents['package.json'] || '';
+  const hasDockerfile = allPaths.some(p => p.match(/Dockerfile/i));
+  const dockerfileContent = Object.entries(fileContents).find(([p]) => p.match(/Dockerfile/i));
+
+  for (const check of CHECKS) {
+    let status = 'pass';
+    let matchedFiles = [];
+    let detail = '';
+
+    // .env in tree
+    if (check.treeCheck && check.envPatterns) {
+      const found = allPaths.filter(p => {
+        const name = p.split('/').pop();
+        return check.envPatterns.includes(name);
+      });
+      if (found.length > 0) {
+        status = 'fail';
+        matchedFiles = found;
+        detail = `Found: ${found.join(', ')}`;
+      }
+      // Check gitignore
+      const gitignore = fileContents['.gitignore'] || '';
+      if (!gitignore.match(/\.env/)) {
+        if (status === 'pass') { status = 'fail'; detail = '.env not in .gitignore'; }
+      }
+    }
+    // Pattern-based checks
+    else if (check.patterns && !check.absenceCheck) {
+      const targetFiles = check.fileTypes
+        ? allContent.filter(([p]) => check.fileTypes.some(ext => p.endsWith(ext)))
+        : allContent;
+
+      for (const [path, content] of targetFiles) {
+        for (const pat of check.patterns) {
+          if (pat.test(content)) {
+            status = 'fail';
+            if (!matchedFiles.includes(path)) matchedFiles.push(path);
+          }
+        }
+      }
+      // Good patterns override (e.g. bcrypt found = pass even if md5 also found)
+      if (check.goodPatterns && status === 'fail') {
+        const hasGood = allContent.some(([_, c]) => check.goodPatterns.some(p => p.test(c)));
+        if (hasGood) { status = 'pass'; matchedFiles = []; }
+      }
+      // absenceInSame: only fail if the vulnerable pattern exists WITHOUT the safe pattern in the same file
+      if (check.absenceInSame && status === 'fail') {
+        const stillBad = matchedFiles.filter(path => {
+          const c = fileContents[path];
+          return !check.absenceInSame.some(p => p.test(c));
+        });
+        if (stillBad.length === 0) { status = 'pass'; matchedFiles = []; }
+        else { matchedFiles = stillBad; }
+      }
+      if (matchedFiles.length) detail = matchedFiles.slice(0, 3).join(', ');
+    }
+    // Absence checks
+    else if (check.absenceCheck) {
+      const hasMust = allContent.some(([_, c]) => check.mustHave.some(p => p.test(c))) ||
+                      (pkgJson && check.mustHave.some(p => p.test(pkgJson)));
+      if (!hasMust) {
+        status = 'fail';
+        detail = 'No evidence found in codebase';
+      }
+    }
+    // Dockerfile USER check
+    else if (check.dockerfileCheck) {
+      if (hasDockerfile && dockerfileContent) {
+        if (!dockerfileContent[1].match(/^USER\s/m)) {
+          status = 'fail';
+          matchedFiles = [dockerfileContent[0]];
+          detail = 'No USER directive — container runs as root';
+        }
+      } else {
+        status = 'na';
+        detail = 'No Dockerfile found';
+      }
+    }
+    // Package check (hallucinated deps)
+    else if (check.packageCheck) {
+      status = 'na';
+      detail = 'Requires npm registry check — use CLI tool';
+    }
+    // Route check
+    else if (check.routeCheck) {
+      // Heuristic: look for route definitions and check middleware attachment
+      const routePatterns = /(?:app|router)\.(get|post|put|patch|delete)\s*\(\s*['"][^'"]+['"]\s*,\s*(?:async\s*)?\(?(?:req|ctx)/i;
+      const authMiddleware = /authenticate|auth|protect|requireAuth|isAuthenticated|verifyToken/i;
+      let unprotectedRoutes = 0;
+      for (const [path, content] of allContent) {
+        const lines = content.split('\n');
+        for (const line of lines) {
+          if (routePatterns.test(line) && !authMiddleware.test(line)) {
+            unprotectedRoutes++;
+          }
+        }
+      }
+      if (unprotectedRoutes > 3) {
+        status = 'fail';
+        detail = `Found ${unprotectedRoutes} route handlers without visible auth middleware`;
+      }
+    }
+
+    const catCounts = { A:3, B:5, C:3, D:4, E:5, F:1, G:3, H:1, I:3, J:2 };
+
+    log(`› [${check.cat}${check.id.toString().padStart(2,'0')}] ${check.name}: ${
+      status === 'pass' ? 'PASS' : status === 'fail' ? 'FAIL' : 'N/A'
+    }`, status === 'pass' ? 'ok' : status === 'fail' ? 'fail' : '');
+
+    results.push({ ...check, status, matchedFiles, detail });
+  }
+
+  return results;
+}
+
+function displayResults(results) {
+  const applicable = results.filter(r => r.status !== 'na');
+  const passed = applicable.filter(r => r.status === 'pass');
+  const failed = applicable.filter(r => r.status === 'fail');
+  const totalPossible = applicable.reduce((s, r) => s + r.weight, 0);
+  const totalEarned = passed.reduce((s, r) => s + r.weight, 0);
+  const score = totalPossible > 0 ? Math.round((totalEarned / totalPossible) * 100) : 0;
+  const grade = score >= 90 ? 'A' : score >= 80 ? 'B' : score >= 70 ? 'C' : score >= 60 ? 'D' : 'F';
+  const gradeColor = { A:'green', B:'green', C:'blue', D:'yellow', F:'red' }[grade];
+
+  // Category breakdown
+  const cats = {};
+  for (const r of results) {
+    if (!cats[r.cat]) cats[r.cat] = { total:0, passed:0 };
+    if (r.status !== 'na') {
+      cats[r.cat].total++;
+      if (r.status === 'pass') cats[r.cat].passed++;
+    }
+  }
+
+  const critCount = failed.filter(r => r.severity === 'critical').length;
+  const highCount = failed.filter(r => r.severity === 'high').length;
+  const medCount = failed.filter(r => r.severity === 'medium').length;
+  const lowCount = failed.filter(r => r.severity === 'low').length;
+
+  let sc = `<span class="bright">A VIBE CHECK SCORECARD</span>\n`;
+  sc += `<span class="dim">═══════════════════════════════════════════════════</span>\n`;
+  sc += `<span class="${gradeColor}">Score: ${score}/100  |  Grade: ${grade}  |  Passed: ${passed.length}/${applicable.length}</span>\n\n`;
+  sc += `<span class="dim">Category                            Status</span>\n`;
+  sc += `<span class="dim">───────────────────────────────────────────────────</span>\n`;
+
+  for (const [key, name] of Object.entries(CATEGORIES)) {
+    const c = cats[key] || { total:0, passed:0 };
+    if (c.total === 0) {
+      sc += `<span class="dim">${(key+': '+name).padEnd(36)}[—]   N/A</span>\n`;
+    } else {
+      const bar = '█'.repeat(c.passed) + '░'.repeat(c.total - c.passed);
+      const color = c.passed === c.total ? 'green' : c.passed === 0 ? 'red' : 'yellow';
+      sc += `<span class="${color}">${(key+': '+name).padEnd(36)}[${c.passed}/${c.total}]  ${bar}</span>\n`;
+    }
+  }
+
+  sc += `<span class="dim">───────────────────────────────────────────────────</span>\n`;
+  sc += `<span class="red">Critical: ${critCount}</span>  |  <span class="yellow">High: ${highCount}</span>  |  <span class="blue">Medium: ${medCount}</span>  |  Low: ${lowCount}`;
+
+  document.getElementById('scorecard').innerHTML = sc;
+
+  // Findings
+  let html = '';
+  const sorted = [...failed].sort((a,b) => b.weight - a.weight);
+  for (const f of sorted) {
+    html += `<div class="finding">
+      <div class="finding-head">
+        <span class="finding-sev ${f.severity}">${f.severity}</span>
+        <span class="finding-title">#${f.id} ${f.name}</span>
+      </div>
+      ${f.detail ? `<div class="finding-detail">${f.detail}</div>` : ''}
+      ${f.matchedFiles.length ? `<div class="finding-file">${f.matchedFiles.slice(0,5).join(' · ')}</div>` : ''}
+      <div class="finding-detail" style="margin-top:6px;color:var(--green)">${f.fix}</div>
+    </div>`;
+  }
+  if (sorted.length === 0) html = '<div style="padding:20px;text-align:center;color:var(--green);font-family:var(--font-mono);font-size:13px">No vulnerabilities detected. Nice work.</div>';
+
+  document.getElementById('findings').innerHTML = html;
+  document.getElementById('results').classList.add('active');
+  setStatus(`Scan complete — Score: ${score}/100 (Grade ${grade})`);
+  log(`\n› scan complete: ${score}/100 · grade ${grade} · ${failed.length} issues found`, gradeColor === 'red' ? 'fail' : 'ok');
+}
+
+// Enter key trigger
+document.getElementById('repoInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') startScan();
+});
+</script>
+</body>
+</html>
