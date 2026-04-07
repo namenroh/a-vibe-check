@@ -91,6 +91,31 @@
     .finding-title{font-family:var(--font-mono);font-size:13px;font-weight:500;color:var(--text-primary)}
     .finding-detail{font-size:12px;color:var(--text-secondary);line-height:1.6;margin-top:4px}
     .finding-file{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:4px}
+    .finding-fix-toggle{font-family:var(--font-mono);font-size:11px;color:var(--green);cursor:pointer;margin-top:6px;display:inline-block;opacity:.8;transition:opacity .15s;user-select:none}
+    .finding-fix-toggle:hover{opacity:1}
+    .finding-fix-body{display:none;margin-top:6px;padding:10px 14px;background:rgba(52,211,153,0.06);border-left:2px solid var(--green);border-radius:0 6px 6px 0;font-size:12px;color:var(--green);line-height:1.7;font-family:var(--font-mono)}
+    .finding-fix-body.open{display:block}
+
+    /* POST-SCAN CTA PANEL */
+    .post-scan-cta{display:none;border-top:1px solid var(--border);padding:0}
+    .post-scan-cta.active{display:block}
+    .cta-panel{padding:28px 24px}
+    .cta-panel-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+    @media(max-width:640px){.cta-panel-row{grid-template-columns:1fr}}
+    .cta-card{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:20px;transition:border-color .15s}
+    .cta-card:hover{border-color:var(--border-light)}
+    .cta-card-icon{font-family:var(--font-mono);font-size:18px;margin-bottom:10px}
+    .cta-card-title{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:6px}
+    .cta-card-desc{font-size:12px;color:var(--text-secondary);line-height:1.6;margin-bottom:14px}
+    .cta-card-link{font-family:var(--font-mono);font-size:12px;color:var(--green);text-decoration:none;transition:opacity .15s}
+    .cta-card-link:hover{opacity:.8}
+    .cta-card-link.install-cmd{display:block;background:var(--bg-surface);padding:8px 14px;border-radius:6px;margin-top:10px;cursor:pointer;border:1px solid var(--border)}
+    .cta-card-link.install-cmd:hover{border-color:var(--green)}
+    .share-row{display:flex;gap:10px;flex-wrap:wrap}
+    .share-btn{font-family:var(--font-mono);font-size:11px;padding:8px 16px;border-radius:6px;text-decoration:none;border:1px solid var(--border);color:var(--text-secondary);background:var(--bg);transition:all .15s;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+    .share-btn:hover{border-color:var(--text-muted);color:var(--text-primary)}
+    .cta-divider{height:1px;background:var(--border);margin:20px 0}
+
     .scanner-footer{padding:16px 24px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-align:center}
     .scanner-footer a{color:var(--green);text-decoration:none}
 
@@ -210,6 +235,34 @@
         <div class="results" id="results">
           <div class="results-scorecard" id="scorecard"></div>
           <div class="results-findings" id="findings"></div>
+        </div>
+        <!-- POST-SCAN CTA PANEL -->
+        <div class="post-scan-cta" id="postScanCta">
+          <div class="cta-panel">
+            <div class="cta-panel-row">
+              <div class="cta-card">
+                <div class="cta-card-icon">⌨</div>
+                <div class="cta-card-title">Go deeper with the full CLI</div>
+                <div class="cta-card-desc">The web scanner catches common patterns. The full skill runs framework-specific detection, deeper analysis, and generates fix-ready output.</div>
+                <div class="cta-card-link install-cmd" onclick="navigator.clipboard.writeText('claude install a-vibe-check');this.textContent='Copied!';setTimeout(()=>{this.textContent='$ claude install a-vibe-check'},1500)">$ claude install a-vibe-check</div>
+              </div>
+              <div class="cta-card">
+                <div class="cta-card-icon">📡</div>
+                <div class="cta-card-title">AI builds fast. Learn what it misses.</div>
+                <div class="cta-card-desc">Practical guides on using AI in business without shipping security holes or burning trust.</div>
+                <a class="cta-card-link" href="https://substack.com/@joshhorneman" target="_blank">Read on Substack →</a><br>
+                <a class="cta-card-link" href="https://howll.ai" target="_blank" style="margin-top:6px;display:inline-block">howll.ai — AI for business →</a><br>
+                <a class="cta-card-link" href="https://joshhorneman.com" target="_blank" style="margin-top:6px;display:inline-block">joshhorneman.com →</a>
+              </div>
+            </div>
+            <div class="cta-divider"></div>
+            <div style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);margin-bottom:12px">Share your score</div>
+            <div class="share-row" id="shareRow">
+              <a class="share-btn" id="shareTwitter" target="_blank">𝕏 Post</a>
+              <a class="share-btn" id="shareLinkedIn" target="_blank">in LinkedIn</a>
+              <button class="share-btn" id="shareCopy">📋 Copy scorecard</button>
+            </div>
+          </div>
         </div>
         <div class="scanner-footer">Public repos only · Runs entirely in your browser · No code is stored or transmitted · <a href="https://github.com/namenroh/a-vibe-check" target="_blank">Full CLI tool on GitHub</a></div>
       </div>
@@ -741,6 +794,7 @@ function displayResults(results) {
   let html = '';
   const sorted = [...failed].sort((a,b) => b.weight - a.weight);
   for (const f of sorted) {
+    const fixId = `fix-${f.id}`;
     html += `<div class="finding">
       <div class="finding-head">
         <span class="finding-sev ${f.severity}">${f.severity}</span>
@@ -748,13 +802,30 @@ function displayResults(results) {
       </div>
       ${f.detail ? `<div class="finding-detail">${f.detail}</div>` : ''}
       ${f.matchedFiles.length ? `<div class="finding-file">${f.matchedFiles.slice(0,5).join(' · ')}</div>` : ''}
-      <div class="finding-detail" style="margin-top:6px;color:var(--green)">${f.fix}</div>
+      <div class="finding-fix-toggle" onclick="document.getElementById('${fixId}').classList.toggle('open');this.textContent=this.textContent.includes('▸')?'▾ Hide fix':'▸ How to fix'">▸ How to fix</div>
+      <div class="finding-fix-body" id="${fixId}">${f.fix}</div>
     </div>`;
   }
   if (sorted.length === 0) html = '<div style="padding:20px;text-align:center;color:var(--green);font-family:var(--font-mono);font-size:13px">No vulnerabilities detected. Nice work.</div>';
 
   document.getElementById('findings').innerHTML = html;
   document.getElementById('results').classList.add('active');
+
+  // Show post-scan CTA panel
+  document.getElementById('postScanCta').classList.add('active');
+
+  // Wire share buttons
+  const shareText = `Just ran A Vibe Check on my repo — scored ${score}/100 (Grade ${grade}). ${failed.length} issues found. Free scanner: https://a-vibe-check.vercel.app`;
+  document.getElementById('shareTwitter').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+  document.getElementById('shareLinkedIn').href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://a-vibe-check.vercel.app')}&summary=${encodeURIComponent(shareText)}`;
+  document.getElementById('shareCopy').onclick = () => {
+    const plain = document.getElementById('scorecard').innerText;
+    navigator.clipboard.writeText(plain + '\n\nRun yours: https://a-vibe-check.vercel.app');
+    const btn = document.getElementById('shareCopy');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = '📋 Copy scorecard'; }, 1500);
+  };
+
   setStatus(`Scan complete — Score: ${score}/100 (Grade ${grade})`);
   log(`\n› scan complete: ${score}/100 · grade ${grade} · ${failed.length} issues found`, gradeColor === 'red' ? 'fail' : 'ok');
 }
