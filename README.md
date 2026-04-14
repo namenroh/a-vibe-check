@@ -1,8 +1,11 @@
-# A Vibe Check — Security Audit for AI-Built Apps
+# A Vibe Check — Security Audit + Expert Marketplace for AI-Built Apps
 
 **[avibecheck.xyz](https://avibecheck.xyz) — Try the live scanner**
 
-Automated security scanning that catches the dumb stuff developers leave behind. Run it when you deploy. Get a score. Fix the holes.
+Two things in one project:
+
+1. **Free scanner** — automated security audit that catches the dumb stuff AI code generators leave behind. Run it when you deploy. Get a score. Fix the holes.
+2. **Expert marketplace** — when the scanner finds something you can't fix, or you hit a wall AI can't navigate, get matched with a vetted human who can. Security auditors, scaling specialists, frontend engineers, backend engineers, designers, and growth/launch specialists.
 
 ## What It Catches
 
@@ -152,11 +155,49 @@ RECOMMENDATIONS:
 4. Implement server-side authorization checks
 ```
 
+## The Marketplace
+
+AI gets you 80% of the way. Then it loops, burns tokens, or ships you something you don't trust. The scanner finds the wall. A human gets you over it.
+
+**Six expert categories, all vetted:**
+
+| Category | What they help with | Typical rate |
+| --- | --- | --- |
+| Security & Compliance | Real audits, pen-tests, RLS/auth, GDPR/SOC 2/PCI mapping | $150–400 / hr |
+| Architecture & Scaling | Database design, caching, queues, infra cost, performance | $120–300 / hr |
+| Frontend & UX Engineering | Accessibility, performance, state, animation, device coverage | $90–200 / hr |
+| Backend & Integrations | API design, Stripe, webhooks, auth, background jobs | $90–250 / hr |
+| Design & UX | UX audits, design systems, conversion UI, brand, landing | $80–200 / hr |
+| Product, Growth & Launch | Positioning, launch, pricing, content, SEO | $70–200 / hr |
+
+### How it works
+
+1. **Scan or describe.** Run A Vibe Check on your repo — or just tell us where you're stuck. Your scan results pre-fill the brief automatically.
+2. **We match, not list.** No endless profiles. We hand-pick 1–3 specialists who've solved your exact problem, with a fixed-scope quote up front.
+3. **Ship with confidence.** Work together in whatever fits — Claude Code, GitHub, Slack, a call. Pay on milestones. You own the code.
+
+### Scan-aware matching
+
+When the web scanner runs, the post-scan panel recommends a specialist based on your failed checks:
+
+- Mostly auth / secrets / injection failures → matched with a **security specialist**
+- Mostly infra / ops / monitoring failures → matched with an **architecture & scaling specialist**
+- Mostly transport / headers / frontend failures → matched with a **frontend engineer**
+- Mostly error handling / file / integration failures → matched with a **backend engineer**
+- Clean score (80+) → matched for **design / growth / launch** if you want to level up
+
+### Applying as an expert
+
+Click "Apply to the pool" on the site. We review weekly, vet for quality (not quantity), and pair you with paying projects from vibe coders who've already scanned their repo and know where they're stuck. Set your own rate, pick the work you want.
+
 ## Contributing
 
 Found a check we're missing? Have a false positive? Open an issue or PR.
 
-We're looking for new checks that catch real problems in AI-generated code. Security theater doesn't help.
+We're looking for:
+- **Scanner checks** that catch real problems in AI-generated code (security theater doesn't help)
+- **Expert applicants** across all six marketplace categories
+- **Vibe coders** who want to shape the marketplace MVP — request a match or give us feedback on what's missing
 
 ## License
 
