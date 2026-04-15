@@ -202,6 +202,17 @@
     .hero-cta-link:hover{opacity:.75}
 
     /* MARKETPLACE */
+    /* Primary CTA — the paid review call. Sits above the marketplace-hero row
+       so it's the headline action; the two-card row below is alternative paths. */
+    .book-review-hero{background:linear-gradient(135deg,rgba(52,211,153,0.12) 0%,rgba(96,165,250,0.07) 100%);border:1px solid rgba(52,211,153,0.28);border-radius:14px;padding:36px 32px;text-align:center;margin-bottom:20px}
+    .book-review-tag{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:10px}
+    .book-review-title{font-size:clamp(22px,3.2vw,30px);font-weight:600;letter-spacing:-0.02em;color:var(--text-primary);margin-bottom:12px;line-height:1.25}
+    .book-review-desc{font-size:15px;color:var(--text-secondary);max-width:560px;margin:0 auto 18px;line-height:1.6}
+    .book-review-meta{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
+    .book-review-chip{font-family:var(--font-mono);font-size:11px;padding:5px 12px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--text-secondary)}
+    .book-review-btn{font-family:var(--font-mono);font-size:14px;font-weight:500;background:var(--green);color:var(--bg);padding:14px 28px;border-radius:8px;border:none;cursor:pointer;transition:opacity .15s}
+    .book-review-btn:hover{opacity:.88}
+
     .marketplace-hero{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:40px}
     @media(max-width:720px){.marketplace-hero{grid-template-columns:1fr}}
     .mkt-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:14px;padding:28px;transition:border-color .15s}
@@ -224,8 +235,7 @@
     .expert-cat-icon{font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--accent);background:var(--accent-glow);width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px}
     .expert-cat-name{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--text-primary)}
     .expert-cat-desc{font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px;flex:1}
-    .expert-cat-meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-bottom:14px;padding-top:12px;border-top:1px solid var(--border)}
-    .expert-cat-meta .rate{color:var(--green)}
+    .expert-cat-meta{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-bottom:14px;padding-top:12px;border-top:1px solid var(--border)}
     .expert-cat-btn{font-family:var(--font-mono);font-size:11px;color:var(--green);background:var(--green-dim);padding:8px 14px;border-radius:6px;border:1px solid rgba(52,211,153,0.15);cursor:pointer;text-align:center;transition:all .15s}
     .expert-cat-btn:hover{background:rgba(52,211,153,0.18);border-color:rgba(52,211,153,0.3)}
 
@@ -331,9 +341,7 @@
     .arch-card-cat{font-family:var(--font-mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--accent)}
     .arch-card-skills{display:flex;flex-wrap:wrap;gap:4px}
     .arch-skill{font-family:var(--font-mono);font-size:10px;background:var(--bg);color:var(--text-secondary);padding:3px 8px;border-radius:4px;border:1px solid var(--border)}
-    .arch-card-meta{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);padding-top:8px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-    .arch-card-meta .rate{color:var(--green)}
-    .arch-card-actions{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+    .arch-card-actions{display:flex;flex-direction:column;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
     .arch-btn-claim{font-family:var(--font-mono);font-size:11px;color:var(--bg);background:var(--yellow);padding:9px 12px;border-radius:6px;border:none;cursor:pointer;transition:opacity .15s;text-align:center}
     .arch-btn-claim:hover{opacity:.88}
     .arch-btn-request{font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);background:transparent;padding:8px 12px;border-radius:6px;border:1px solid var(--border);cursor:pointer;transition:all .15s;text-align:center}
@@ -354,18 +362,13 @@
     .optional-details>summary .label-hint{color:var(--text-muted);font-weight:400;margin-left:2px}
     .optional-fields{padding-top:12px}
 
-    /* TRIAGE OPTION IN REQUEST MODAL */
-    .triage-card{background:linear-gradient(135deg,rgba(52,211,153,0.08) 0%,rgba(96,165,250,0.06) 100%);border:1px solid rgba(52,211,153,0.22);border-radius:10px;padding:14px 16px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:border-color .15s}
-    .triage-card:hover{border-color:rgba(52,211,153,0.45)}
-    .triage-card:focus-within{border-color:rgba(52,211,153,0.6);box-shadow:0 0 0 2px rgba(52,211,153,0.25)}
-    /* Visually hide the real checkbox but keep it accessible to keyboard + screen readers */
-    .triage-input{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-    .triage-check{width:18px;height:18px;border:1.5px solid var(--text-muted);border-radius:4px;flex-shrink:0;margin-top:2px;position:relative;transition:all .15s}
-    .triage-input:checked ~ .triage-check{background:var(--green);border-color:var(--green)}
-    .triage-input:checked ~ .triage-check::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--bg);font-size:12px;font-weight:700;line-height:1}
-    .triage-body{flex:1}
-    .triage-title{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:4px}
-    .triage-desc{font-size:12px;color:var(--text-secondary);line-height:1.6}
+    /* BOOKING NUDGE — prefer the review call over the async request form */
+    .booking-nudge{background:linear-gradient(135deg,rgba(52,211,153,0.08) 0%,rgba(96,165,250,0.06) 100%);border:1px solid rgba(52,211,153,0.22);border-radius:10px;padding:14px 16px;margin-bottom:20px}
+    .booking-nudge-title{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:4px}
+    .booking-nudge-desc{font-size:12px;color:var(--text-secondary);line-height:1.6}
+    .booking-nudge-desc strong{color:var(--text-primary)}
+    .booking-nudge-desc a{color:var(--green);text-decoration:none;white-space:nowrap}
+    .booking-nudge-desc a:hover{text-decoration:underline}
 
     /* Tablet / mobile nav — collapse text links behind hamburger, keep CTA visible */
     @media(max-width:760px){
@@ -390,6 +393,8 @@
       .pilot-banner{padding:14px 16px;gap:12px}
       .pilot-banner-left{flex-direction:column;align-items:flex-start;gap:10px}
       .pilot-btn{width:100%;text-align:center}
+      .book-review-hero{padding:26px 18px}
+      .book-review-btn{width:100%;padding:13px 20px}
       .trust-row{gap:6px}
       .trust-chip{font-size:10px;padding:5px 10px}
       .journey{padding:22px 0}
@@ -413,7 +418,7 @@
           <a href="#scoring" onclick="closeNav()">scoring</a>
           <a href="#install" onclick="closeNav()">install</a>
         </div>
-        <button type="button" class="nav-cta" onclick="closeNav();openModal('requestModal')">Get help →</button>
+        <button type="button" class="nav-cta" onclick="closeNav();openBooking()">Book a review →</button>
         <button class="nav-toggle" id="navToggle" onclick="toggleNav()" aria-label="Menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
@@ -426,12 +431,12 @@
   <!-- HERO -->
   <div class="hero">
     <div class="container">
-      <div class="hero-badge">v2.1 — scanner + expert marketplace</div>
+      <div class="hero-badge">v2.2 — scanner + review call</div>
       <h1>Scan your vibe-coded app.<br><span class="dim">Then get a human to</span> <span class="accent">finish it.</span></h1>
-      <p class="hero-sub">30-point security scan in seconds. Hit a wall? Get matched with a vetted specialist — security, scaling, design, launch.</p>
+      <p class="hero-sub">30-point security scan in seconds. Hit a wall? Book a 30-min review with a senior engineer — free during beta — and walk away with a build plan.</p>
       <div class="hero-ctas">
         <button type="button" class="hero-cta-link" onclick="document.getElementById('repoInput').focus()">› Run the free scan</button>
-        <a href="#marketplace" class="hero-cta-link">› Browse experts</a>
+        <button type="button" class="hero-cta-link" onclick="openBooking()">› Book a 30-min review</button>
       </div>
     </div>
   </div>
@@ -460,7 +465,7 @@
                 <span class="suggested-expert-title" id="suggestedExpertTitle">Get human help</span>
               </div>
               <div class="suggested-expert-desc" id="suggestedExpertDesc">Your scan surfaced issues a specialist can close out for you.</div>
-              <button class="suggested-expert-btn" onclick="requestFromScan()">Match me with a specialist →</button>
+              <button class="suggested-expert-btn" onclick="bookFromScan()">Book a 30-min review →</button>
             </div>
             <div class="cta-panel-row">
               <div class="cta-card">
@@ -596,7 +601,7 @@
           <div class="wall-card-story">Three weeks in, the monthly plan is gone and the fix is <em>further away than when you started</em>. You need a direction, not more tokens.</div>
           <div class="wall-card-action">
             <div class="wall-card-action-label">What helps</div>
-            <button class="wall-card-btn" onclick="openTriageRequest()">Free 15-min triage call →</button>
+            <button class="wall-card-btn" onclick="openBooking()">Book a 30-min review →</button>
           </div>
         </div>
         <div class="wall-card">
@@ -627,17 +632,29 @@
         <button class="pilot-btn" onclick="openModal('applyModal')">Apply as founding expert →</button>
       </div>
 
+      <div class="book-review-hero">
+        <div class="book-review-tag">// start here</div>
+        <h3 class="book-review-title">Book a 30-min vibe-check review.</h3>
+        <p class="book-review-desc">A senior engineer walks your repo with you. Finds the gaps AI missed. You leave with a short written build plan — and a clear view of what to ship, fix, or rebuild next.</p>
+        <div class="book-review-meta">
+          <span class="book-review-chip">Free during beta</span>
+          <span class="book-review-chip">~30 min</span>
+          <span class="book-review-chip">No card required</span>
+        </div>
+        <button class="book-review-btn" onclick="openBooking()">Book a review →</button>
+      </div>
+
       <div class="marketplace-hero">
         <div class="mkt-card">
-          <div class="mkt-card-tag for-you">For vibe coders</div>
-          <div class="mkt-card-title">Stuck? Get matched with someone who's been there.</div>
-          <div class="mkt-card-desc">Tell us the problem, your budget, your timeline. We match you with 1–3 vetted specialists within 48 hours. Fixed-scope quote before any work starts.</div>
-          <button class="mkt-btn primary" onclick="openModal('requestModal')">Request an expert →</button>
+          <div class="mkt-card-tag for-you">Prefer async?</div>
+          <div class="mkt-card-title">Request a specialist match.</div>
+          <div class="mkt-card-desc">Tell us the problem. We hand-pick 1–3 specialists within 48 hours with a fixed-scope quote before any work starts.</div>
+          <button class="mkt-btn secondary" onclick="openModal('requestModal')">Request a match →</button>
         </div>
         <div class="mkt-card">
           <div class="mkt-card-tag for-experts">For experts</div>
           <div class="mkt-card-title">Developers, designers, strategists — join the pool.</div>
-          <div class="mkt-card-desc">Get paired with paying projects from vibe coders who've already run the scan and know where they're stuck. Set your own rate. Pick the work you want.</div>
+          <div class="mkt-card-desc">Get paired with paying projects from vibe coders who've already scanned their repo and know where they're stuck. Pick the work you want.</div>
           <button class="mkt-btn secondary" onclick="openModal('applyModal')">Apply to the pool →</button>
         </div>
       </div>
@@ -647,37 +664,37 @@
         <div class="expert-cat">
           <div class="expert-cat-head"><span class="expert-cat-icon">🔒</span><span class="expert-cat-name">Security & Compliance</span></div>
           <div class="expert-cat-desc">Real audits, penetration tests, secure-by-design reviews. GDPR, SOC 2, PCI DSS, Privacy Act mapping. Fix the issues A Vibe Check found.</div>
-          <div class="expert-cat-meta"><span>pen-test · audit · RLS · auth</span><span class="rate">$150–400 / hr</span></div>
+          <div class="expert-cat-meta">pen-test · audit · RLS · auth</div>
           <button class="expert-cat-btn" onclick="requestForCategory('Security & Compliance')">Request a specialist</button>
         </div>
         <div class="expert-cat">
           <div class="expert-cat-head"><span class="expert-cat-icon">📈</span><span class="expert-cat-name">Architecture & Scaling</span></div>
           <div class="expert-cat-desc">Your app works at 10 users. Will it work at 10,000? Database design, query optimisation, caching, infra cost reduction, queue design.</div>
-          <div class="expert-cat-meta"><span>postgres · redis · k8s · edge</span><span class="rate">$120–300 / hr</span></div>
+          <div class="expert-cat-meta">postgres · redis · k8s · edge</div>
           <button class="expert-cat-btn" onclick="requestForCategory('Architecture & Scaling')">Request a specialist</button>
         </div>
         <div class="expert-cat">
           <div class="expert-cat-head"><span class="expert-cat-icon">🎛</span><span class="expert-cat-name">Frontend & UX Engineering</span></div>
           <div class="expert-cat-desc">Accessibility, performance, state management, animation. Make it feel fast, feel right, and work for every user on every device.</div>
-          <div class="expert-cat-meta"><span>react · next · svelte · a11y</span><span class="rate">$90–200 / hr</span></div>
+          <div class="expert-cat-meta">react · next · svelte · a11y</div>
           <button class="expert-cat-btn" onclick="requestForCategory('Frontend & UX Engineering')">Request a specialist</button>
         </div>
         <div class="expert-cat">
           <div class="expert-cat-head"><span class="expert-cat-icon">⚙</span><span class="expert-cat-name">Backend & Integrations</span></div>
           <div class="expert-cat-desc">API design, Stripe flows, webhook hardening, auth, third-party integrations, background jobs. The plumbing your AI glossed over.</div>
-          <div class="expert-cat-meta"><span>node · python · stripe · oauth</span><span class="rate">$90–250 / hr</span></div>
+          <div class="expert-cat-meta">node · python · stripe · oauth</div>
           <button class="expert-cat-btn" onclick="requestForCategory('Backend & Integrations')">Request a specialist</button>
         </div>
         <div class="expert-cat">
           <div class="expert-cat-head"><span class="expert-cat-icon">🎨</span><span class="expert-cat-name">Design & UX</span></div>
           <div class="expert-cat-desc">UX audits, design systems, conversion-focused UI, brand and landing pages. Stop shipping Cursor-default-grey. Ship something people want to use.</div>
-          <div class="expert-cat-meta"><span>figma · ux · conversion · brand</span><span class="rate">$80–200 / hr</span></div>
+          <div class="expert-cat-meta">figma · ux · conversion · brand</div>
           <button class="expert-cat-btn" onclick="requestForCategory('Design & UX')">Request a specialist</button>
         </div>
         <div class="expert-cat">
           <div class="expert-cat-head"><span class="expert-cat-icon">🚀</span><span class="expert-cat-name">Product, Growth & Launch</span></div>
           <div class="expert-cat-desc">Positioning, landing pages, launch strategy, pricing, content, SEO. Turn your working prototype into something people find, trust, and pay for.</div>
-          <div class="expert-cat-meta"><span>positioning · launch · seo · copy</span><span class="rate">$70–200 / hr</span></div>
+          <div class="expert-cat-meta">positioning · launch · seo · copy</div>
           <button class="expert-cat-btn" onclick="requestForCategory('Product, Growth & Launch')">Request a specialist</button>
         </div>
       </div>
@@ -719,7 +736,8 @@
       </div>
 
       <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <button class="mkt-btn primary" onclick="openModal('requestModal')">Request an expert</button>
+        <button class="mkt-btn primary" onclick="openBooking()">Book a 30-min review</button>
+        <button class="mkt-btn secondary" onclick="openModal('requestModal')">Request a match instead</button>
         <button class="mkt-btn secondary" onclick="openModal('applyModal')">Apply as an expert</button>
       </div>
     </div>
@@ -746,9 +764,12 @@
   <!-- CTA -->
   <section class="cta-section">
     <div class="container">
-      <h2 class="section-heading">The scan takes five minutes.<br>The only reason not to run it<br>is if you'd rather not know.</h2>
-      <p class="section-sub">Free forever. MIT-licensed. No upsell.</p>
-      <button type="button" class="btn-primary" onclick="document.getElementById('repoInput').focus();window.scrollTo({top:0,behavior:'smooth'})">Scan your repo now ↑</button>
+      <h2 class="section-heading">The scan takes five minutes.<br>The review takes thirty.<br><span class="dim">Both are free.</span></h2>
+      <p class="section-sub">Run the scan. If you're stuck, book the call. Walk away with a plan.</p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <button type="button" class="btn-primary" onclick="openBooking()">Book a 30-min review</button>
+        <button type="button" class="btn-primary" style="background:transparent;color:var(--text-primary);border:1px solid var(--border-light)" onclick="document.getElementById('repoInput').focus();window.scrollTo({top:0,behavior:'smooth'})">Or scan your repo ↑</button>
+      </div>
     </div>
   </section>
 
@@ -777,14 +798,10 @@
       </div>
       <div class="modal-body">
         <div class="modal-context" id="requestContext" style="display:none"></div>
-        <label class="triage-card" for="triageCheckbox">
-          <input type="checkbox" id="triageCheckbox" class="triage-input">
-          <span class="triage-check" aria-hidden="true"></span>
-          <span class="triage-body">
-            <span class="triage-title">Start with a free 15-min triage call</span>
-            <span class="triage-desc">Not sure what you need? Burned through tokens with nothing to show? We'll figure out the shape of the problem together — no card required.</span>
-          </span>
-        </label>
+        <div class="booking-nudge">
+          <div class="booking-nudge-title">Would a quick call be faster?</div>
+          <div class="booking-nudge-desc">Most requests start with a <strong>30-min vibe-check review</strong> — a senior engineer walks your repo, finds the gaps, and gives you a build plan. <a href="#" onclick="closeModal('requestModal');openBooking();return false">Book one →</a></div>
+        </div>
         <form id="requestForm" onsubmit="submitRequest(event)">
           <div class="form-row split">
             <div>
@@ -1434,6 +1451,32 @@ const FORMSPREE_ENDPOINT = ''; // e.g. 'https://formspree.io/f/xxxxxxxx'
 // Fallback inbox for mailto: submissions when FORMSPREE_ENDPOINT isn't set.
 const MARKETPLACE_INBOX = 'hello@howll.ai';
 
+// Calendar booking URL for the paid vibe-check review call (the primary CTA).
+// Empty → openBooking() falls back to the request modal so the site still works
+// before the calendar is wired up. Paste the Cal.com / Calendly / Savvycal URL.
+const CALENDAR_URL = ''; // e.g. 'https://cal.com/howll/vibe-check-review'
+
+// Open the calendar in a new tab if configured; otherwise open the request modal
+// as a graceful fallback. Called from every "Book a review" button on the page.
+function openBooking() {
+  if (CALENDAR_URL) {
+    window.open(CALENDAR_URL, '_blank', 'noopener,noreferrer');
+    return;
+  }
+  openModal('requestModal');
+}
+
+// Same as openBooking() but for the post-scan button: when we have scan context
+// and no calendar URL, fall back to the request modal pre-filled with scan data
+// rather than an empty form, so the lead isn't lost.
+function bookFromScan() {
+  if (CALENDAR_URL) {
+    window.open(CALENDAR_URL, '_blank', 'noopener,noreferrer');
+    return;
+  }
+  requestFromScan();
+}
+
 // Last scan context — populated by displayResults(), read by the "match me" flow.
 window.lastScanContext = null;
 
@@ -1450,28 +1493,28 @@ const CAT_TO_EXPERT = {
 const EXPERT_COPY = {
   'Security & Compliance': {
     icon:'🔒',
-    title:(n)=>`Match me with a security specialist — ${n} ${n===1?'issue':'issues'} to close`,
-    desc:(n,critHigh)=>`Your scan flagged ${critHigh} critical/high security ${critHigh===1?'issue':'issues'}. A vetted security specialist will walk the repo, explain each finding in context, and ship the fixes with you.`,
+    title:(n)=>`Book a 30-min review — ${n} ${n===1?'issue':'issues'} to close`,
+    desc:(n,critHigh)=>`Your scan flagged ${critHigh} critical/high security ${critHigh===1?'issue':'issues'}. On the call, a senior engineer walks each finding with you, explains the fix, and gives you a prioritised build plan. Free during beta.`,
   },
   'Architecture & Scaling': {
     icon:'📈',
-    title:()=>`Match me with a scaling & infra specialist`,
-    desc:()=>`Your scan surfaced infrastructure and ops gaps. A scaling specialist can fix the config, add monitoring, and pressure-test the app before your next user spike.`,
+    title:()=>`Book a 30-min review — scaling & infra gaps`,
+    desc:()=>`Your scan surfaced infrastructure and ops gaps. On the call, we'll go through the config, talk through what to fix first, and pressure-test the architecture before your next user spike. Free during beta.`,
   },
   'Frontend & UX Engineering': {
     icon:'🎛',
-    title:()=>`Match me with a frontend engineer`,
-    desc:()=>`Your scan flagged transport/header and frontend issues. A frontend specialist can harden the browser side and audit UX at the same time.`,
+    title:()=>`Book a 30-min review — frontend & transport`,
+    desc:()=>`Your scan flagged transport/header and frontend issues. On the call, a senior engineer walks the browser-side risks and gives you a plan to harden it without breaking UX. Free during beta.`,
   },
   'Backend & Integrations': {
     icon:'⚙',
-    title:()=>`Match me with a backend engineer`,
-    desc:()=>`Your scan flagged backend gaps — error handling, file uploads, integrations. A backend specialist can close these out cleanly.`,
+    title:()=>`Book a 30-min review — backend gaps`,
+    desc:()=>`Your scan flagged backend gaps — error handling, file uploads, integrations. On the call, a senior engineer walks each issue with you and helps you scope the fix. Free during beta.`,
   },
   'General': {
     icon:'🧑‍💻',
-    title:(s)=>s>=80?`Looking to scale, launch, or polish?`:`Get human help to close the gaps`,
-    desc:(s)=>s>=80?`Your scan came back clean. Most vibe coders who hit this level next want help with scaling, design polish, or go-to-market. Tell us what's next — we'll match you.`:`Tell us where you're stuck. We'll hand-pick 1–3 specialists who've solved the same problem before.`,
+    title:(s)=>s>=80?`Book a 30-min review — what's next?`:`Book a 30-min review`,
+    desc:(s)=>s>=80?`Your scan came back clean. Most vibe coders at this level want help planning what's next — scaling, design polish, or go-to-market. Book a call and we'll map it out together. Free during beta.`:`Tell us where you're stuck — on a 30-min call, a senior engineer walks your repo with you and helps you plan the next steps. Free during beta.`,
   },
 };
 
@@ -1524,13 +1567,8 @@ function _getFocusable(container) {
 function openModal(id) {
   const m = document.getElementById(id);
   if (!m) return;
-  // Reset per-open state: clear any prior success/error banner, uncheck the
-  // triage control on the request modal, and cache the primary button label so
-  // the "Sending…" state can restore it later.
-  if (id === 'requestModal') {
-    const cb = document.getElementById('triageCheckbox');
-    if (cb) cb.checked = false;
-  }
+  // Reset per-open state: clear any prior success/error banner and cache the
+  // primary button label so the "Sending…" state can restore it later.
   setModalState(id, null);
   const primary = m.querySelector('.modal-foot .mkt-btn.primary');
   if (primary && !primary.dataset.label) primary.dataset.label = primary.textContent;
@@ -1691,7 +1729,6 @@ async function submitRequest(e) {
   const category = document.getElementById('reqCategory').value;
   const budget = document.getElementById('reqBudget').value;
   const timeline = document.getElementById('reqTimeline').value;
-  const triage = document.getElementById('triageCheckbox')?.checked || false;
 
   if (!name || !email || !problem) {
     setModalState('requestModal', 'error', 'Please fill in your name, email, and what you need help with. Everything else is optional.');
@@ -1701,13 +1738,12 @@ async function submitRequest(e) {
   const ctx = window.lastScanContext;
   const payload = {
     _form: 'request',
-    _subject: `[a-vibe-check] Request expert${category ? ' — ' + category : ''}${triage ? ' (triage call)' : ''}`,
+    _subject: `[a-vibe-check] Request expert${category ? ' — ' + category : ''}`,
     name, email, problem,
     project: project || undefined,
     category: category || undefined,
     budget: budget || undefined,
     timeline: timeline || undefined,
-    triageCall: triage || undefined,
     scanContext: ctx ? {
       repo: ctx.repoUrl, score: ctx.score, grade: ctx.grade,
       failed: ctx.failedCount, criticalHigh: ctx.critHighCount,
@@ -1720,10 +1756,7 @@ async function submitRequest(e) {
   setSubmitting('requestModal', false);
 
   if (sent) {
-    setModalState('requestModal', 'success', triage
-      ? 'Request received. We\'ll book your free 15-min triage call within 24 hours.'
-      : 'Request received. We\'ll email you a shortlist within 48 hours.');
-    // Clear form after a short beat
+    setModalState('requestModal', 'success', 'Request received. We\'ll email you a shortlist within 48 hours.');
     setTimeout(() => document.getElementById('requestForm')?.reset(), 100);
     return;
   }
@@ -1736,7 +1769,6 @@ async function submitRequest(e) {
     category ? `Category: ${category}` : '',
     budget ? `Budget: ${budget}` : '',
     timeline ? `Timeline: ${timeline}` : '',
-    triage ? 'Free 15-min triage call requested: YES' : '',
     '',
     'Problem:',
     problem,
@@ -1816,40 +1848,18 @@ async function submitApply(e) {
   window.claimingSlot = null;
 }
 
-// Open the request modal with the triage checkbox pre-checked and "Not sure"
-// pre-selected as the category. Called from the "You blew the token budget"
-// wall scenario.
-function openTriageRequest() {
-  openModal('requestModal');
-  const cb = document.getElementById('triageCheckbox');
-  if (cb) cb.checked = true;
-  // Also pre-select "Not sure" in the category dropdown
-  const sel = document.getElementById('reqCategory');
-  if (sel) {
-    for (const o of sel.options) {
-      if (o.value && o.value.indexOf('Not sure') === 0) { sel.value = o.value; break; }
-    }
-  }
-  const budget = document.getElementById('reqBudget');
-  if (budget) {
-    for (const o of budget.options) {
-      if (o.value && o.value.indexOf('Unsure') === 0) { budget.value = o.value; break; }
-    }
-  }
-}
-
 // ─── ARCHETYPE DIRECTORY ───
 // Illustrative archetypes (no real names) — founding slots open. Flip `available: true`
 // once a real expert has claimed and been vetted into the pilot cohort.
 const ARCHETYPES = [
-  { id:'sec-1',    cat:'sec',    catLabel:'Security & Compliance',      title:'Senior Security Engineer',   years:'10+ yrs', rate:'$180/hr', skills:['OWASP','pen-test','RLS','SOC 2'], available:false, claimed:false },
-  { id:'sec-2',    cat:'sec',    catLabel:'Security & Compliance',      title:'Compliance Lead',            years:'8 yrs',   rate:'$220/hr', skills:['GDPR','Privacy Act','audits','policy'], available:false, claimed:false },
-  { id:'scale-1',  cat:'scale',  catLabel:'Architecture & Scaling',     title:'Staff Backend Engineer',     years:'12 yrs',  rate:'$240/hr', skills:['Postgres','Redis','k8s','queues'], available:false, claimed:false },
-  { id:'scale-2',  cat:'scale',  catLabel:'Architecture & Scaling',     title:'DevOps / SRE',               years:'7 yrs',   rate:'$160/hr', skills:['AWS','CI/CD','monitoring','cost'], available:false, claimed:false },
-  { id:'fe-1',     cat:'fe',     catLabel:'Frontend & UX Engineering',  title:'Senior Frontend Engineer',   years:'8 yrs',   rate:'$140/hr', skills:['Next.js','React','a11y','perf'], available:false, claimed:false },
-  { id:'be-1',     cat:'be',     catLabel:'Backend & Integrations',     title:'Full-Stack Engineer',        years:'6 yrs',   rate:'$130/hr', skills:['Node','Python','Stripe','APIs'], available:false, claimed:false },
-  { id:'design-1', cat:'design', catLabel:'Design & UX',                title:'Senior Product Designer',    years:'9 yrs',   rate:'$150/hr', skills:['Figma','design systems','UX','conversion'], available:false, claimed:false },
-  { id:'growth-1', cat:'growth', catLabel:'Product, Growth & Launch',   title:'Product / Growth Lead',      years:'10 yrs',  rate:'$180/hr', skills:['positioning','launch','SEO','pricing'], available:false, claimed:false },
+  { id:'sec-1',    cat:'sec',    catLabel:'Security & Compliance',      title:'Senior Security Engineer',   years:'10+ yrs', skills:['OWASP','pen-test','RLS','SOC 2'], available:false, claimed:false },
+  { id:'sec-2',    cat:'sec',    catLabel:'Security & Compliance',      title:'Compliance Lead',            years:'8 yrs',   skills:['GDPR','Privacy Act','audits','policy'], available:false, claimed:false },
+  { id:'scale-1',  cat:'scale',  catLabel:'Architecture & Scaling',     title:'Staff Backend Engineer',     years:'12 yrs',  skills:['Postgres','Redis','k8s','queues'], available:false, claimed:false },
+  { id:'scale-2',  cat:'scale',  catLabel:'Architecture & Scaling',     title:'DevOps / SRE',               years:'7 yrs',   skills:['AWS','CI/CD','monitoring','cost'], available:false, claimed:false },
+  { id:'fe-1',     cat:'fe',     catLabel:'Frontend & UX Engineering',  title:'Senior Frontend Engineer',   years:'8 yrs',   skills:['Next.js','React','a11y','perf'], available:false, claimed:false },
+  { id:'be-1',     cat:'be',     catLabel:'Backend & Integrations',     title:'Full-Stack Engineer',        years:'6 yrs',   skills:['Node','Python','Stripe','APIs'], available:false, claimed:false },
+  { id:'design-1', cat:'design', catLabel:'Design & UX',                title:'Senior Product Designer',    years:'9 yrs',   skills:['Figma','design systems','UX','conversion'], available:false, claimed:false },
+  { id:'growth-1', cat:'growth', catLabel:'Product, Growth & Launch',   title:'Product / Growth Lead',      years:'10 yrs',  skills:['positioning','launch','SEO','pricing'], available:false, claimed:false },
 ];
 
 const DIR_FILTERS = [
@@ -1894,7 +1904,6 @@ function archCardHTML(a) {
     </div>
     <div class="arch-card-cat">${a.catLabel}</div>
     <div class="arch-card-skills">${skillsHTML}</div>
-    <div class="arch-card-meta"><span>typical rate</span><span class="rate">${a.rate}</span></div>
     <div class="arch-card-actions">
       ${claimBtn}
       <button class="arch-btn-request" onclick="requestArchetype('${a.id}')">Request this expertise →</button>

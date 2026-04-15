@@ -159,16 +159,16 @@ RECOMMENDATIONS:
 
 AI gets you 80% of the way. Then it loops, burns tokens, or ships you something you don't trust. The scanner finds the wall. A human gets you over it.
 
-**Six expert categories, all vetted:**
+**Six expertise areas we help with:**
 
-| Category | What they help with | Typical rate |
-| --- | --- | --- |
-| Security & Compliance | Real audits, pen-tests, RLS/auth, GDPR/SOC 2/PCI mapping | $150–400 / hr |
-| Architecture & Scaling | Database design, caching, queues, infra cost, performance | $120–300 / hr |
-| Frontend & UX Engineering | Accessibility, performance, state, animation, device coverage | $90–200 / hr |
-| Backend & Integrations | API design, Stripe, webhooks, auth, background jobs | $90–250 / hr |
-| Design & UX | UX audits, design systems, conversion UI, brand, landing | $80–200 / hr |
-| Product, Growth & Launch | Positioning, launch, pricing, content, SEO | $70–200 / hr |
+| Area | What we help with |
+| --- | --- |
+| Security & Compliance | Real audits, pen-tests, RLS/auth, GDPR/SOC 2/PCI mapping |
+| Architecture & Scaling | Database design, caching, queues, infra cost, performance |
+| Frontend & UX Engineering | Accessibility, performance, state, animation, device coverage |
+| Backend & Integrations | API design, Stripe, webhooks, auth, background jobs |
+| Design & UX | UX audits, design systems, conversion UI, brand, landing |
+| Product, Growth & Launch | Positioning, launch, pricing, content, SEO |
 
 ### How it works
 
