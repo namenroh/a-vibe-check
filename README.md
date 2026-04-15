@@ -186,9 +186,31 @@ When the web scanner runs, the post-scan panel recommends a specialist based on 
 - Mostly error handling / file / integration failures → matched with a **backend engineer**
 - Clean score (80+) → matched for **design / growth / launch** if you want to level up
 
-### Applying as an expert
+### When AI hits the wall
 
-Click "Apply to the pool" on the site. We review weekly, vet for quality (not quantity), and pair you with paying projects from vibe coders who've already scanned their repo and know where they're stuck. Set your own rate, pick the work you want.
+The marketplace exists because AI fails in specific, repeatable ways. The site calls out three we hear the most:
+
+1. **Claude's stuck in a loop.** Rewriting the same file confidently wrong. Fix: 30-min pair with a senior engineer.
+2. **You blew the token budget.** Three weeks in, no progress, monthly plan gone. Fix: free 15-min triage call.
+3. **Claude pushed you down a path.** Wrong framework, wrong architecture, three sprints deep. Fix: senior architect review.
+
+### Free 15-min triage call
+
+For vibe coders who can't afford more tokens — or don't know what they need yet — the request form has a free triage option. No card required. We'll figure out the shape of the problem together, then scope paid work from there.
+
+### Applying as an expert (pilot program)
+
+We're running a **founding cohort of 20 experts**. Each archetype has a "Claim this founding slot" CTA on the directory. Founding experts get:
+
+- 100% of earnings for year one (no platform fee)
+- Direct input on how the platform evolves
+- First pick of requests from vibe coders who've run the scan
+
+Click "Apply as founding expert" on the site, or claim a specific archetype slot in the directory. We vet weekly for quality (not quantity). Set your own rate, pick the work you want.
+
+### Operations
+
+The marketplace is operated by [howll.ai](https://howll.ai). Form submissions (both expert applications and vibe-coder requests) land in `hello@howll.ai` for matching and vetting. As supply grows we'll swap the `mailto:` MVP for a lightweight serverless endpoint — the swap is isolated to a single constant in `website/index.html` (`MARKETPLACE_INBOX`).
 
 ## Contributing
 
