@@ -15,7 +15,7 @@
   <style>
     :root {
       --bg: #141218; --bg-raised: #1c1a22; --bg-surface: #24222b; --bg-surface-hover: #2c2a34;
-      --text-primary: #e8e6ed; --text-secondary: #8b8896; --text-muted: #5c5868;
+      --text-primary: #e8e6ed; --text-secondary: #8b8896; --text-muted: #858190;
       --border: #2e2c36; --border-light: #38363f;
       --accent: #ef4444; --accent-dim: #dc2626; --accent-glow: rgba(239,68,68,0.12);
       --green: #34d399; --green-dim: rgba(52,211,153,0.12);
@@ -1816,14 +1816,9 @@ async function submitApply(e) {
   window.claimingSlot = null;
 }
 
-// ─── TRIAGE TOGGLE ───
-// Kept as a no-op shim: the triage control is now a real <input type="checkbox">
-// with its own native toggle behaviour. This function remains only to avoid
-// breaking any lingering references (e.g. from cached clients or tests).
-function toggleTriage() {
-  const cb = document.getElementById('triageCheckbox');
-  if (cb) cb.checked = !cb.checked;
-}
+// Open the request modal with the triage checkbox pre-checked and "Not sure"
+// pre-selected as the category. Called from the "You blew the token budget"
+// wall scenario.
 function openTriageRequest() {
   openModal('requestModal');
   const cb = document.getElementById('triageCheckbox');

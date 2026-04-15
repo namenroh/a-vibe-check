@@ -7,7 +7,7 @@ cd a-vibe-check-repo
 
 git init
 git add .
-git commit -m "A Vibe Check v2.0 — 30-point security audit for AI-built apps"
+git commit -m "A Vibe Check — security audit + expert marketplace for AI-built apps"
 gh repo create namenroh/a-vibe-check --public --source=. --push
 ```
 
@@ -20,7 +20,7 @@ Or if you prefer to create the repo on GitHub first:
 ```bash
 git init
 git add .
-git commit -m "A Vibe Check v2.0 — 30-point security audit for AI-built apps"
+git commit -m "A Vibe Check — security audit + expert marketplace for AI-built apps"
 git remote add origin https://github.com/namenroh/a-vibe-check.git
 git branch -M main
 git push -u origin main
