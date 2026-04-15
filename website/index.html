@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Vibe Check — Security Audit + Expert Marketplace for AI-Built Apps</title>
-  <meta name="description" content="Scan your vibe-coded app for security holes. Hit a wall? Get matched with a vetted human — security, scaling, design, launch.">
-  <meta property="og:title" content="A Vibe Check — Scan your AI-built app. Then get a human to finish it.">
-  <meta property="og:description" content="Automated security audit plus an expert marketplace for vibe coders who've hit a wall.">
+  <title>A Vibe Check — Scan your AI-built app, then book a 30-min review</title>
+  <meta name="description" content="Free 30-point security scan for AI-built apps. Hit a wall? Book a 30-min review with a senior engineer and walk away with a build plan. Free during beta.">
+  <meta property="og:title" content="A Vibe Check — Scan your AI-built app, then book a 30-min review">
+  <meta property="og:description" content="Scan in seconds. Book a review with a senior engineer. Walk away with a plan. Free during beta.">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -201,6 +201,20 @@
     .hero-cta-link{font-family:var(--font-mono);font-size:12px;color:var(--green);text-decoration:none;transition:opacity .15s;background:none;border:none;padding:0;cursor:pointer}
     .hero-cta-link:hover{opacity:.75}
 
+    /* AFTER-REVIEW PATH GRID — three-card row showing what comes after the call.
+       Path A (self-serve) vs paths B/C (scoped engagements with the team). */
+    .path-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border-radius:12px;overflow:hidden;margin-bottom:24px}
+    @media(max-width:760px){.path-grid{grid-template-columns:1fr}}
+    .path-card{background:var(--bg-raised);padding:26px 24px;display:flex;flex-direction:column;gap:10px}
+    .path-card-upsell{background:linear-gradient(180deg,var(--bg-raised) 0%,rgba(52,211,153,0.03) 100%)}
+    .path-card-num{font-family:var(--font-mono);font-size:18px;font-weight:700;color:var(--accent);letter-spacing:-.02em;opacity:.85}
+    .path-card-upsell .path-card-num{color:var(--green)}
+    .path-card-title{font-family:var(--font-mono);font-size:15px;font-weight:600;color:var(--text-primary);line-height:1.35}
+    .path-card-desc{font-size:13px;color:var(--text-secondary);line-height:1.7;flex:1}
+    .path-card-tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--text-muted);padding-top:10px;border-top:1px solid var(--border)}
+    .after-review-foot{text-align:center;padding-top:8px}
+    .after-review-foot p{font-size:14px;color:var(--text-secondary);line-height:1.7;max-width:600px;margin:0 auto 20px}
+
     /* MARKETPLACE */
     /* Primary CTA — the paid review call. Sits above the marketplace-hero row
        so it's the headline action; the two-card row below is alternative paths. */
@@ -310,6 +324,14 @@
     .wall-card-btn{font-family:var(--font-mono);font-size:12px;color:var(--green);background:var(--green-dim);padding:8px 14px;border-radius:6px;border:1px solid rgba(52,211,153,0.15);cursor:pointer;transition:all .15s;text-align:left}
     .wall-card-btn:hover{background:rgba(52,211,153,0.18);border-color:rgba(52,211,153,0.3)}
 
+    /* PILOT STRIP — slim, tail-positioned, for the expert supply side. Post-pivot
+       this is a recruiting channel, not the primary storefront message. */
+    .pilot-strip{display:flex;align-items:center;gap:14px;padding:12px 16px;margin:24px 0 20px;background:var(--bg-raised);border:1px solid var(--border);border-radius:10px;flex-wrap:wrap}
+    .pilot-strip-tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--yellow);background:var(--yellow-dim);padding:4px 10px;border-radius:20px;border:1px solid rgba(251,191,36,0.22);flex-shrink:0}
+    .pilot-strip-copy{flex:1;min-width:220px;font-size:12px;color:var(--text-secondary);line-height:1.6}
+    .pilot-strip-btn{font-family:var(--font-mono);font-size:11px;color:var(--text-primary);background:var(--bg-surface);padding:8px 14px;border-radius:6px;border:1px solid var(--border-light);cursor:pointer;transition:background .15s;white-space:nowrap}
+    .pilot-strip-btn:hover{background:var(--bg-surface-hover)}
+
     /* PILOT BANNER */
     .pilot-banner{background:linear-gradient(135deg,rgba(251,191,36,0.10) 0%,rgba(239,68,68,0.06) 100%);border:1px solid rgba(251,191,36,0.25);border-radius:12px;padding:18px 22px;margin-bottom:32px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
     .pilot-banner-left{display:flex;align-items:center;gap:14px}
@@ -342,10 +364,11 @@
     .arch-card-skills{display:flex;flex-wrap:wrap;gap:4px}
     .arch-skill{font-family:var(--font-mono);font-size:10px;background:var(--bg);color:var(--text-secondary);padding:3px 8px;border-radius:4px;border:1px solid var(--border)}
     .arch-card-actions{display:flex;flex-direction:column;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid var(--border)}
-    .arch-btn-claim{font-family:var(--font-mono);font-size:11px;color:var(--bg);background:var(--yellow);padding:9px 12px;border-radius:6px;border:none;cursor:pointer;transition:opacity .15s;text-align:center}
-    .arch-btn-claim:hover{opacity:.88}
-    .arch-btn-request{font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);background:transparent;padding:8px 12px;border-radius:6px;border:1px solid var(--border);cursor:pointer;transition:all .15s;text-align:center}
-    .arch-btn-request:hover{border-color:var(--border-light);color:var(--text-primary)}
+    .arch-btn-primary{font-family:var(--font-mono);font-size:11px;font-weight:500;color:var(--bg);background:var(--green);padding:10px 12px;border-radius:6px;border:none;cursor:pointer;transition:opacity .15s;text-align:center;width:100%}
+    .arch-btn-primary:hover{opacity:.88}
+    .arch-secondaries{display:flex;flex-direction:column;gap:4px;margin-top:6px}
+    .arch-secondary{font-family:var(--font-mono);font-size:10px;color:var(--text-muted);background:none;border:none;padding:3px 0;cursor:pointer;text-align:left;transition:color .15s}
+    .arch-secondary:hover{color:var(--text-secondary)}
 
     /* MODAL STATE BANNERS (success/error) */
     .modal-state{padding:12px 14px;border-radius:8px;margin-bottom:16px;font-family:var(--font-mono);font-size:12px;line-height:1.6}
@@ -622,15 +645,8 @@
     <div class="container">
       <div class="section-tag"><span>//</span> the marketplace</div>
       <h2 class="section-heading">The scan finds the wall.<br>A human gets you over it.</h2>
-      <p class="section-sub">AI gets you 80% of the way. Then it loops. Then it burns tokens. Then it ships you something you don't trust. A Vibe Check connects vibe coders with vetted humans who can finish the job — audits, scaling, design, launch, any of it.</p>
+      <p class="section-sub">AI gets you 80% of the way. Then it loops. Then it burns tokens. Then it ships you something you don't trust. A Vibe Check connects vibe coders with humans who can finish the job — audits, scaling, design, launch, any of it.</p>
 
-      <div class="pilot-banner">
-        <div class="pilot-banner-left">
-          <span class="pilot-badge">Pilot · founding round open</span>
-          <div class="pilot-copy">We're onboarding the first <strong>20 founding experts</strong>. Set your rate, shape the platform, keep 100% of earnings for year one.</div>
-        </div>
-        <button class="pilot-btn" onclick="openModal('applyModal')">Apply as founding expert →</button>
-      </div>
 
       <div class="book-review-hero">
         <div class="book-review-tag">// start here</div>
@@ -707,6 +723,12 @@
       <div class="dir-filter" id="dirFilter"></div>
       <div class="dir-grid" id="dirGrid"></div>
 
+      <div class="pilot-strip">
+        <span class="pilot-strip-tag">For experts</span>
+        <span class="pilot-strip-copy">Senior developer, designer, or strategist? We're onboarding founding experts to pair with vibe coders who've already scanned their repo.</span>
+        <button type="button" class="pilot-strip-btn" onclick="openModal('applyModal')">Apply to the pool →</button>
+      </div>
+
       <div class="section-tag"><span>//</span> how it works</div>
       <div class="hiw-row">
         <div class="hiw-step">
@@ -739,6 +761,39 @@
         <button class="mkt-btn primary" onclick="openBooking()">Book a 30-min review</button>
         <button class="mkt-btn secondary" onclick="openModal('requestModal')">Request a match instead</button>
         <button class="mkt-btn secondary" onclick="openModal('applyModal')">Apply as an expert</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- AFTER THE REVIEW -->
+  <section id="after-review">
+    <div class="container">
+      <div class="section-tag"><span>//</span> after the review</div>
+      <h2 class="section-heading">What happens next.</h2>
+      <p class="section-sub">The call isn't the pitch. It's the plan. Here's what usually comes after a review.</p>
+      <div class="path-grid">
+        <div class="path-card">
+          <div class="path-card-num">A</div>
+          <div class="path-card-title">You take the plan and run.</div>
+          <div class="path-card-desc">The build plan goes into your Claude Code, Cursor, or team — whoever's doing the work. You know what's broken, what to fix first, and what to ignore. No follow-on needed.</div>
+          <div class="path-card-tag">Most common</div>
+        </div>
+        <div class="path-card path-card-upsell">
+          <div class="path-card-num">B</div>
+          <div class="path-card-title">We fix the critical stuff in a week.</div>
+          <div class="path-card-desc">Some findings are too gnarly for AI to close without human eyes. We scope a fixed-price sprint — usually security hardening, auth fixes, or unblocking a stuck architecture — and ship it.</div>
+          <div class="path-card-tag">~1 week · fixed scope</div>
+        </div>
+        <div class="path-card path-card-upsell">
+          <div class="path-card-num">C</div>
+          <div class="path-card-title">We rebuild what's under the vibe.</div>
+          <div class="path-card-desc">The call makes it clear the shortest path isn't a patch. The team builds the real thing with you — clean architecture, production-grade auth, tests you can trust, the lot. Claude-friendly so you can still iterate.</div>
+          <div class="path-card-tag">multi-sprint · scoped per phase</div>
+        </div>
+      </div>
+      <div class="after-review-foot">
+        <p>Paths B and C are the upsell. Path A is the default. We'd rather tell you the plan is trivial and send you on your way than invent work.</p>
+        <button type="button" class="btn-primary" onclick="openBooking()">Book a review →</button>
       </div>
     </div>
   </section>
@@ -1178,7 +1233,7 @@ async function startScan() {
     setStatus('Running 30 security checks...');
 
     // Run checks
-    const results = runChecks(fileContents, files);
+    const results = await runChecks(fileContents, files);
     displayResults(results, owner, repo);
 
   } catch (err) {
@@ -1191,7 +1246,7 @@ async function startScan() {
   btn.textContent = 'Run A Vibe Check';
 }
 
-function runChecks(fileContents, allFiles) {
+async function runChecks(fileContents, allFiles) {
   const results = [];
   const allPaths = allFiles.map(f => f.path);
   const allContent = Object.entries(fileContents);
@@ -1199,7 +1254,13 @@ function runChecks(fileContents, allFiles) {
   const hasDockerfile = allPaths.some(p => p.match(/Dockerfile/i));
   const dockerfileContent = Object.entries(fileContents).find(([p]) => p.match(/Dockerfile/i));
 
+  let checkIdx = 0;
   for (const check of CHECKS) {
+    checkIdx++;
+    setStatus(`Running check ${checkIdx} of ${CHECKS.length} — ${check.name}`);
+    // Yield to the event loop every few checks so the status repaints and the
+    // UI doesn't look frozen on repos that pull many files.
+    if (checkIdx % 3 === 0) await new Promise(r => setTimeout(r, 0));
     let status = 'pass';
     let matchedFiles = [];
     let detail = '';
@@ -1889,11 +1950,14 @@ function setFilter(key) {
 
 function archCardHTML(a) {
   const availClass = a.claimed ? 'claimed' : (a.available ? 'available' : 'open');
-  const availLabel = a.claimed ? 'Claimed' : (a.available ? 'Available this week' : 'Slot open');
+  const availLabel = a.claimed ? 'Claimed' : (a.available ? 'Available this week' : 'Open');
   const skillsHTML = a.skills.map(s => `<span class="arch-skill">${s}</span>`).join('');
-  const claimBtn = a.claimed
-    ? `<button class="arch-btn-claim" disabled style="opacity:.5;cursor:not-allowed">Slot claimed</button>`
-    : `<button class="arch-btn-claim" onclick="claimSlot('${a.id}')">Claim this founding slot →</button>`;
+  // Post-pivot: the primary CTA is the review call (for vibe coders, who are
+  // the default audience). The secondary path (async specialist match) and the
+  // expert-supply-side CTA (claim founding slot) become small link-style links.
+  const claimLink = a.claimed
+    ? `<span class="arch-secondary" style="opacity:.5">Slot claimed</span>`
+    : `<button type="button" class="arch-secondary" onclick="claimSlot('${a.id}')">Are you a senior ${a.title.split(' ').pop().toLowerCase()}? Claim this slot →</button>`;
   return `<div class="arch-card" data-cat="${a.cat}">
     <div class="arch-card-head">
       <div>
@@ -1905,8 +1969,11 @@ function archCardHTML(a) {
     <div class="arch-card-cat">${a.catLabel}</div>
     <div class="arch-card-skills">${skillsHTML}</div>
     <div class="arch-card-actions">
-      ${claimBtn}
-      <button class="arch-btn-request" onclick="requestArchetype('${a.id}')">Request this expertise →</button>
+      <button type="button" class="arch-btn-primary" onclick="openBooking()">Book a review about this →</button>
+      <div class="arch-secondaries">
+        <button type="button" class="arch-secondary" onclick="requestArchetype('${a.id}')">Or request an async match →</button>
+        ${claimLink}
+      </div>
     </div>
   </div>`;
 }
