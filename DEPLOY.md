@@ -53,7 +53,9 @@ When prompted:
 6. Output Directory: `.`
 7. Deploy
 
-### Step 3: Connect Custom Domain
+## Step 3: Connect Custom Domain (not yet active)
+
+The custom `avibecheck.xyz` domain is not wired up yet. The live site currently serves from the Vercel subdomain (`a-vibe-check.vercel.app`). When ready to cut over:
 
 1. In Vercel dashboard → your project → Settings → Domains
 2. Add `avibecheck.xyz`
@@ -63,9 +65,10 @@ When prompted:
    - Typically: `A` record → `76.76.21.21` and `CNAME` for `www` → `cname.vercel-dns.com`
 4. SSL is automatic once DNS propagates
 
-### Step 4: Verify
+## Step 4: Verify
 
-- https://avibecheck.xyz should load the site
+- The Vercel deployment URL (currently `https://a-vibe-check.vercel.app`) should load the site
+- Once the custom domain is live, `https://avibecheck.xyz` should also resolve
 - Test the scanner with a public repo
 - Check security headers are applied (vercel.json)
 
