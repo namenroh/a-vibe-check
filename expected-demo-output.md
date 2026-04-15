@@ -3,31 +3,31 @@
 Date: 2026-04-04
 Stack: Express.js, jsonwebtoken, cors, Node.js
 Vibe Check Score: 23/100 (Grade F)
-Checks Passed: 5/30
+Checks Passed: 3/30
 Checks Failed: 15/30
-Checks N/A: 10/30
+Checks N/A: 12/30
 
 ## Scorecard
 
 ```
 VIBE CHECK SCORECARD
 ═══════════════════════════════════════════════════
-Score: 23/100  |  Grade: F  |  Passed: 5/20
+Score: 23/100  |  Grade: F  |  Passed: 3/18 applicable (12 N/A)
 
-Category                          Status
+Category                          Status (passed / total · N/A)
 ───────────────────────────────────────────────────
-A: Secrets & Credentials          [0/3]  ░░░
-B: Authentication & Sessions      [0/5]  ░░░░░
-C: Authorisation & Access Control [0/3]  ░░░
-D: Injection & Input Handling     [0/4]  ░░░░
-E: Infrastructure & Deployment    [1/5]  █░░░░
-F: Error Handling & Info Leakage  [0/1]  ░
-G: BaaS & Third-Party            [0/0]  N/A
-H: File Handling & Uploads        [0/0]  N/A
-I: Transport & Browser Security   [2/3]  ██░
-J: Operational Security           [2/2]  ██
+A: Secrets & Credentials          [0/3]        ░░░
+B: Authentication & Sessions      [0/5]        ░░░░░
+C: Authorisation & Access Control [0/3]        ░░░
+D: Injection & Input Handling     [0/4]        ░░░░
+E: Infrastructure & Deployment    [1/5] 2 N/A  █░░░░
+F: Error Handling & Info Leakage  [0/1]        ░
+G: BaaS & Third-Party             [0/3] 3 N/A  (all N/A)
+H: File Handling & Uploads        [0/1] 1 N/A  (N/A)
+I: Transport & Browser Security   [1/3] 2 N/A  █░░
+J: Operational Security           [1/2] 1 N/A  █░
 ───────────────────────────────────────────────────
-Critical issues: 7  |  High: 5  |  Medium: 3  |  Low: 0
+Critical issues: 6  |  High: 6  |  Medium: 3  |  Low: 0
 ```
 
 ## Critical (fix before shipping)
@@ -142,6 +142,10 @@ JWT is signed without an `expiresIn` option. Token is valid forever.
 File: `vulnerable-demo-app.js`, lines 95-105
 `/api/render` endpoint reflects user input directly into HTML and JavaScript. Full XSS.
 
+**Check #14 — Missing Input Validation**
+File: `vulnerable-demo-app.js`, throughout
+No validation library (zod, joi, etc.) is used. Every endpoint trusts `req.body` and `req.params` as-is.
+
 **Check #16 — CORS Wildcard**
 File: `vulnerable-demo-app.js`, line 18
 CORS origin set to `*` with `credentials: true`. Any website can make authenticated requests.
@@ -168,8 +172,6 @@ Global error handler returns full stack trace, error message, path, and method t
 
 - Check #17 — Not running as root (no Docker config present to assess, but no evidence of root)
 - Check #26 — No redirect endpoints found
-- Check #27 — N/A (would need deployment to assess)
-- Check #28 — N/A (would need deployment to assess)
 - Check #29 — console.log present (minimal, but exists)
 
 ## N/A
@@ -183,18 +185,20 @@ Global error handler returns full stack trace, error message, path, and method t
 - Check #23 — No payment integration (the Stripe key is exposed but no webhook handler)
 - Check #24 — No package.json in demo (single file)
 - Check #25 — No file upload handling
+- Check #27 — Would need deployment to assess
+- Check #28 — Would need deployment to assess
 - Check #30 — No database to back up
 
 ## Compliance Impact
 
 ### Australian Privacy Act 1988
-This application fails APP 11 (security of personal information) on 12 counts. The combination of weak password hashing (MD5), IDOR vulnerabilities, SQL injection, and hardcoded API keys means personal information has essentially no protection. If this application processed real user data, a breach would trigger Notifiable Data Breaches scheme obligations.
+This application fails APP 11 (security of personal information) on all 15 failed checks. The combination of weak password hashing (MD5), IDOR vulnerabilities, SQL injection, and hardcoded API keys means personal information has essentially no protection. If this application processed real user data, a breach would trigger Notifiable Data Breaches scheme obligations.
 
 ### OWASP Top 10
 Findings map to 5 of 10 OWASP categories:
 - A01 Broken Access Control: Checks 9, 11
 - A02 Cryptographic Failures: Checks 1, 3, 8
-- A03 Injection: Checks 12, 13
+- A03 Injection: Checks 12, 13, 14
 - A05 Security Misconfiguration: Checks 16, 20, 21
 - A07 Identification and Authentication Failures: Checks 4, 5, 6, 7
 
@@ -214,5 +218,6 @@ Findings map to 5 of 10 OWASP categories:
 12. **Set production mode** (Check #20) — 5 minutes
 13. **Implement proper logout** (Check #7) — 20 minutes
 14. **Move tokens to httpOnly cookies** (Check #5) — 45 minutes
+15. **Add input validation with zod/joi** (Check #14) — 45 minutes
 
-Total estimated effort: ~4 hours
+Total estimated effort: ~5 hours

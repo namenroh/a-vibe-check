@@ -124,9 +124,9 @@ Running A Vibe Check on the demo app produces this scorecard:
 ```
 A VIBE CHECK SCORECARD
 ═══════════════════════════════════════════════════
-Score: 23/100  |  Grade: F  |  Passed: 5/20
+Score: 23/100  |  Grade: F  |  Passed: 3/18 applicable (12 N/A)
 
-Critical issues: 7  |  High: 5  |  Medium: 3  |  Low: 0
+Critical issues: 6  |  High: 6  |  Medium: 3  |  Low: 0
 
 FAILURES:
 ─────────────────────────────────────────────────
@@ -145,7 +145,7 @@ FAILURES:
 🔴 C1: Frontend-only admin auth
    Admin check in JavaScript, missing backend validation
 
-[... and 15 more failures ...]
+[... and 10 more failures ...]
 
 RECOMMENDATIONS:
 ─────────────────────────────────────────────────

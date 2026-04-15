@@ -94,7 +94,7 @@ Findings map to [X] of 10 OWASP categories:
 
 ## When to Include Compliance Mapping
 
-Always include the Australian Privacy Act mapping — Josh's clients are predominantly Australian businesses.
+Always include the Australian Privacy Act mapping — our clients are predominantly Australian businesses.
 
 Include OWASP Top 10 for all reports — it's the universal reference.
 

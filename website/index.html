@@ -15,7 +15,7 @@
   <style>
     :root {
       --bg: #141218; --bg-raised: #1c1a22; --bg-surface: #24222b; --bg-surface-hover: #2c2a34;
-      --text-primary: #e8e6ed; --text-secondary: #8b8896; --text-muted: #5c5868;
+      --text-primary: #e8e6ed; --text-secondary: #8b8896; --text-muted: #858190;
       --border: #2e2c36; --border-light: #38363f;
       --accent: #ef4444; --accent-dim: #dc2626; --accent-glow: rgba(239,68,68,0.12);
       --green: #34d399; --green-dim: rgba(52,211,153,0.12);
@@ -149,14 +149,6 @@
     .section-heading{font-size:clamp(24px,3.5vw,34px);font-weight:600;letter-spacing:-0.03em;line-height:1.2;margin-bottom:16px}
     .section-sub{font-size:15px;color:var(--text-secondary);line-height:1.7;margin-bottom:40px;max-width:560px}
 
-    /* PROBLEMS */
-    .problems{display:grid;gap:2px;border-radius:12px;overflow:hidden}
-    .problem{background:var(--bg-raised);padding:28px;display:grid;grid-template-columns:40px 1fr;gap:16px;transition:background .15s}
-    .problem:hover{background:var(--bg-surface)}
-    .problem-icon{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--accent);padding-top:2px}
-    .problem-title{font-family:var(--font-mono);font-size:14px;font-weight:500;color:var(--text-primary);margin-bottom:8px}
-    .problem-desc{font-size:14px;color:var(--text-secondary);line-height:1.7}
-
     /* CHECKS GRID */
     .checks-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2px;background:var(--border);border-radius:12px;overflow:hidden}
     .check-cat{background:var(--bg-raised);padding:22px 24px}
@@ -192,7 +184,7 @@
     .cta-section::before{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:500px;height:300px;background:radial-gradient(ellipse,var(--accent-glow) 0%,transparent 70%);pointer-events:none}
     .cta-section .section-heading{max-width:560px;margin:0 auto 16px}
     .cta-section .section-sub{max-width:440px;margin:0 auto 36px}
-    .btn-primary{font-family:var(--font-mono);font-size:13px;font-weight:500;background:var(--text-primary);color:var(--bg);padding:12px 24px;border-radius:8px;text-decoration:none;border:none;transition:opacity .15s;display:inline-block}
+    .btn-primary{font-family:var(--font-mono);font-size:13px;font-weight:500;background:var(--text-primary);color:var(--bg);padding:12px 24px;border-radius:8px;text-decoration:none;border:none;transition:opacity .15s;display:inline-block;cursor:pointer}
     .btn-primary:hover{opacity:.9}
 
     /* FOOTER */
@@ -206,7 +198,7 @@
 
     /* HERO CTAS */
     .hero-ctas{display:flex;gap:20px;justify-content:center;margin-top:20px;flex-wrap:wrap}
-    .hero-cta-link{font-family:var(--font-mono);font-size:12px;color:var(--green);text-decoration:none;transition:opacity .15s}
+    .hero-cta-link{font-family:var(--font-mono);font-size:12px;color:var(--green);text-decoration:none;transition:opacity .15s;background:none;border:none;padding:0;cursor:pointer}
     .hero-cta-link:hover{opacity:.75}
 
     /* MARKETPLACE */
@@ -365,9 +357,12 @@
     /* TRIAGE OPTION IN REQUEST MODAL */
     .triage-card{background:linear-gradient(135deg,rgba(52,211,153,0.08) 0%,rgba(96,165,250,0.06) 100%);border:1px solid rgba(52,211,153,0.22);border-radius:10px;padding:14px 16px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:border-color .15s}
     .triage-card:hover{border-color:rgba(52,211,153,0.45)}
+    .triage-card:focus-within{border-color:rgba(52,211,153,0.6);box-shadow:0 0 0 2px rgba(52,211,153,0.25)}
+    /* Visually hide the real checkbox but keep it accessible to keyboard + screen readers */
+    .triage-input{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     .triage-check{width:18px;height:18px;border:1.5px solid var(--text-muted);border-radius:4px;flex-shrink:0;margin-top:2px;position:relative;transition:all .15s}
-    .triage-card.checked .triage-check{background:var(--green);border-color:var(--green)}
-    .triage-card.checked .triage-check::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--bg);font-size:12px;font-weight:700;line-height:1}
+    .triage-input:checked ~ .triage-check{background:var(--green);border-color:var(--green)}
+    .triage-input:checked ~ .triage-check::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--bg);font-size:12px;font-weight:700;line-height:1}
     .triage-body{flex:1}
     .triage-title{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:4px}
     .triage-desc{font-size:12px;color:var(--text-secondary);line-height:1.6}
@@ -418,13 +413,15 @@
           <a href="#scoring" onclick="closeNav()">scoring</a>
           <a href="#install" onclick="closeNav()">install</a>
         </div>
-        <a href="#" class="nav-cta" onclick="closeNav();openModal('requestModal');return false">Get help →</a>
+        <button type="button" class="nav-cta" onclick="closeNav();openModal('requestModal')">Get help →</button>
         <button class="nav-toggle" id="navToggle" onclick="toggleNav()" aria-label="Menu" aria-expanded="false">
           <span></span><span></span><span></span>
         </button>
       </div>
     </div>
   </nav>
+
+  <main id="main">
 
   <!-- HERO -->
   <div class="hero">
@@ -433,7 +430,7 @@
       <h1>Scan your vibe-coded app.<br><span class="dim">Then get a human to</span> <span class="accent">finish it.</span></h1>
       <p class="hero-sub">30-point security scan in seconds. Hit a wall? Get matched with a vetted specialist — security, scaling, design, launch.</p>
       <div class="hero-ctas">
-        <a href="#" class="hero-cta-link" onclick="document.getElementById('repoInput').focus();return false">› Run the free scan</a>
+        <button type="button" class="hero-cta-link" onclick="document.getElementById('repoInput').focus()">› Run the free scan</button>
         <a href="#marketplace" class="hero-cta-link">› Browse experts</a>
       </div>
     </div>
@@ -751,9 +748,11 @@
     <div class="container">
       <h2 class="section-heading">The scan takes five minutes.<br>The only reason not to run it<br>is if you'd rather not know.</h2>
       <p class="section-sub">Free forever. MIT-licensed. No upsell.</p>
-      <a href="#" class="btn-primary" onclick="document.getElementById('repoInput').focus();window.scrollTo({top:0,behavior:'smooth'});return false">Scan your repo now ↑</a>
+      <button type="button" class="btn-primary" onclick="document.getElementById('repoInput').focus();window.scrollTo({top:0,behavior:'smooth'})">Scan your repo now ↑</button>
     </div>
   </section>
+
+  </main>
 
   <footer>
     <div class="container">
@@ -768,23 +767,24 @@
 
   <!-- REQUEST AN EXPERT MODAL -->
   <div class="modal-backdrop" id="requestModal" onclick="if(event.target===this)closeModal('requestModal')">
-    <div class="modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="requestModalTitle" aria-describedby="requestModalSub">
       <div class="modal-head">
         <div>
-          <div class="modal-title">Request an expert</div>
-          <div class="modal-sub">Tell us the shape of the problem. We'll come back with 1–3 matched specialists within 48 hours.</div>
+          <div class="modal-title" id="requestModalTitle">Request an expert</div>
+          <div class="modal-sub" id="requestModalSub">Tell us the shape of the problem. We'll come back with 1–3 matched specialists within 48 hours.</div>
         </div>
         <button class="modal-close" onclick="closeModal('requestModal')" aria-label="Close">✕</button>
       </div>
       <div class="modal-body">
         <div class="modal-context" id="requestContext" style="display:none"></div>
-        <div class="triage-card" id="triageCard" onclick="toggleTriage()">
-          <div class="triage-check"></div>
-          <div class="triage-body">
-            <div class="triage-title">Start with a free 15-min triage call</div>
-            <div class="triage-desc">Not sure what you need? Burned through tokens with nothing to show? We'll figure out the shape of the problem together — no card required.</div>
-          </div>
-        </div>
+        <label class="triage-card" for="triageCheckbox">
+          <input type="checkbox" id="triageCheckbox" class="triage-input">
+          <span class="triage-check" aria-hidden="true"></span>
+          <span class="triage-body">
+            <span class="triage-title">Start with a free 15-min triage call</span>
+            <span class="triage-desc">Not sure what you need? Burned through tokens with nothing to show? We'll figure out the shape of the problem together — no card required.</span>
+          </span>
+        </label>
         <form id="requestForm" onsubmit="submitRequest(event)">
           <div class="form-row split">
             <div>
@@ -858,11 +858,11 @@
 
   <!-- APPLY AS EXPERT MODAL -->
   <div class="modal-backdrop" id="applyModal" onclick="if(event.target===this)closeModal('applyModal')">
-    <div class="modal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="applyModalTitle" aria-describedby="applyModalSub">
       <div class="modal-head">
         <div>
-          <div class="modal-title">Apply to the expert pool</div>
-          <div class="modal-sub">Developers, designers, strategists, auditors — anyone who helps vibe coders ship. We'll be in touch with next steps within a week.</div>
+          <div class="modal-title" id="applyModalTitle">Apply to the expert pool</div>
+          <div class="modal-sub" id="applyModalSub">Developers, designers, strategists, auditors — anyone who helps vibe coders ship. We'll be in touch with next steps within a week.</div>
         </div>
         <button class="modal-close" onclick="closeModal('applyModal')" aria-label="Close">✕</button>
       </div>
@@ -1281,8 +1281,6 @@ function runChecks(fileContents, allFiles) {
       }
     }
 
-    const catCounts = { A:3, B:5, C:3, D:4, E:5, F:1, G:3, H:1, I:3, J:2 };
-
     log(`› [${check.cat}${check.id.toString().padStart(2,'0')}] ${check.name}: ${
       status === 'pass' ? 'PASS' : status === 'fail' ? 'FAIL' : 'N/A'
     }`, status === 'pass' ? 'ok' : status === 'fail' ? 'fail' : '');
@@ -1371,7 +1369,7 @@ function displayResults(results, owner, repo) {
     owner, repo,
     score, grade,
     failedCount: failed.length,
-    critHighCount: (pick.critHighCount || failed.filter(r=>r.severity==='critical'||r.severity==='high').length),
+    critHighCount: pick.critHighCount || 0,
     category: pick.category,
     topFindings: sorted.map(f => ({ name: f.name, severity: f.severity, cat: f.cat })),
   };
@@ -1480,13 +1478,12 @@ const EXPERT_COPY = {
 function pickExpertFromScan(results) {
   const failed = results.filter(r => r.status === 'fail');
   const critHigh = failed.filter(r => r.severity === 'critical' || r.severity === 'high');
-  if (failed.length === 0) return { category:'General', fallbackReason:'clean' };
-  // Count weighted failures by expert category
+  if (failed.length === 0) return { category:'General', failedCount:0, critHighCount:0 };
+  // Weighted failures by expert category — each check already carries its weight.
   const score = {};
   for (const f of failed) {
     const exp = CAT_TO_EXPERT[f.cat] || 'General';
-    const w = (f.severity==='critical'?10:f.severity==='high'?7:f.severity==='medium'?4:2);
-    score[exp] = (score[exp] || 0) + w;
+    score[exp] = (score[exp] || 0) + f.weight;
   }
   const top = Object.entries(score).sort((a,b)=>b[1]-a[1])[0];
   return { category: top[0], failedCount: failed.length, critHighCount: critHigh.length };
@@ -1513,25 +1510,88 @@ function renderSuggestedExpert(ctx) {
 }
 
 // ─── MODALS ───
+// Track the element that had focus before each modal opened, so we can restore
+// focus there on close. Keyed by modal id.
+const _modalReturnFocus = {};
+// Focusable selector for trap — excludes disabled/hidden/negative tabindex
+const FOCUSABLE_SELECTOR = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+function _getFocusable(container) {
+  return Array.from(container.querySelectorAll(FOCUSABLE_SELECTOR))
+    .filter(el => el.offsetWidth > 0 || el.offsetHeight > 0 || el === document.activeElement);
+}
+
 function openModal(id) {
   const m = document.getElementById(id);
   if (!m) return;
+  // Reset per-open state: clear any prior success/error banner, uncheck the
+  // triage control on the request modal, and cache the primary button label so
+  // the "Sending…" state can restore it later.
+  if (id === 'requestModal') {
+    const cb = document.getElementById('triageCheckbox');
+    if (cb) cb.checked = false;
+  }
+  setModalState(id, null);
+  const primary = m.querySelector('.modal-foot .mkt-btn.primary');
+  if (primary && !primary.dataset.label) primary.dataset.label = primary.textContent;
+  // Remember the element that opened the modal so we can return focus on close.
+  _modalReturnFocus[id] = document.activeElement;
   m.classList.add('open');
   document.body.style.overflow = 'hidden';
   // Focus first input for accessibility
-  const firstInput = m.querySelector('input, select, textarea');
-  if (firstInput) setTimeout(()=>firstInput.focus(), 80);
+  const firstInput = m.querySelector('input:not([type="hidden"]), select, textarea');
+  const firstFocusable = firstInput || m.querySelector(FOCUSABLE_SELECTOR);
+  if (firstFocusable) setTimeout(()=>firstFocusable.focus(), 80);
 }
 function closeModal(id) {
   const m = document.getElementById(id);
   if (!m) return;
   m.classList.remove('open');
   document.body.style.overflow = '';
+  // Return focus to the element that originally opened this modal.
+  const returnTo = _modalReturnFocus[id];
+  if (returnTo && typeof returnTo.focus === 'function') {
+    try { returnTo.focus(); } catch (_) { /* element may have been removed */ }
+  }
+  _modalReturnFocus[id] = null;
 }
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
-    document.querySelectorAll('.modal-backdrop.open').forEach(m => m.classList.remove('open'));
+    const openModals = document.querySelectorAll('.modal-backdrop.open');
+    if (!openModals.length) return;
+    openModals.forEach(m => {
+      m.classList.remove('open');
+      const returnTo = _modalReturnFocus[m.id];
+      if (returnTo && typeof returnTo.focus === 'function') {
+        try { returnTo.focus(); } catch (_) {}
+      }
+      _modalReturnFocus[m.id] = null;
+    });
     document.body.style.overflow = '';
+  }
+});
+
+// Focus trap — when Tab / Shift+Tab is pressed inside an open modal, cycle
+// focus within that modal instead of escaping out to the page behind it.
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Tab') return;
+  const open = document.querySelector('.modal-backdrop.open');
+  if (!open) return;
+  const focusable = _getFocusable(open);
+  if (focusable.length === 0) { e.preventDefault(); return; }
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  const active = document.activeElement;
+  if (e.shiftKey) {
+    if (active === first || !open.contains(active)) {
+      e.preventDefault();
+      last.focus();
+    }
+  } else {
+    if (active === last || !open.contains(active)) {
+      e.preventDefault();
+      first.focus();
+    }
   }
 });
 
@@ -1580,8 +1640,8 @@ function buildMailto(subject, bodyLines) {
   return `mailto:${MARKETPLACE_INBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
-// Render an inline success/error state inside the modal body. State is cleared
-// when the modal is opened again (see openModal override further down).
+// Render an inline success/error state inside the modal body. openModal clears
+// it on each open; pass kind=null to clear manually.
 function setModalState(modalId, kind, message) {
   const m = document.getElementById(modalId);
   if (!m) return;
@@ -1631,7 +1691,7 @@ async function submitRequest(e) {
   const category = document.getElementById('reqCategory').value;
   const budget = document.getElementById('reqBudget').value;
   const timeline = document.getElementById('reqTimeline').value;
-  const triage = document.getElementById('triageCard')?.classList.contains('checked');
+  const triage = document.getElementById('triageCheckbox')?.checked || false;
 
   if (!name || !email || !problem) {
     setModalState('requestModal', 'error', 'Please fill in your name, email, and what you need help with. Everything else is optional.');
@@ -1756,15 +1816,13 @@ async function submitApply(e) {
   window.claimingSlot = null;
 }
 
-// ─── TRIAGE TOGGLE ───
-function toggleTriage() {
-  const card = document.getElementById('triageCard');
-  if (card) card.classList.toggle('checked');
-}
+// Open the request modal with the triage checkbox pre-checked and "Not sure"
+// pre-selected as the category. Called from the "You blew the token budget"
+// wall scenario.
 function openTriageRequest() {
   openModal('requestModal');
-  const card = document.getElementById('triageCard');
-  if (card && !card.classList.contains('checked')) card.classList.add('checked');
+  const cb = document.getElementById('triageCheckbox');
+  if (cb) cb.checked = true;
   // Also pre-select "Not sure" in the category dropdown
   const sel = document.getElementById('reqCategory');
   if (sel) {
@@ -1818,8 +1876,6 @@ function setFilter(key) {
   renderFilter();
   renderArchetypes();
 }
-
-function escapeAttr(s) { return String(s).replace(/'/g,'&#39;').replace(/"/g,'&quot;'); }
 
 function archCardHTML(a) {
   const availClass = a.claimed ? 'claimed' : (a.available ? 'available' : 'open');
@@ -1894,23 +1950,6 @@ function requestArchetype(id) {
     ctxEl.style.display = 'block';
   }
 }
-
-// Reset modal state (triage, success/error banners) whenever a modal is freshly
-// opened. openTriageRequest calls openModal first, then re-checks the triage card,
-// so the order stays correct.
-const _origOpenModal = openModal;
-openModal = function(id) {
-  if (id === 'requestModal') {
-    const card = document.getElementById('triageCard');
-    if (card) card.classList.remove('checked');
-  }
-  setModalState(id, null);
-  // Cache primary button label for the submitting state
-  const modal = document.getElementById(id);
-  const primary = modal?.querySelector('.modal-foot .mkt-btn.primary');
-  if (primary && !primary.dataset.label) primary.dataset.label = primary.textContent;
-  return _origOpenModal(id);
-};
 
 // Initial render
 document.addEventListener('DOMContentLoaded', () => {
