@@ -30,15 +30,23 @@
     ::selection{background:var(--accent);color:#fff}
 
     /* NAV */
-    nav{padding:20px 0;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(20,18,24,0.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:100}
-    nav .container{display:flex;justify-content:space-between;align-items:center}
-    .nav-logo{font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--text-primary);text-decoration:none;letter-spacing:-0.02em}
+    nav{padding:16px 0;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(20,18,24,0.9);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);z-index:100}
+    nav .container{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .nav-logo{font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--text-primary);text-decoration:none;letter-spacing:-0.02em;white-space:nowrap}
     .nav-logo span{color:var(--accent)}
-    .nav-links{display:flex;gap:24px;align-items:center}
-    .nav-links a{font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);text-decoration:none;transition:color .15s;letter-spacing:.01em}
+    .nav-right{display:flex;align-items:center;gap:20px}
+    .nav-links{display:flex;gap:22px;align-items:center}
+    .nav-links a{font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);text-decoration:none;transition:color .15s;letter-spacing:.01em;white-space:nowrap}
     .nav-links a:hover{color:var(--text-primary)}
-    .nav-cta{color:var(--green)!important;background:var(--green-dim);padding:6px 14px;border-radius:6px;border:1px solid rgba(52,211,153,0.15);transition:all .15s}
+    .nav-cta{font-family:var(--font-mono);font-size:12px;color:var(--green)!important;background:var(--green-dim);padding:6px 14px;border-radius:6px;border:1px solid rgba(52,211,153,0.15);transition:all .15s;text-decoration:none;white-space:nowrap;letter-spacing:.01em}
     .nav-cta:hover{background:rgba(52,211,153,0.18);border-color:rgba(52,211,153,0.3)}
+    /* Hamburger — hidden on desktop */
+    .nav-toggle{display:none;background:none;border:1px solid var(--border);width:36px;height:32px;padding:0;cursor:pointer;border-radius:6px;align-items:center;justify-content:center;flex-direction:column;gap:4px;transition:border-color .15s}
+    .nav-toggle:hover{border-color:var(--border-light)}
+    .nav-toggle span{display:block;width:16px;height:1.5px;background:var(--text-primary);transition:transform .18s,opacity .18s}
+    body.nav-open .nav-toggle span:nth-child(1){transform:translateY(5.5px) rotate(45deg)}
+    body.nav-open .nav-toggle span:nth-child(2){opacity:0}
+    body.nav-open .nav-toggle span:nth-child(3){transform:translateY(-5.5px) rotate(-45deg)}
 
     /* HERO */
     .hero{padding:80px 0 60px;position:relative;text-align:center}
@@ -364,14 +372,37 @@
     .triage-title{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:4px}
     .triage-desc{font-size:12px;color:var(--text-secondary);line-height:1.6}
 
+    /* Tablet / mobile nav — collapse text links behind hamburger, keep CTA visible */
+    @media(max-width:760px){
+      .nav-toggle{display:flex}
+      .nav-right{gap:10px}
+      .nav-links{position:absolute;top:100%;left:0;right:0;display:none;flex-direction:column;align-items:stretch;gap:2px;padding:12px 24px;background:var(--bg-raised);border-bottom:1px solid var(--border);box-shadow:0 10px 20px rgba(0,0,0,0.35)}
+      body.nav-open .nav-links{display:flex}
+      .nav-links a{padding:12px 10px;font-size:14px;border-radius:6px}
+      .nav-links a:hover{background:var(--bg-surface);color:var(--text-primary)}
+      .nav-cta{padding:6px 12px;font-size:11px}
+    }
+
     @media(max-width:640px){
       .hero{padding:56px 0 40px}section{padding:56px 0}
-      .stats .container{grid-template-columns:repeat(3,1fr);gap:8px}.stat{padding:12px 8px}.stat-val{font-size:22px}
+      .stats .container{grid-template-columns:repeat(3,1fr);gap:8px}.stat{padding:10px 6px}.stat-val{font-size:22px}.stat-label{font-size:10px}
       .checks-grid{grid-template-columns:1fr}.severity-row{grid-template-columns:repeat(2,1fr)}
-      .nav-links{gap:12px}.problem{grid-template-columns:1fr}.problem-icon{display:none}
       .scanner-input-area{flex-direction:column}
       .experts-grid{grid-template-columns:1fr}
       .dir-grid{grid-template-columns:1fr}
+      .hero-badge{font-size:10px;padding:5px 12px}
+      .hero-sub{padding:0 4px}
+      .pilot-banner{padding:14px 16px;gap:12px}
+      .pilot-banner-left{flex-direction:column;align-items:flex-start;gap:10px}
+      .pilot-btn{width:100%;text-align:center}
+      .trust-row{gap:6px}
+      .trust-chip{font-size:10px;padding:5px 10px}
+      .journey{padding:22px 0}
+      .modal-backdrop{padding:12px}
+      .modal-head,.modal-body,.modal-foot{padding-left:18px;padding-right:18px}
+      .modal-foot{flex-direction:column-reverse}
+      .modal-foot .mkt-btn{width:100%;text-align:center}
+      footer .container{flex-direction:column;align-items:flex-start;gap:10px}
     }
   </style>
 </head>
@@ -380,12 +411,17 @@
   <nav>
     <div class="container">
       <a href="#" class="nav-logo">a<span>.</span>vibe<span>.</span>check</a>
-      <div class="nav-links">
-        <a href="#marketplace">experts</a>
-        <a href="#checks">checks</a>
-        <a href="#scoring">scoring</a>
-        <a href="#install">install</a>
-        <a href="#" class="nav-cta" onclick="openModal('requestModal');return false">Get help →</a>
+      <div class="nav-right">
+        <div class="nav-links" id="navLinks">
+          <a href="#marketplace" onclick="closeNav()">experts</a>
+          <a href="#checks" onclick="closeNav()">checks</a>
+          <a href="#scoring" onclick="closeNav()">scoring</a>
+          <a href="#install" onclick="closeNav()">install</a>
+        </div>
+        <a href="#" class="nav-cta" onclick="closeNav();openModal('requestModal');return false">Get help →</a>
+        <button class="nav-toggle" id="navToggle" onclick="toggleNav()" aria-label="Menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
       </div>
     </div>
   </nav>
@@ -1362,6 +1398,28 @@ function displayResults(results, owner, repo) {
 // Enter key trigger
 document.getElementById('repoInput').addEventListener('keydown', e => {
   if (e.key === 'Enter') startScan();
+});
+
+// ─── MOBILE NAV ───
+function toggleNav() {
+  const open = document.body.classList.toggle('nav-open');
+  document.getElementById('navToggle')?.setAttribute('aria-expanded', open ? 'true' : 'false');
+}
+function closeNav() {
+  if (document.body.classList.contains('nav-open')) {
+    document.body.classList.remove('nav-open');
+    document.getElementById('navToggle')?.setAttribute('aria-expanded', 'false');
+  }
+}
+// Close the mobile nav when tapping outside it
+document.addEventListener('click', e => {
+  if (!document.body.classList.contains('nav-open')) return;
+  if (e.target.closest('nav')) return;
+  closeNav();
+});
+// Close on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeNav();
 });
 
 // ─── MARKETPLACE ───
