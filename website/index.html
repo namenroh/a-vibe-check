@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>A Vibe Check — Security Audit for AI-Built Apps</title>
-  <meta name="description" content="30-point security audit that catches the vulnerabilities AI code generators introduce. Free, open-source, MIT-licensed.">
-  <meta property="og:title" content="A Vibe Check — Security Audit for AI-Built Apps">
-  <meta property="og:description" content="Your AI writes code that works. Vibe Check finds what it forgot to secure.">
+  <title>A Vibe Check — Security Audit + Expert Marketplace for AI-Built Apps</title>
+  <meta name="description" content="Scan your vibe-coded app for security holes. Hit a wall? Get matched with a vetted human — security, scaling, design, launch.">
+  <meta property="og:title" content="A Vibe Check — Scan your AI-built app. Then get a human to finish it.">
+  <meta property="og:description" content="Automated security audit plus an expert marketplace for vibe coders who've hit a wall.">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -190,12 +190,167 @@
     .footer-links a{font-family:var(--font-mono);font-size:12px;color:var(--text-muted);text-decoration:none;transition:color .15s}
     .footer-links a:hover{color:var(--text-primary)}
 
+    /* HERO CTAS */
+    .hero-ctas{display:flex;gap:20px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+    .hero-cta-link{font-family:var(--font-mono);font-size:12px;color:var(--green);text-decoration:none;transition:opacity .15s}
+    .hero-cta-link:hover{opacity:.75}
+
+    /* MARKETPLACE */
+    .marketplace-hero{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:40px}
+    @media(max-width:720px){.marketplace-hero{grid-template-columns:1fr}}
+    .mkt-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:14px;padding:28px;transition:border-color .15s}
+    .mkt-card:hover{border-color:var(--border-light)}
+    .mkt-card-tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px}
+    .mkt-card-tag.for-you{color:var(--green)}
+    .mkt-card-tag.for-experts{color:var(--yellow)}
+    .mkt-card-title{font-family:var(--font-mono);font-size:16px;font-weight:600;color:var(--text-primary);margin-bottom:10px}
+    .mkt-card-desc{font-size:14px;color:var(--text-secondary);line-height:1.7;margin-bottom:20px}
+    .mkt-btn{font-family:var(--font-mono);font-size:12px;font-weight:500;padding:10px 18px;border-radius:8px;border:none;cursor:pointer;transition:opacity .15s;display:inline-block;text-decoration:none}
+    .mkt-btn.primary{background:var(--green);color:var(--bg)}
+    .mkt-btn.primary:hover{opacity:.88}
+    .mkt-btn.secondary{background:var(--bg-surface);color:var(--text-primary);border:1px solid var(--border-light)}
+    .mkt-btn.secondary:hover{background:var(--bg-surface-hover)}
+
+    /* EXPERT CATEGORIES GRID */
+    .experts-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:2px;background:var(--border);border-radius:12px;overflow:hidden;margin-bottom:32px}
+    .expert-cat{background:var(--bg-raised);padding:24px;display:flex;flex-direction:column}
+    .expert-cat-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+    .expert-cat-icon{font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--accent);background:var(--accent-glow);width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:8px}
+    .expert-cat-name{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--text-primary)}
+    .expert-cat-desc{font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px;flex:1}
+    .expert-cat-meta{display:flex;justify-content:space-between;align-items:center;font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-bottom:14px;padding-top:12px;border-top:1px solid var(--border)}
+    .expert-cat-meta .rate{color:var(--green)}
+    .expert-cat-btn{font-family:var(--font-mono);font-size:11px;color:var(--green);background:var(--green-dim);padding:8px 14px;border-radius:6px;border:1px solid rgba(52,211,153,0.15);cursor:pointer;text-align:center;transition:all .15s}
+    .expert-cat-btn:hover{background:rgba(52,211,153,0.18);border-color:rgba(52,211,153,0.3)}
+
+    /* HOW IT WORKS (marketplace) */
+    .hiw-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border-radius:12px;overflow:hidden;margin-bottom:32px}
+    @media(max-width:720px){.hiw-row{grid-template-columns:1fr}}
+    .hiw-step{background:var(--bg-raised);padding:24px}
+    .hiw-num{font-family:var(--font-mono);font-size:28px;font-weight:700;color:var(--accent);line-height:1;margin-bottom:10px;opacity:.85}
+    .hiw-title{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:8px}
+    .hiw-desc{font-size:13px;color:var(--text-secondary);line-height:1.7}
+
+    /* TRUST ROW */
+    .trust-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
+    .trust-chip{font-family:var(--font-mono);font-size:11px;padding:6px 12px;border-radius:20px;background:var(--bg-raised);border:1px solid var(--border);color:var(--text-secondary)}
+    .trust-chip::before{content:'✓ ';color:var(--green)}
+
+    /* SUGGESTED EXPERT CARD (in post-scan) */
+    .suggested-expert{background:linear-gradient(135deg,rgba(52,211,153,0.08) 0%,rgba(96,165,250,0.06) 100%);border:1px solid rgba(52,211,153,0.22);border-radius:10px;padding:20px;margin-bottom:16px}
+    .suggested-expert-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+    .suggested-expert-icon{font-family:var(--font-mono);font-size:16px}
+    .suggested-expert-title{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--text-primary)}
+    .suggested-expert-desc{font-size:13px;color:var(--text-secondary);line-height:1.7;margin-bottom:14px}
+    .suggested-expert-btn{font-family:var(--font-mono);font-size:12px;font-weight:500;background:var(--green);color:var(--bg);padding:10px 18px;border-radius:6px;border:none;cursor:pointer;transition:opacity .15s}
+    .suggested-expert-btn:hover{opacity:.88}
+
+    /* MODAL */
+    .modal-backdrop{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;padding:24px;overflow-y:auto}
+    .modal-backdrop.open{display:flex}
+    .modal{background:var(--bg-raised);border:1px solid var(--border-light);border-radius:14px;max-width:560px;width:100%;max-height:calc(100vh - 48px);overflow-y:auto;position:relative}
+    .modal-head{padding:24px 24px 12px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+    .modal-title{font-family:var(--font-mono);font-size:15px;font-weight:600;color:var(--text-primary);margin-bottom:4px}
+    .modal-sub{font-size:13px;color:var(--text-secondary);line-height:1.6}
+    .modal-close{background:none;border:none;color:var(--text-muted);font-size:20px;cursor:pointer;padding:0;line-height:1;transition:color .15s}
+    .modal-close:hover{color:var(--text-primary)}
+    .modal-body{padding:20px 24px}
+    .modal-context{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);line-height:1.7}
+    .modal-context strong{color:var(--text-primary)}
+    .form-row{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+    .form-row.split{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media(max-width:520px){.form-row.split{grid-template-columns:1fr}}
+    .form-row label{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);letter-spacing:.02em}
+    .form-row label .req{color:var(--accent)}
+    .form-row input,.form-row textarea,.form-row select{font-family:var(--font-sans);font-size:13px;background:var(--bg);border:1px solid var(--border);color:var(--text-primary);padding:10px 12px;border-radius:6px;outline:none;transition:border-color .15s;width:100%}
+    .form-row input:focus,.form-row textarea:focus,.form-row select:focus{border-color:var(--text-muted)}
+    .form-row textarea{min-height:90px;resize:vertical;font-family:var(--font-sans)}
+    .modal-foot{padding:16px 24px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+    .modal-note{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);margin-top:12px;line-height:1.7}
+
+    /* JOURNEY STRIP */
+    .journey{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:28px 0;background:var(--bg-raised)}
+    .journey-label{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);text-align:center;margin-bottom:16px}
+    .journey-row{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;align-items:stretch}
+    @media(max-width:720px){.journey-row{grid-template-columns:repeat(3,1fr);row-gap:8px}}
+    @media(max-width:440px){.journey-row{grid-template-columns:repeat(2,1fr)}}
+    .journey-step{text-align:center;padding:12px 8px;border-radius:8px;position:relative;transition:background .15s}
+    .journey-step.here{background:var(--accent-glow)}
+    .journey-step.here .journey-step-label{color:var(--accent);font-weight:600}
+    .journey-step-icon{font-size:18px;margin-bottom:4px;line-height:1}
+    .journey-step-label{font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);line-height:1.4}
+    .journey-step-sub{font-family:var(--font-mono);font-size:10px;color:var(--text-muted);margin-top:2px}
+
+    /* WALL SCENARIOS */
+    .wall-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border-radius:12px;overflow:hidden}
+    @media(max-width:720px){.wall-grid{grid-template-columns:1fr}}
+    .wall-card{background:var(--bg-raised);padding:28px 24px;display:flex;flex-direction:column;gap:12px}
+    .wall-card-tag{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+    .wall-card-title{font-family:var(--font-mono);font-size:15px;font-weight:600;color:var(--text-primary);line-height:1.4}
+    .wall-card-story{font-size:13px;color:var(--text-secondary);line-height:1.7;flex:1}
+    .wall-card-story em{color:var(--text-primary);font-style:normal;background:var(--accent-glow);padding:1px 4px;border-radius:3px}
+    .wall-card-action{display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:1px solid var(--border)}
+    .wall-card-action-label{font-family:var(--font-mono);font-size:10px;color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase}
+    .wall-card-btn{font-family:var(--font-mono);font-size:12px;color:var(--green);background:var(--green-dim);padding:8px 14px;border-radius:6px;border:1px solid rgba(52,211,153,0.15);cursor:pointer;transition:all .15s;text-align:left}
+    .wall-card-btn:hover{background:rgba(52,211,153,0.18);border-color:rgba(52,211,153,0.3)}
+
+    /* PILOT BANNER */
+    .pilot-banner{background:linear-gradient(135deg,rgba(251,191,36,0.10) 0%,rgba(239,68,68,0.06) 100%);border:1px solid rgba(251,191,36,0.25);border-radius:12px;padding:18px 22px;margin-bottom:32px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+    .pilot-banner-left{display:flex;align-items:center;gap:14px}
+    .pilot-badge{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--yellow);background:var(--yellow-dim);border:1px solid rgba(251,191,36,0.22);padding:4px 10px;border-radius:20px;flex-shrink:0}
+    .pilot-copy{font-size:13px;color:var(--text-secondary);line-height:1.6}
+    .pilot-copy strong{color:var(--text-primary)}
+    .pilot-btn{font-family:var(--font-mono);font-size:12px;font-weight:500;color:var(--bg);background:var(--yellow);padding:9px 16px;border-radius:6px;border:none;cursor:pointer;flex-shrink:0;transition:opacity .15s;text-decoration:none;display:inline-block}
+    .pilot-btn:hover{opacity:.88}
+
+    /* DIRECTORY */
+    .dir-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+    .dir-title{font-family:var(--font-mono);font-size:13px;font-weight:600;color:var(--text-primary)}
+    .dir-avail{font-family:var(--font-mono);font-size:11px;color:var(--text-muted)}
+    .dir-avail .count{color:var(--green);font-weight:600}
+    .dir-filter{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+    .dir-filter-btn{font-family:var(--font-mono);font-size:11px;background:var(--bg-raised);border:1px solid var(--border);color:var(--text-secondary);padding:6px 12px;border-radius:20px;cursor:pointer;transition:all .15s}
+    .dir-filter-btn:hover{border-color:var(--border-light);color:var(--text-primary)}
+    .dir-filter-btn.active{background:var(--text-primary);color:var(--bg);border-color:var(--text-primary)}
+    .dir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px;margin-bottom:32px}
+    .arch-card{background:var(--bg-raised);border:1px solid var(--border);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:border-color .15s}
+    .arch-card:hover{border-color:var(--border-light)}
+    .arch-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+    .arch-card-title{font-family:var(--font-mono);font-size:14px;font-weight:600;color:var(--text-primary);line-height:1.3}
+    .arch-card-years{font-family:var(--font-mono);font-size:10px;color:var(--text-muted);margin-top:2px}
+    .arch-card-avail{font-family:var(--font-mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;padding:3px 8px;border-radius:4px;white-space:nowrap;flex-shrink:0}
+    .arch-card-avail.open{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(251,191,36,0.22)}
+    .arch-card-avail.available{background:var(--green-dim);color:var(--green);border:1px solid rgba(52,211,153,0.22)}
+    .arch-card-avail.claimed{background:var(--bg-surface);color:var(--text-muted);border:1px solid var(--border)}
+    .arch-card-cat{font-family:var(--font-mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--accent)}
+    .arch-card-skills{display:flex;flex-wrap:wrap;gap:4px}
+    .arch-skill{font-family:var(--font-mono);font-size:10px;background:var(--bg);color:var(--text-secondary);padding:3px 8px;border-radius:4px;border:1px solid var(--border)}
+    .arch-card-meta{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);padding-top:8px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+    .arch-card-meta .rate{color:var(--green)}
+    .arch-card-actions{display:flex;flex-direction:column;gap:6px;margin-top:4px}
+    .arch-btn-claim{font-family:var(--font-mono);font-size:11px;color:var(--bg);background:var(--yellow);padding:9px 12px;border-radius:6px;border:none;cursor:pointer;transition:opacity .15s;text-align:center}
+    .arch-btn-claim:hover{opacity:.88}
+    .arch-btn-request{font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);background:transparent;padding:8px 12px;border-radius:6px;border:1px solid var(--border);cursor:pointer;transition:all .15s;text-align:center}
+    .arch-btn-request:hover{border-color:var(--border-light);color:var(--text-primary)}
+
+    /* TRIAGE OPTION IN REQUEST MODAL */
+    .triage-card{background:linear-gradient(135deg,rgba(52,211,153,0.08) 0%,rgba(96,165,250,0.06) 100%);border:1px solid rgba(52,211,153,0.22);border-radius:10px;padding:14px 16px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:border-color .15s}
+    .triage-card:hover{border-color:rgba(52,211,153,0.45)}
+    .triage-check{width:18px;height:18px;border:1.5px solid var(--text-muted);border-radius:4px;flex-shrink:0;margin-top:2px;position:relative;transition:all .15s}
+    .triage-card.checked .triage-check{background:var(--green);border-color:var(--green)}
+    .triage-card.checked .triage-check::after{content:'✓';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--bg);font-size:12px;font-weight:700;line-height:1}
+    .triage-body{flex:1}
+    .triage-title{font-family:var(--font-mono);font-size:12px;font-weight:600;color:var(--text-primary);margin-bottom:4px}
+    .triage-desc{font-size:12px;color:var(--text-secondary);line-height:1.6}
+
     @media(max-width:640px){
       .hero{padding:56px 0 40px}section{padding:56px 0}
       .stats .container{grid-template-columns:repeat(3,1fr);gap:8px}.stat{padding:12px 8px}.stat-val{font-size:22px}
       .checks-grid{grid-template-columns:1fr}.severity-row{grid-template-columns:repeat(2,1fr)}
       .nav-links{gap:12px}.problem{grid-template-columns:1fr}.problem-icon{display:none}
       .scanner-input-area{flex-direction:column}
+      .experts-grid{grid-template-columns:1fr}
+      .dir-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -205,10 +360,11 @@
     <div class="container">
       <a href="#" class="nav-logo">a<span>.</span>vibe<span>.</span>check</a>
       <div class="nav-links">
+        <a href="#marketplace">experts</a>
         <a href="#checks">checks</a>
         <a href="#scoring">scoring</a>
         <a href="#install">install</a>
-        <a href="https://github.com/namenroh/a-vibe-check" class="nav-cta" target="_blank">GitHub →</a>
+        <a href="#" class="nav-cta" onclick="openModal('requestModal');return false">Get help →</a>
       </div>
     </div>
   </nav>
@@ -216,9 +372,13 @@
   <!-- HERO -->
   <div class="hero">
     <div class="container">
-      <div class="hero-badge">v2.0 — Free — MIT Licensed</div>
-      <h1>Your AI writes code that works.<br><span class="dim">Find what it forgot to</span> <span class="accent">secure.</span></h1>
-      <p class="hero-sub">Paste a public GitHub repo below. Get a 30-point security audit in seconds.</p>
+      <div class="hero-badge">v2.1 — scanner + expert marketplace</div>
+      <h1>Scan your vibe-coded app.<br><span class="dim">Then get a human to</span> <span class="accent">finish it.</span></h1>
+      <p class="hero-sub">30-point security scan in seconds. Hit a wall? Get matched with a vetted specialist — security, scaling, design, launch.</p>
+      <div class="hero-ctas">
+        <a href="#" class="hero-cta-link" onclick="document.getElementById('repoInput').focus();return false">› Run the free scan</a>
+        <a href="#marketplace" class="hero-cta-link">› Browse experts</a>
+      </div>
     </div>
   </div>
 
@@ -239,6 +399,15 @@
         <!-- POST-SCAN CTA PANEL -->
         <div class="post-scan-cta" id="postScanCta">
           <div class="cta-panel">
+            <!-- Scan-aware expert recommendation (populated by JS) -->
+            <div class="suggested-expert" id="suggestedExpert" style="display:none">
+              <div class="suggested-expert-head">
+                <span class="suggested-expert-icon" id="suggestedExpertIcon">🧑‍💻</span>
+                <span class="suggested-expert-title" id="suggestedExpertTitle">Get human help</span>
+              </div>
+              <div class="suggested-expert-desc" id="suggestedExpertDesc">Your scan surfaced issues a specialist can close out for you.</div>
+              <button class="suggested-expert-btn" onclick="requestFromScan()">Match me with a specialist →</button>
+            </div>
             <div class="cta-panel-row">
               <div class="cta-card">
                 <div class="cta-card-icon">⌨</div>
@@ -278,6 +447,20 @@
     </div>
   </div>
 
+  <!-- JOURNEY STRIP -->
+  <div class="journey">
+    <div class="container">
+      <div class="journey-label">// the vibe-coding journey — where a-vibe-check fits</div>
+      <div class="journey-row">
+        <div class="journey-step"><div class="journey-step-icon">💡</div><div class="journey-step-label">Idea</div><div class="journey-step-sub">AI helps start</div></div>
+        <div class="journey-step"><div class="journey-step-icon">🛠</div><div class="journey-step-label">Build</div><div class="journey-step-sub">AI ships fast</div></div>
+        <div class="journey-step here"><div class="journey-step-icon">🧱</div><div class="journey-step-label">Stuck</div><div class="journey-step-sub">you're here</div></div>
+        <div class="journey-step here"><div class="journey-step-icon">🔍</div><div class="journey-step-label">Scan</div><div class="journey-step-sub">find what's broken</div></div>
+        <div class="journey-step here"><div class="journey-step-icon">🤝</div><div class="journey-step-label">Ship</div><div class="journey-step-sub">match with a human</div></div>
+      </div>
+    </div>
+  </div>
+
   <!-- PROBLEM -->
   <section>
     <div class="container">
@@ -290,6 +473,157 @@
         <div class="problem"><div class="problem-icon">03</div><div><div class="problem-title">Permissions checked on the wrong side</div><div class="problem-desc">Admin logic in the frontend. Auth middleware on the first three routes but not the rest. Change the user ID in the URL and you own someone else's data.</div></div></div>
         <div class="problem"><div class="problem-icon">04</div><div><div class="problem-title">Injection bugs solved 20 years ago</div><div class="problem-desc">SQL injection via string concatenation. XSS through dangerouslySetInnerHTML. eval() running user input. The shortest path to working code skips input validation.</div></div></div>
         <div class="problem"><div class="problem-icon">05</div><div><div class="problem-title">Everything around the app misconfigured</div><div class="problem-desc">CORS wildcard. Debug mode in production. Database ports exposed. Supabase RLS disabled — the same config that caused the Moltbook breach. 1.5M API keys leaked.</div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHEN AI HITS THE WALL -->
+  <section id="wall">
+    <div class="container">
+      <div class="section-tag"><span>//</span> when AI hits the wall</div>
+      <h2 class="section-heading">Three ways your AI fails you.<br>All of them have a human fix.</h2>
+      <p class="section-sub">You didn't buy Claude. You rented it. When it loops, burns tokens, or leads you somewhere it can't get you out of — that's when the marketplace earns its keep.</p>
+      <div class="wall-grid">
+        <div class="wall-card">
+          <div class="wall-card-tag">scenario 01</div>
+          <div class="wall-card-title">Claude's stuck in a loop.</div>
+          <div class="wall-card-story">It's rewriting the same file for the fifth time. Each pass is confidently wrong in a slightly different way. You know <em>something's off</em> but you can't see what you can't see.</div>
+          <div class="wall-card-action">
+            <div class="wall-card-action-label">What helps</div>
+            <button class="wall-card-btn" onclick="requestForCategory('Architecture & Scaling')">30-min pair with a senior engineer →</button>
+          </div>
+        </div>
+        <div class="wall-card">
+          <div class="wall-card-tag">scenario 02</div>
+          <div class="wall-card-title">You blew the token budget.</div>
+          <div class="wall-card-story">Three weeks in, the monthly plan is gone and the fix is <em>further away than when you started</em>. You need a direction, not more tokens.</div>
+          <div class="wall-card-action">
+            <div class="wall-card-action-label">What helps</div>
+            <button class="wall-card-btn" onclick="openTriageRequest()">Free 15-min triage call →</button>
+          </div>
+        </div>
+        <div class="wall-card">
+          <div class="wall-card-tag">scenario 03</div>
+          <div class="wall-card-title">Claude pushed you down a path.</div>
+          <div class="wall-card-story">Wrong framework, wrong data model, wrong architecture — and now it's <em>three sprints deep</em>. You can see the mess but you can't see a way back out alone.</div>
+          <div class="wall-card-action">
+            <div class="wall-card-action-label">What helps</div>
+            <button class="wall-card-btn" onclick="requestForCategory('Architecture & Scaling')">Senior architect review →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKETPLACE -->
+  <section id="marketplace">
+    <div class="container">
+      <div class="section-tag"><span>//</span> the marketplace</div>
+      <h2 class="section-heading">The scan finds the wall.<br>A human gets you over it.</h2>
+      <p class="section-sub">AI gets you 80% of the way. Then it loops. Then it burns tokens. Then it ships you something you don't trust. A Vibe Check connects vibe coders with vetted humans who can finish the job — audits, scaling, design, launch, any of it.</p>
+
+      <div class="pilot-banner">
+        <div class="pilot-banner-left">
+          <span class="pilot-badge">Pilot · founding round open</span>
+          <div class="pilot-copy">We're onboarding the first <strong>20 founding experts</strong>. Set your rate, shape the platform, keep 100% of earnings for year one.</div>
+        </div>
+        <button class="pilot-btn" onclick="openModal('applyModal')">Apply as founding expert →</button>
+      </div>
+
+      <div class="marketplace-hero">
+        <div class="mkt-card">
+          <div class="mkt-card-tag for-you">For vibe coders</div>
+          <div class="mkt-card-title">Stuck? Get matched with someone who's been there.</div>
+          <div class="mkt-card-desc">Tell us the problem, your budget, your timeline. We match you with 1–3 vetted specialists within 48 hours. Fixed-scope quote before any work starts.</div>
+          <button class="mkt-btn primary" onclick="openModal('requestModal')">Request an expert →</button>
+        </div>
+        <div class="mkt-card">
+          <div class="mkt-card-tag for-experts">For experts</div>
+          <div class="mkt-card-title">Developers, designers, strategists — join the pool.</div>
+          <div class="mkt-card-desc">Get paired with paying projects from vibe coders who've already run the scan and know where they're stuck. Set your own rate. Pick the work you want.</div>
+          <button class="mkt-btn secondary" onclick="openModal('applyModal')">Apply to the pool →</button>
+        </div>
+      </div>
+
+      <div class="section-tag" style="margin-top:16px"><span>//</span> six categories · more coming</div>
+      <div class="experts-grid">
+        <div class="expert-cat">
+          <div class="expert-cat-head"><span class="expert-cat-icon">🔒</span><span class="expert-cat-name">Security & Compliance</span></div>
+          <div class="expert-cat-desc">Real audits, penetration tests, secure-by-design reviews. GDPR, SOC 2, PCI DSS, Privacy Act mapping. Fix the issues A Vibe Check found.</div>
+          <div class="expert-cat-meta"><span>pen-test · audit · RLS · auth</span><span class="rate">$150–400 / hr</span></div>
+          <button class="expert-cat-btn" onclick="requestForCategory('Security & Compliance')">Request a specialist</button>
+        </div>
+        <div class="expert-cat">
+          <div class="expert-cat-head"><span class="expert-cat-icon">📈</span><span class="expert-cat-name">Architecture & Scaling</span></div>
+          <div class="expert-cat-desc">Your app works at 10 users. Will it work at 10,000? Database design, query optimisation, caching, infra cost reduction, queue design.</div>
+          <div class="expert-cat-meta"><span>postgres · redis · k8s · edge</span><span class="rate">$120–300 / hr</span></div>
+          <button class="expert-cat-btn" onclick="requestForCategory('Architecture & Scaling')">Request a specialist</button>
+        </div>
+        <div class="expert-cat">
+          <div class="expert-cat-head"><span class="expert-cat-icon">🎛</span><span class="expert-cat-name">Frontend & UX Engineering</span></div>
+          <div class="expert-cat-desc">Accessibility, performance, state management, animation. Make it feel fast, feel right, and work for every user on every device.</div>
+          <div class="expert-cat-meta"><span>react · next · svelte · a11y</span><span class="rate">$90–200 / hr</span></div>
+          <button class="expert-cat-btn" onclick="requestForCategory('Frontend & UX Engineering')">Request a specialist</button>
+        </div>
+        <div class="expert-cat">
+          <div class="expert-cat-head"><span class="expert-cat-icon">⚙</span><span class="expert-cat-name">Backend & Integrations</span></div>
+          <div class="expert-cat-desc">API design, Stripe flows, webhook hardening, auth, third-party integrations, background jobs. The plumbing your AI glossed over.</div>
+          <div class="expert-cat-meta"><span>node · python · stripe · oauth</span><span class="rate">$90–250 / hr</span></div>
+          <button class="expert-cat-btn" onclick="requestForCategory('Backend & Integrations')">Request a specialist</button>
+        </div>
+        <div class="expert-cat">
+          <div class="expert-cat-head"><span class="expert-cat-icon">🎨</span><span class="expert-cat-name">Design & UX</span></div>
+          <div class="expert-cat-desc">UX audits, design systems, conversion-focused UI, brand and landing pages. Stop shipping Cursor-default-grey. Ship something people want to use.</div>
+          <div class="expert-cat-meta"><span>figma · ux · conversion · brand</span><span class="rate">$80–200 / hr</span></div>
+          <button class="expert-cat-btn" onclick="requestForCategory('Design & UX')">Request a specialist</button>
+        </div>
+        <div class="expert-cat">
+          <div class="expert-cat-head"><span class="expert-cat-icon">🚀</span><span class="expert-cat-name">Product, Growth & Launch</span></div>
+          <div class="expert-cat-desc">Positioning, landing pages, launch strategy, pricing, content, SEO. Turn your working prototype into something people find, trust, and pay for.</div>
+          <div class="expert-cat-meta"><span>positioning · launch · seo · copy</span><span class="rate">$70–200 / hr</span></div>
+          <button class="expert-cat-btn" onclick="requestForCategory('Product, Growth & Launch')">Request a specialist</button>
+        </div>
+      </div>
+
+      <div class="section-tag"><span>//</span> the directory — founding slots open</div>
+      <div class="dir-head">
+        <div class="dir-title">Founding expert slots — all 8 archetypes open</div>
+        <div class="dir-avail"><span class="count" id="dirAvailCount">0</span> available this week</div>
+      </div>
+      <div class="dir-filter" id="dirFilter"></div>
+      <div class="dir-grid" id="dirGrid"></div>
+
+      <div class="section-tag"><span>//</span> how it works</div>
+      <div class="hiw-row">
+        <div class="hiw-step">
+          <div class="hiw-num">01</div>
+          <div class="hiw-title">Scan or describe</div>
+          <div class="hiw-desc">Run A Vibe Check on your repo — or just tell us where you're stuck. Your scan results pre-fill the brief automatically.</div>
+        </div>
+        <div class="hiw-step">
+          <div class="hiw-num">02</div>
+          <div class="hiw-title">We match, not list</div>
+          <div class="hiw-desc">No endless profiles to scroll. We hand-pick 1–3 specialists who've solved your exact problem before, with a fixed-scope quote up front.</div>
+        </div>
+        <div class="hiw-step">
+          <div class="hiw-num">03</div>
+          <div class="hiw-title">Ship with confidence</div>
+          <div class="hiw-desc">Work together in whatever tool fits — Claude Code, GitHub, Slack, a call. Pay on milestones. You own the code.</div>
+        </div>
+      </div>
+
+      <div class="trust-row">
+        <span class="trust-chip">All experts vetted</span>
+        <span class="trust-chip">Fixed-scope quotes</span>
+        <span class="trust-chip">Milestone payments</span>
+        <span class="trust-chip">You own the code</span>
+        <span class="trust-chip">NDAs on request</span>
+        <span class="trust-chip">AI-friendly workflow</span>
+      </div>
+
+      <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <button class="mkt-btn primary" onclick="openModal('requestModal')">Request an expert</button>
+        <button class="mkt-btn secondary" onclick="openModal('applyModal')">Apply as an expert</button>
       </div>
     </div>
   </section>
@@ -383,6 +717,164 @@
       </div>
     </div>
   </footer>
+
+  <!-- REQUEST AN EXPERT MODAL -->
+  <div class="modal-backdrop" id="requestModal" onclick="if(event.target===this)closeModal('requestModal')">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <div class="modal-title">Request an expert</div>
+          <div class="modal-sub">Tell us the shape of the problem. We'll come back with 1–3 matched specialists within 48 hours.</div>
+        </div>
+        <button class="modal-close" onclick="closeModal('requestModal')" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-context" id="requestContext" style="display:none"></div>
+        <div class="triage-card" id="triageCard" onclick="toggleTriage()">
+          <div class="triage-check"></div>
+          <div class="triage-body">
+            <div class="triage-title">Start with a free 15-min triage call</div>
+            <div class="triage-desc">Not sure what you need? Burned through tokens with nothing to show? We'll figure out the shape of the problem together — no card required.</div>
+          </div>
+        </div>
+        <form id="requestForm" onsubmit="submitRequest(event)">
+          <div class="form-row split">
+            <div>
+              <label for="reqName">Your name <span class="req">*</span></label>
+              <input type="text" id="reqName" required placeholder="Jane Smith">
+            </div>
+            <div>
+              <label for="reqEmail">Email <span class="req">*</span></label>
+              <input type="email" id="reqEmail" required placeholder="jane@example.com">
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="reqProject">Project / repo URL</label>
+            <input type="text" id="reqProject" placeholder="https://github.com/you/your-app">
+          </div>
+          <div class="form-row">
+            <label for="reqCategory">What kind of expert? <span class="req">*</span></label>
+            <select id="reqCategory" required>
+              <option value="">— Pick a category —</option>
+              <option>Security & Compliance</option>
+              <option>Architecture & Scaling</option>
+              <option>Frontend & UX Engineering</option>
+              <option>Backend & Integrations</option>
+              <option>Design & UX</option>
+              <option>Product, Growth & Launch</option>
+              <option>Not sure — help me figure it out</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="reqProblem">What do you need help with? <span class="req">*</span></label>
+            <textarea id="reqProblem" required placeholder="The scan flagged 7 critical auth issues — JWTs in localStorage, no rate limiting on /login, frontend-only admin checks. I need someone to walk me through fixing these properly."></textarea>
+          </div>
+          <div class="form-row split">
+            <div>
+              <label for="reqBudget">Budget range</label>
+              <select id="reqBudget">
+                <option value="">— Select —</option>
+                <option>Under $500</option>
+                <option>$500 – $2,000</option>
+                <option>$2,000 – $5,000</option>
+                <option>$5,000 – $15,000</option>
+                <option>$15,000+</option>
+                <option>Unsure — need a quote</option>
+              </select>
+            </div>
+            <div>
+              <label for="reqTimeline">Timeline</label>
+              <select id="reqTimeline">
+                <option value="">— Select —</option>
+                <option>ASAP (this week)</option>
+                <option>Within 2 weeks</option>
+                <option>Within a month</option>
+                <option>Flexible</option>
+              </select>
+            </div>
+          </div>
+        </form>
+        <div class="modal-note">We'll email you a shortlist within 48 hours. No spam, no auto-DMs, no profile-scrolling. Submitting opens your email client so you can review before sending.</div>
+      </div>
+      <div class="modal-foot">
+        <button class="mkt-btn secondary" onclick="closeModal('requestModal')">Cancel</button>
+        <button class="mkt-btn primary" onclick="submitRequest(event)">Send request →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPLY AS EXPERT MODAL -->
+  <div class="modal-backdrop" id="applyModal" onclick="if(event.target===this)closeModal('applyModal')">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <div class="modal-title">Apply to the expert pool</div>
+          <div class="modal-sub">Developers, designers, strategists, auditors — anyone who helps vibe coders ship. We'll be in touch with next steps within a week.</div>
+        </div>
+        <button class="modal-close" onclick="closeModal('applyModal')" aria-label="Close">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="applyForm" onsubmit="submitApply(event)">
+          <div class="form-row split">
+            <div>
+              <label for="appName">Your name <span class="req">*</span></label>
+              <input type="text" id="appName" required placeholder="Alex Chen">
+            </div>
+            <div>
+              <label for="appEmail">Email <span class="req">*</span></label>
+              <input type="email" id="appEmail" required placeholder="alex@example.com">
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="appCategory">Primary category <span class="req">*</span></label>
+            <select id="appCategory" required>
+              <option value="">— Pick your main strength —</option>
+              <option>Security & Compliance</option>
+              <option>Architecture & Scaling</option>
+              <option>Frontend & UX Engineering</option>
+              <option>Backend & Integrations</option>
+              <option>Design & UX</option>
+              <option>Product, Growth & Launch</option>
+              <option>Other (describe below)</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label for="appSkills">Core skills / stack <span class="req">*</span></label>
+            <input type="text" id="appSkills" required placeholder="e.g. Next.js, Postgres, Stripe, AWS, OWASP pen-testing">
+          </div>
+          <div class="form-row split">
+            <div>
+              <label for="appRate">Typical hourly rate (USD)</label>
+              <input type="text" id="appRate" placeholder="e.g. $150">
+            </div>
+            <div>
+              <label for="appAvail">Weekly availability</label>
+              <select id="appAvail">
+                <option value="">— Select —</option>
+                <option>&lt; 5 hrs/week</option>
+                <option>5–10 hrs/week</option>
+                <option>10–20 hrs/week</option>
+                <option>Full-time / contracts</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <label for="appPortfolio">Portfolio / LinkedIn / GitHub</label>
+            <input type="text" id="appPortfolio" placeholder="https://…">
+          </div>
+          <div class="form-row">
+            <label for="appBio">Short bio — what makes you a good fit for vibe coders?</label>
+            <textarea id="appBio" placeholder="I've shipped production apps on most modern stacks and I'm comfortable pairing inside Claude Code / Cursor. I like turning half-working prototypes into real products."></textarea>
+          </div>
+        </form>
+        <div class="modal-note">Applications are reviewed weekly. We vet for quality, not quantity — we'd rather have 50 great humans than 5,000 profiles. Submitting opens your email client so you can review before sending.</div>
+      </div>
+      <div class="modal-foot">
+        <button class="mkt-btn secondary" onclick="closeModal('applyModal')">Cancel</button>
+        <button class="mkt-btn primary" onclick="submitApply(event)">Send application →</button>
+      </div>
+    </div>
+  </div>
 
 <script>
 // ─── CHECK DEFINITIONS ───
@@ -743,7 +1235,7 @@ function runChecks(fileContents, allFiles) {
   return results;
 }
 
-function displayResults(results) {
+function displayResults(results, owner, repo) {
   const applicable = results.filter(r => r.status !== 'na');
   const passed = applicable.filter(r => r.status === 'pass');
   const failed = applicable.filter(r => r.status === 'fail');
@@ -814,13 +1306,28 @@ function displayResults(results) {
   // Show post-scan CTA panel
   document.getElementById('postScanCta').classList.add('active');
 
+  // ─── Scan-aware expert recommendation ───
+  const pick = pickExpertFromScan(results);
+  const scanCtx = {
+    repoUrl: owner && repo ? `https://github.com/${owner}/${repo}` : '',
+    owner, repo,
+    score, grade,
+    failedCount: failed.length,
+    critHighCount: (pick.critHighCount || failed.filter(r=>r.severity==='critical'||r.severity==='high').length),
+    category: pick.category,
+    topFindings: sorted.map(f => ({ name: f.name, severity: f.severity, cat: f.cat })),
+  };
+  window.lastScanContext = scanCtx;
+  renderSuggestedExpert(scanCtx);
+
   // Wire share buttons
-  const shareText = `Just ran A Vibe Check on my repo — scored ${score}/100 (Grade ${grade}). ${failed.length} issues found. Free scanner: https://a-vibe-check.vercel.app`;
+  const siteUrl = window.location.origin;
+  const shareText = `Just ran A Vibe Check on my repo — scored ${score}/100 (Grade ${grade}). ${failed.length} issues found. Free scanner: ${siteUrl}`;
   document.getElementById('shareTwitter').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
-  document.getElementById('shareLinkedIn').href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://a-vibe-check.vercel.app')}&summary=${encodeURIComponent(shareText)}`;
+  document.getElementById('shareLinkedIn').href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(siteUrl)}&summary=${encodeURIComponent(shareText)}`;
   document.getElementById('shareCopy').onclick = () => {
     const plain = document.getElementById('scorecard').innerText;
-    navigator.clipboard.writeText(plain + '\n\nRun yours: https://a-vibe-check.vercel.app');
+    navigator.clipboard.writeText(plain + '\n\nRun yours: ' + siteUrl);
     const btn = document.getElementById('shareCopy');
     btn.textContent = 'Copied!';
     setTimeout(() => { btn.textContent = '📋 Copy scorecard'; }, 1500);
@@ -834,6 +1341,420 @@ function displayResults(results) {
 document.getElementById('repoInput').addEventListener('keydown', e => {
   if (e.key === 'Enter') startScan();
 });
+
+// ─── MARKETPLACE ───
+// Destination inbox for form submissions. Update here if/when we move off mailto.
+// TODO: swap to a serverless endpoint (Vercel function → Notion/Airtable) once supply
+// side is onboarded; keep mailto as the graceful fallback.
+const MARKETPLACE_INBOX = 'hello@howll.ai';
+
+// Last scan context — populated by displayResults(), read by the "match me" flow.
+window.lastScanContext = null;
+
+// Map each failed check category to the marketplace specialist that owns it.
+// Categories: A,B,C,D,E,F,G,H,I,J  → marketplace category
+const CAT_TO_EXPERT = {
+  A:'Security & Compliance', B:'Security & Compliance', C:'Security & Compliance',
+  D:'Security & Compliance', G:'Security & Compliance',
+  E:'Architecture & Scaling', J:'Architecture & Scaling',
+  F:'Backend & Integrations', H:'Backend & Integrations',
+  I:'Frontend & UX Engineering',
+};
+
+const EXPERT_COPY = {
+  'Security & Compliance': {
+    icon:'🔒',
+    title:(n)=>`Match me with a security specialist — ${n} ${n===1?'issue':'issues'} to close`,
+    desc:(n,critHigh)=>`Your scan flagged ${critHigh} critical/high security ${critHigh===1?'issue':'issues'}. A vetted security specialist will walk the repo, explain each finding in context, and ship the fixes with you.`,
+  },
+  'Architecture & Scaling': {
+    icon:'📈',
+    title:()=>`Match me with a scaling & infra specialist`,
+    desc:()=>`Your scan surfaced infrastructure and ops gaps. A scaling specialist can fix the config, add monitoring, and pressure-test the app before your next user spike.`,
+  },
+  'Frontend & UX Engineering': {
+    icon:'🎛',
+    title:()=>`Match me with a frontend engineer`,
+    desc:()=>`Your scan flagged transport/header and frontend issues. A frontend specialist can harden the browser side and audit UX at the same time.`,
+  },
+  'Backend & Integrations': {
+    icon:'⚙',
+    title:()=>`Match me with a backend engineer`,
+    desc:()=>`Your scan flagged backend gaps — error handling, file uploads, integrations. A backend specialist can close these out cleanly.`,
+  },
+  'General': {
+    icon:'🧑‍💻',
+    title:(s)=>s>=80?`Looking to scale, launch, or polish?`:`Get human help to close the gaps`,
+    desc:(s)=>s>=80?`Your scan came back clean. Most vibe coders who hit this level next want help with scaling, design polish, or go-to-market. Tell us what's next — we'll match you.`:`Tell us where you're stuck. We'll hand-pick 1–3 specialists who've solved the same problem before.`,
+  },
+};
+
+function pickExpertFromScan(results) {
+  const failed = results.filter(r => r.status === 'fail');
+  const critHigh = failed.filter(r => r.severity === 'critical' || r.severity === 'high');
+  if (failed.length === 0) return { category:'General', fallbackReason:'clean' };
+  // Count weighted failures by expert category
+  const score = {};
+  for (const f of failed) {
+    const exp = CAT_TO_EXPERT[f.cat] || 'General';
+    const w = (f.severity==='critical'?10:f.severity==='high'?7:f.severity==='medium'?4:2);
+    score[exp] = (score[exp] || 0) + w;
+  }
+  const top = Object.entries(score).sort((a,b)=>b[1]-a[1])[0];
+  return { category: top[0], failedCount: failed.length, critHighCount: critHigh.length };
+}
+
+function renderSuggestedExpert(ctx) {
+  const el = document.getElementById('suggestedExpert');
+  if (!el) return;
+  const copy = EXPERT_COPY[ctx.category] || EXPERT_COPY['General'];
+  document.getElementById('suggestedExpertIcon').textContent = copy.icon;
+  document.getElementById('suggestedExpertTitle').textContent =
+    typeof copy.title === 'function'
+      ? (ctx.category === 'Security & Compliance'
+          ? copy.title(ctx.critHighCount || 0)
+          : copy.title(ctx.score || 0))
+      : copy.title;
+  document.getElementById('suggestedExpertDesc').textContent =
+    typeof copy.desc === 'function'
+      ? (ctx.category === 'Security & Compliance'
+          ? copy.desc(ctx.failedCount || 0, ctx.critHighCount || 0)
+          : copy.desc(ctx.score || 0))
+      : copy.desc;
+  el.style.display = 'block';
+}
+
+// ─── MODALS ───
+function openModal(id) {
+  const m = document.getElementById(id);
+  if (!m) return;
+  m.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // Focus first input for accessibility
+  const firstInput = m.querySelector('input, select, textarea');
+  if (firstInput) setTimeout(()=>firstInput.focus(), 80);
+}
+function closeModal(id) {
+  const m = document.getElementById(id);
+  if (!m) return;
+  m.classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-backdrop.open').forEach(m => m.classList.remove('open'));
+    document.body.style.overflow = '';
+  }
+});
+
+// Open the request modal pre-selected to a category (from the marketplace grid)
+function requestForCategory(category) {
+  openModal('requestModal');
+  const sel = document.getElementById('reqCategory');
+  if (sel) {
+    for (const o of sel.options) { if (o.value === category) { sel.value = category; break; } }
+  }
+  // Clear any prior scan context panel
+  document.getElementById('requestContext').style.display = 'none';
+}
+
+// Open the request modal with scan context pre-filled (from the post-scan card)
+function requestFromScan() {
+  openModal('requestModal');
+  const ctx = window.lastScanContext;
+  if (!ctx) return;
+  // Pre-fill category
+  const sel = document.getElementById('reqCategory');
+  if (sel && ctx.category) {
+    for (const o of sel.options) { if (o.value === ctx.category) { sel.value = ctx.category; break; } }
+  }
+  // Pre-fill project URL
+  if (ctx.repoUrl) document.getElementById('reqProject').value = ctx.repoUrl;
+  // Pre-fill problem with the top 5 failed checks
+  const problemEl = document.getElementById('reqProblem');
+  if (!problemEl.value && ctx.topFindings && ctx.topFindings.length) {
+    const lines = ctx.topFindings.slice(0,5).map(f => `• [${f.severity.toUpperCase()}] ${f.name}`).join('\n');
+    problemEl.value = `A Vibe Check flagged ${ctx.failedCount} issues (score ${ctx.score}/100, grade ${ctx.grade}). I'd like help closing out:\n\n${lines}\n\n`;
+  }
+  // Show the context banner
+  const ctxEl = document.getElementById('requestContext');
+  ctxEl.innerHTML = `<strong>Scan context attached:</strong> ${ctx.repoUrl || 'repo'} · score ${ctx.score}/100 (grade ${ctx.grade}) · ${ctx.failedCount} issues · suggested match: ${ctx.category}`;
+  ctxEl.style.display = 'block';
+}
+
+// ─── FORM SUBMIT (mailto MVP) ───
+function buildMailto(subject, bodyLines) {
+  const body = bodyLines.filter(Boolean).join('\n');
+  return `mailto:${MARKETPLACE_INBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+function submitRequest(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  const name = document.getElementById('reqName').value.trim();
+  const email = document.getElementById('reqEmail').value.trim();
+  const project = document.getElementById('reqProject').value.trim();
+  const category = document.getElementById('reqCategory').value;
+  const problem = document.getElementById('reqProblem').value.trim();
+  const budget = document.getElementById('reqBudget').value;
+  const timeline = document.getElementById('reqTimeline').value;
+
+  if (!name || !email || !category || !problem) {
+    alert('Please fill in name, email, category, and the problem description.');
+    return;
+  }
+
+  const ctx = window.lastScanContext;
+  const lines = [
+    `Name: ${name}`,
+    `Email: ${email}`,
+    project ? `Project: ${project}` : '',
+    `Category: ${category}`,
+    budget ? `Budget: ${budget}` : '',
+    timeline ? `Timeline: ${timeline}` : '',
+    '',
+    'Problem:',
+    problem,
+    '',
+    ctx ? `— Scan context —` : '',
+    ctx ? `Repo: ${ctx.repoUrl}` : '',
+    ctx ? `Score: ${ctx.score}/100 (Grade ${ctx.grade})` : '',
+    ctx ? `Failed: ${ctx.failedCount}, Critical/High: ${ctx.critHighCount}` : '',
+  ];
+
+  const href = buildMailto(`[a-vibe-check] Request expert — ${category}`, lines);
+  window.location.href = href;
+  // Give the mail client a moment to open, then show confirmation
+  setTimeout(() => {
+    closeModal('requestModal');
+    alert('Your email client should be opening with your request pre-filled. Review and send — we\'ll reply within 48 hours.');
+  }, 400);
+}
+
+function submitApply(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  const name = document.getElementById('appName').value.trim();
+  const email = document.getElementById('appEmail').value.trim();
+  const category = document.getElementById('appCategory').value;
+  const skills = document.getElementById('appSkills').value.trim();
+  const rate = document.getElementById('appRate').value.trim();
+  const avail = document.getElementById('appAvail').value;
+  const portfolio = document.getElementById('appPortfolio').value.trim();
+  const bio = document.getElementById('appBio').value.trim();
+
+  if (!name || !email || !category || !skills) {
+    alert('Please fill in name, email, category, and skills.');
+    return;
+  }
+
+  const slotCtx = window.claimingSlot; // set by claimSlot()
+  const subject = slotCtx
+    ? `[a-vibe-check] Founding expert claim — ${slotCtx.title}`
+    : `[a-vibe-check] Expert application — ${category}`;
+
+  const lines = [
+    slotCtx ? `Claiming slot: ${slotCtx.title} (${slotCtx.catLabel})` : '',
+    slotCtx ? '' : null,
+    `Name: ${name}`,
+    `Email: ${email}`,
+    `Category: ${category}`,
+    `Skills: ${skills}`,
+    rate ? `Rate: ${rate}` : '',
+    avail ? `Availability: ${avail}` : '',
+    portfolio ? `Portfolio: ${portfolio}` : '',
+    '',
+    bio ? 'Bio:' : '',
+    bio,
+  ];
+
+  const href = buildMailto(subject, lines);
+  window.location.href = href;
+  setTimeout(() => {
+    closeModal('applyModal');
+    window.claimingSlot = null;
+    alert('Your email client should be opening with your application pre-filled. Review and send — we review weekly.');
+  }, 400);
+}
+
+// ─── TRIAGE TOGGLE ───
+function toggleTriage() {
+  const card = document.getElementById('triageCard');
+  if (card) card.classList.toggle('checked');
+}
+function openTriageRequest() {
+  openModal('requestModal');
+  const card = document.getElementById('triageCard');
+  if (card && !card.classList.contains('checked')) card.classList.add('checked');
+  // Also pre-select "Not sure" in the category dropdown
+  const sel = document.getElementById('reqCategory');
+  if (sel) {
+    for (const o of sel.options) {
+      if (o.value && o.value.indexOf('Not sure') === 0) { sel.value = o.value; break; }
+    }
+  }
+  const budget = document.getElementById('reqBudget');
+  if (budget) {
+    for (const o of budget.options) {
+      if (o.value && o.value.indexOf('Unsure') === 0) { budget.value = o.value; break; }
+    }
+  }
+}
+
+// ─── ARCHETYPE DIRECTORY ───
+// Illustrative archetypes (no real names) — founding slots open. Flip `available: true`
+// once a real expert has claimed and been vetted into the pilot cohort.
+const ARCHETYPES = [
+  { id:'sec-1',    cat:'sec',    catLabel:'Security & Compliance',      title:'Senior Security Engineer',   years:'10+ yrs', rate:'$180/hr', skills:['OWASP','pen-test','RLS','SOC 2'], available:false, claimed:false },
+  { id:'sec-2',    cat:'sec',    catLabel:'Security & Compliance',      title:'Compliance Lead',            years:'8 yrs',   rate:'$220/hr', skills:['GDPR','Privacy Act','audits','policy'], available:false, claimed:false },
+  { id:'scale-1',  cat:'scale',  catLabel:'Architecture & Scaling',     title:'Staff Backend Engineer',     years:'12 yrs',  rate:'$240/hr', skills:['Postgres','Redis','k8s','queues'], available:false, claimed:false },
+  { id:'scale-2',  cat:'scale',  catLabel:'Architecture & Scaling',     title:'DevOps / SRE',               years:'7 yrs',   rate:'$160/hr', skills:['AWS','CI/CD','monitoring','cost'], available:false, claimed:false },
+  { id:'fe-1',     cat:'fe',     catLabel:'Frontend & UX Engineering',  title:'Senior Frontend Engineer',   years:'8 yrs',   rate:'$140/hr', skills:['Next.js','React','a11y','perf'], available:false, claimed:false },
+  { id:'be-1',     cat:'be',     catLabel:'Backend & Integrations',     title:'Full-Stack Engineer',        years:'6 yrs',   rate:'$130/hr', skills:['Node','Python','Stripe','APIs'], available:false, claimed:false },
+  { id:'design-1', cat:'design', catLabel:'Design & UX',                title:'Senior Product Designer',    years:'9 yrs',   rate:'$150/hr', skills:['Figma','design systems','UX','conversion'], available:false, claimed:false },
+  { id:'growth-1', cat:'growth', catLabel:'Product, Growth & Launch',   title:'Product / Growth Lead',      years:'10 yrs',  rate:'$180/hr', skills:['positioning','launch','SEO','pricing'], available:false, claimed:false },
+];
+
+const DIR_FILTERS = [
+  { key:'all',    label:'All' },
+  { key:'sec',    label:'Security' },
+  { key:'scale',  label:'Scaling' },
+  { key:'fe',     label:'Frontend' },
+  { key:'be',     label:'Backend' },
+  { key:'design', label:'Design' },
+  { key:'growth', label:'Growth' },
+];
+
+let activeFilter = 'all';
+
+function renderFilter() {
+  const el = document.getElementById('dirFilter');
+  if (!el) return;
+  el.innerHTML = DIR_FILTERS.map(f =>
+    `<button class="dir-filter-btn${f.key===activeFilter?' active':''}" onclick="setFilter('${f.key}')">${f.label}</button>`
+  ).join('');
+}
+function setFilter(key) {
+  activeFilter = key;
+  renderFilter();
+  renderArchetypes();
+}
+
+function escapeAttr(s) { return String(s).replace(/'/g,'&#39;').replace(/"/g,'&quot;'); }
+
+function archCardHTML(a) {
+  const availClass = a.claimed ? 'claimed' : (a.available ? 'available' : 'open');
+  const availLabel = a.claimed ? 'Claimed' : (a.available ? 'Available this week' : 'Slot open');
+  const skillsHTML = a.skills.map(s => `<span class="arch-skill">${s}</span>`).join('');
+  const claimBtn = a.claimed
+    ? `<button class="arch-btn-claim" disabled style="opacity:.5;cursor:not-allowed">Slot claimed</button>`
+    : `<button class="arch-btn-claim" onclick="claimSlot('${a.id}')">Claim this founding slot →</button>`;
+  return `<div class="arch-card" data-cat="${a.cat}">
+    <div class="arch-card-head">
+      <div>
+        <div class="arch-card-title">${a.title}</div>
+        <div class="arch-card-years">${a.years} experience</div>
+      </div>
+      <span class="arch-card-avail ${availClass}">${availLabel}</span>
+    </div>
+    <div class="arch-card-cat">${a.catLabel}</div>
+    <div class="arch-card-skills">${skillsHTML}</div>
+    <div class="arch-card-meta"><span>typical rate</span><span class="rate">${a.rate}</span></div>
+    <div class="arch-card-actions">
+      ${claimBtn}
+      <button class="arch-btn-request" onclick="requestArchetype('${a.id}')">Request this expertise →</button>
+    </div>
+  </div>`;
+}
+
+function renderArchetypes() {
+  const el = document.getElementById('dirGrid');
+  if (!el) return;
+  const list = activeFilter === 'all'
+    ? ARCHETYPES
+    : ARCHETYPES.filter(a => a.cat === activeFilter);
+  el.innerHTML = list.map(archCardHTML).join('');
+  const countEl = document.getElementById('dirAvailCount');
+  if (countEl) countEl.textContent = ARCHETYPES.filter(a => a.available && !a.claimed).length;
+}
+
+function findArchetype(id) { return ARCHETYPES.find(a => a.id === id); }
+
+// For experts: claim a founding slot (opens apply modal with category pre-filled)
+function claimSlot(id) {
+  const a = findArchetype(id);
+  if (!a) return;
+  window.claimingSlot = { id: a.id, title: a.title, catLabel: a.catLabel };
+  openModal('applyModal');
+  const sel = document.getElementById('appCategory');
+  if (sel) {
+    for (const o of sel.options) { if (o.value === a.catLabel) { sel.value = a.catLabel; break; } }
+  }
+  const skillsEl = document.getElementById('appSkills');
+  if (skillsEl && !skillsEl.value) skillsEl.placeholder = `e.g. ${a.skills.join(', ')}`;
+  const bioEl = document.getElementById('appBio');
+  if (bioEl && !bioEl.value) bioEl.placeholder = `I'm claiming the ${a.title} founding slot. Here's why I'm a fit…`;
+}
+
+// For vibe coders: request this archetype (opens request modal with category pre-filled)
+function requestArchetype(id) {
+  const a = findArchetype(id);
+  if (!a) return;
+  openModal('requestModal');
+  const sel = document.getElementById('reqCategory');
+  if (sel) {
+    for (const o of sel.options) { if (o.value === a.catLabel) { sel.value = a.catLabel; break; } }
+  }
+  const problemEl = document.getElementById('reqProblem');
+  if (problemEl && !problemEl.value) {
+    problemEl.placeholder = `I'd like help from a ${a.title.toLowerCase()}. The specific problem is…`;
+  }
+  const ctxEl = document.getElementById('requestContext');
+  if (ctxEl) {
+    ctxEl.innerHTML = `<strong>Matching against:</strong> ${a.title} · ${a.catLabel} · ${a.rate}`;
+    ctxEl.style.display = 'block';
+  }
+}
+
+// Enhance submitRequest to include triage flag in the email body
+const _origSubmitRequest = submitRequest;
+submitRequest = function(e) {
+  if (e && e.preventDefault) e.preventDefault();
+  const triage = document.getElementById('triageCard')?.classList.contains('checked');
+  // Set a hidden marker by prefixing the problem so it shows up in the email without
+  // changing the existing submit function's data flow
+  if (triage) {
+    const problemEl = document.getElementById('reqProblem');
+    const marker = '[FREE 15-MIN TRIAGE CALL REQUESTED]\n\n';
+    if (problemEl && problemEl.value && !problemEl.value.startsWith(marker)) {
+      problemEl.value = marker + problemEl.value;
+    } else if (problemEl && !problemEl.value) {
+      problemEl.value = marker + 'Please book me a free 15-min triage call — I need help figuring out the shape of the problem before committing to paid work.';
+    }
+  }
+  return _origSubmitRequest(e);
+};
+
+// Reset triage checkbox whenever the request modal is freshly opened from a non-triage path
+const _origOpenModal = openModal;
+openModal = function(id) {
+  if (id === 'requestModal') {
+    // Only auto-reset when opening from the base "Request" buttons — not from openTriageRequest
+    // openTriageRequest calls this first then explicitly checks the box, so the order is fine.
+    const card = document.getElementById('triageCard');
+    if (card) card.classList.remove('checked');
+  }
+  return _origOpenModal(id);
+};
+
+// Initial render
+document.addEventListener('DOMContentLoaded', () => {
+  renderFilter();
+  renderArchetypes();
+});
+// Render immediately if DOM already parsed (script is at end of body)
+if (document.getElementById('dirGrid')) {
+  renderFilter();
+  renderArchetypes();
+}
 </script>
 </body>
 </html>
