@@ -1321,12 +1321,13 @@ function displayResults(results, owner, repo) {
   renderSuggestedExpert(scanCtx);
 
   // Wire share buttons
-  const shareText = `Just ran A Vibe Check on my repo — scored ${score}/100 (Grade ${grade}). ${failed.length} issues found. Free scanner: https://a-vibe-check.vercel.app`;
+  const siteUrl = window.location.origin;
+  const shareText = `Just ran A Vibe Check on my repo — scored ${score}/100 (Grade ${grade}). ${failed.length} issues found. Free scanner: ${siteUrl}`;
   document.getElementById('shareTwitter').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
-  document.getElementById('shareLinkedIn').href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent('https://a-vibe-check.vercel.app')}&summary=${encodeURIComponent(shareText)}`;
+  document.getElementById('shareLinkedIn').href = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(siteUrl)}&summary=${encodeURIComponent(shareText)}`;
   document.getElementById('shareCopy').onclick = () => {
     const plain = document.getElementById('scorecard').innerText;
-    navigator.clipboard.writeText(plain + '\n\nRun yours: https://a-vibe-check.vercel.app');
+    navigator.clipboard.writeText(plain + '\n\nRun yours: ' + siteUrl);
     const btn = document.getElementById('shareCopy');
     btn.textContent = 'Copied!';
     setTimeout(() => { btn.textContent = '📋 Copy scorecard'; }, 1500);

@@ -1,6 +1,6 @@
 # A Vibe Check — Security Audit + Expert Marketplace for AI-Built Apps
 
-**[avibecheck.xyz](https://avibecheck.xyz) — Try the live scanner**
+**Live on Vercel** — the scanner and marketplace run on the project's Vercel URL. A custom domain (`avibecheck.xyz`) will be wired in later; everything works on the default Vercel subdomain in the meantime.
 
 Two things in one project:
 
