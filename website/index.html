@@ -1281,8 +1281,6 @@ function runChecks(fileContents, allFiles) {
       }
     }
 
-    const catCounts = { A:3, B:5, C:3, D:4, E:5, F:1, G:3, H:1, I:3, J:2 };
-
     log(`› [${check.cat}${check.id.toString().padStart(2,'0')}] ${check.name}: ${
       status === 'pass' ? 'PASS' : status === 'fail' ? 'FAIL' : 'N/A'
     }`, status === 'pass' ? 'ok' : status === 'fail' ? 'fail' : '');
@@ -1371,7 +1369,7 @@ function displayResults(results, owner, repo) {
     owner, repo,
     score, grade,
     failedCount: failed.length,
-    critHighCount: (pick.critHighCount || failed.filter(r=>r.severity==='critical'||r.severity==='high').length),
+    critHighCount: pick.critHighCount || 0,
     category: pick.category,
     topFindings: sorted.map(f => ({ name: f.name, severity: f.severity, cat: f.cat })),
   };
@@ -1480,13 +1478,12 @@ const EXPERT_COPY = {
 function pickExpertFromScan(results) {
   const failed = results.filter(r => r.status === 'fail');
   const critHigh = failed.filter(r => r.severity === 'critical' || r.severity === 'high');
-  if (failed.length === 0) return { category:'General', fallbackReason:'clean' };
-  // Count weighted failures by expert category
+  if (failed.length === 0) return { category:'General', failedCount:0, critHighCount:0 };
+  // Weighted failures by expert category — each check already carries its weight.
   const score = {};
   for (const f of failed) {
     const exp = CAT_TO_EXPERT[f.cat] || 'General';
-    const w = (f.severity==='critical'?10:f.severity==='high'?7:f.severity==='medium'?4:2);
-    score[exp] = (score[exp] || 0) + w;
+    score[exp] = (score[exp] || 0) + f.weight;
   }
   const top = Object.entries(score).sort((a,b)=>b[1]-a[1])[0];
   return { category: top[0], failedCount: failed.length, critHighCount: critHigh.length };
@@ -1527,6 +1524,16 @@ function _getFocusable(container) {
 function openModal(id) {
   const m = document.getElementById(id);
   if (!m) return;
+  // Reset per-open state: clear any prior success/error banner, uncheck the
+  // triage control on the request modal, and cache the primary button label so
+  // the "Sending…" state can restore it later.
+  if (id === 'requestModal') {
+    const cb = document.getElementById('triageCheckbox');
+    if (cb) cb.checked = false;
+  }
+  setModalState(id, null);
+  const primary = m.querySelector('.modal-foot .mkt-btn.primary');
+  if (primary && !primary.dataset.label) primary.dataset.label = primary.textContent;
   // Remember the element that opened the modal so we can return focus on close.
   _modalReturnFocus[id] = document.activeElement;
   m.classList.add('open');
@@ -1633,8 +1640,8 @@ function buildMailto(subject, bodyLines) {
   return `mailto:${MARKETPLACE_INBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
-// Render an inline success/error state inside the modal body. State is cleared
-// when the modal is opened again (see openModal override further down).
+// Render an inline success/error state inside the modal body. openModal clears
+// it on each open; pass kind=null to clear manually.
 function setModalState(modalId, kind, message) {
   const m = document.getElementById(modalId);
   if (!m) return;
@@ -1875,8 +1882,6 @@ function setFilter(key) {
   renderArchetypes();
 }
 
-function escapeAttr(s) { return String(s).replace(/'/g,'&#39;').replace(/"/g,'&quot;'); }
-
 function archCardHTML(a) {
   const availClass = a.claimed ? 'claimed' : (a.available ? 'available' : 'open');
   const availLabel = a.claimed ? 'Claimed' : (a.available ? 'Available this week' : 'Slot open');
@@ -1950,23 +1955,6 @@ function requestArchetype(id) {
     ctxEl.style.display = 'block';
   }
 }
-
-// Reset modal state (triage, success/error banners) whenever a modal is freshly
-// opened. openTriageRequest calls openModal first, then re-checks the triage card,
-// so the order stays correct.
-const _origOpenModal = openModal;
-openModal = function(id) {
-  if (id === 'requestModal') {
-    const cb = document.getElementById('triageCheckbox');
-    if (cb) cb.checked = false;
-  }
-  setModalState(id, null);
-  // Cache primary button label for the submitting state
-  const modal = document.getElementById(id);
-  const primary = modal?.querySelector('.modal-foot .mkt-btn.primary');
-  if (primary && !primary.dataset.label) primary.dataset.label = primary.textContent;
-  return _origOpenModal(id);
-};
 
 // Initial render
 document.addEventListener('DOMContentLoaded', () => {
