@@ -119,6 +119,12 @@
     .scanner-footer{padding:16px 24px;border-top:1px solid var(--border);font-family:var(--font-mono);font-size:11px;color:var(--text-muted);text-align:center}
     .scanner-footer a{color:var(--green);text-decoration:none}
 
+    /* SOCIAL PROOF BAND */
+    .social-proof{padding:18px 0 0;text-align:center}
+    .social-proof p{font-family:var(--font-mono);font-size:11px;color:var(--text-muted);letter-spacing:.02em;margin:0}
+    .social-proof a{color:var(--text-secondary);text-decoration:none;transition:color .15s}
+    .social-proof a:hover{color:var(--text-primary)}
+
     /* STATS */
     .stats{border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:24px 0}
     .stats .container{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
@@ -333,6 +339,21 @@
     .arch-btn-request{font-family:var(--font-mono);font-size:11px;color:var(--text-secondary);background:transparent;padding:8px 12px;border-radius:6px;border:1px solid var(--border);cursor:pointer;transition:all .15s;text-align:center}
     .arch-btn-request:hover{border-color:var(--border-light);color:var(--text-primary)}
 
+    /* MODAL STATE BANNERS (success/error) */
+    .modal-state{padding:12px 14px;border-radius:8px;margin-bottom:16px;font-family:var(--font-mono);font-size:12px;line-height:1.6}
+    .modal-state-success{background:var(--green-dim);border:1px solid rgba(52,211,153,0.25);color:var(--green)}
+    .modal-state-error{background:var(--accent-glow);border:1px solid rgba(239,68,68,0.25);color:var(--accent)}
+
+    /* COLLAPSIBLE OPTIONAL FIELDS */
+    .optional-details{border-top:1px solid var(--border);padding-top:14px;margin-top:4px}
+    .optional-details>summary{list-style:none;cursor:pointer;font-family:var(--font-mono);font-size:12px;color:var(--text-secondary);padding:4px 0;user-select:none;transition:color .15s;display:flex;align-items:center;gap:6px}
+    .optional-details>summary:hover{color:var(--text-primary)}
+    .optional-details>summary::-webkit-details-marker{display:none}
+    .optional-details>summary::before{content:'▸';font-size:10px;transition:transform .15s;display:inline-block}
+    .optional-details[open]>summary::before{transform:rotate(90deg)}
+    .optional-details>summary .label-hint{color:var(--text-muted);font-weight:400;margin-left:2px}
+    .optional-fields{padding-top:12px}
+
     /* TRIAGE OPTION IN REQUEST MODAL */
     .triage-card{background:linear-gradient(135deg,rgba(52,211,153,0.08) 0%,rgba(96,165,250,0.06) 100%);border:1px solid rgba(52,211,153,0.22);border-radius:10px;padding:14px 16px;margin-bottom:20px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;transition:border-color .15s}
     .triage-card:hover{border-color:rgba(52,211,153,0.45)}
@@ -438,6 +459,13 @@
     </div>
   </div>
 
+  <!-- SOCIAL PROOF -->
+  <div class="social-proof">
+    <div class="container">
+      <p>Built by <a href="https://howll.ai" target="_blank" rel="noopener">howll.ai</a> · independent tools for the Claude Code community · open-source &amp; MIT-licensed</p>
+    </div>
+  </div>
+
   <!-- STATS -->
   <div class="stats">
     <div class="container">
@@ -461,19 +489,55 @@
     </div>
   </div>
 
-  <!-- PROBLEM -->
+  <!-- CHECKS -->
+  <section id="checks">
+    <div class="container">
+      <div class="section-tag"><span>//</span> what it catches</div>
+      <h2 class="section-heading">30 checks · 10 categories</h2>
+      <p class="section-sub">Every check targets a vulnerability pattern AI code generators introduce. Each includes detection commands and fix instructions.</p>
+      <div class="checks-grid">
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">A</span><span class="check-cat-name">Secrets & Credentials</span></div><ul class="check-items"><li>API keys in frontend code</li><li>.env files in git history</li><li>Weak JWT secrets</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">B</span><span class="check-cat-name">Auth & Sessions</span></div><ul class="check-items"><li>No rate limiting on auth</li><li>JWTs in localStorage</li><li>Tokens that never expire</li><li>Sessions not invalidated</li><li>Weak password hashing</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">C</span><span class="check-cat-name">Authorisation</span></div><ul class="check-items"><li>Frontend-only admin auth</li><li>Missing auth middleware</li><li>IDOR vulnerabilities</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">D</span><span class="check-cat-name">Injection & Input</span></div><ul class="check-items"><li>SQL injection</li><li>XSS via unsafe rendering</li><li>Missing input validation</li><li>eval / exec / pickle</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">E</span><span class="check-cat-name">Infrastructure</span></div><ul class="check-items"><li>CORS wildcard</li><li>Running as root</li><li>Database port exposed</li><li>No HTTPS enforcement</li><li>Debug mode in production</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">F</span><span class="check-cat-name">Error Handling</span></div><ul class="check-items"><li>Stack traces in responses</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">G</span><span class="check-cat-name">BaaS & Third-Party</span></div><ul class="check-items"><li>Supabase/Firebase RLS off</li><li>Unsigned payment webhooks</li><li>Hallucinated dependencies</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">H</span><span class="check-cat-name">File Handling</span></div><ul class="check-items"><li>Uploads without MIME check</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">I</span><span class="check-cat-name">Transport & Headers</span></div><ul class="check-items"><li>Open redirects</li><li>Missing security headers</li><li>CSP missing or permissive</li></ul></div>
+        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">J</span><span class="check-cat-name">Ops Security</span></div><ul class="check-items"><li>No logging or monitoring</li><li>No backup or recovery</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCORING -->
+  <section id="scoring">
+    <div class="container">
+      <div class="section-tag"><span>//</span> scoring</div>
+      <h2 class="section-heading">Every check weighted by severity</h2>
+      <p class="section-sub">Your score is the percentage of applicable points you pass. N/A checks excluded.</p>
+      <div class="severity-row">
+        <div class="severity-card critical"><div class="severity-val">10</div><div class="severity-name">Critical</div><div class="severity-weight">10 pts · 12 checks</div></div>
+        <div class="severity-card high"><div class="severity-val">7</div><div class="severity-name">High</div><div class="severity-weight">7 pts · 10 checks</div></div>
+        <div class="severity-card medium"><div class="severity-val">4</div><div class="severity-name">Medium</div><div class="severity-weight">4 pts · 7 checks</div></div>
+        <div class="severity-card low"><div class="severity-val">2</div><div class="severity-name">Low</div><div class="severity-weight">2 pts · 1 check</div></div>
+      </div>
+      <p style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted)">
+        <span style="color:var(--accent)">F &lt;60</span> · <span style="color:var(--yellow)">D 60–69</span> · <span style="color:var(--blue)">C 70–79</span> · <span style="color:var(--green)">B 80–89</span> · <span style="color:rgba(52,211,153,0.8)">A 90–100</span> · max: 220 points
+      </p>
+    </div>
+  </section>
+
+  <!-- COMPLIANCE -->
   <section>
     <div class="container">
-      <div class="section-tag"><span>//</span> the problem</div>
-      <h2 class="section-heading">LLMs optimise for "works."<br>They stop before "secure."</h2>
-      <p class="section-sub">AI code generators build fast. They also hardcode API keys, skip auth middleware, disable Row Level Security, and hash passwords with MD5. Every time.</p>
-      <div class="problems">
-        <div class="problem"><div class="problem-icon">01</div><div><div class="problem-title">Secrets in your frontend</div><div class="problem-desc">Stripe secret keys in React components. Supabase service role keys exposed via public endpoints. The model picks the shortest path to working code — through your credentials.</div></div></div>
-        <div class="problem"><div class="problem-icon">02</div><div><div class="problem-title">Auth that looks right but isn't</div><div class="problem-desc">No rate limiting on login. JWTs in localStorage. Tokens that never expire. Passwords hashed with MD5. The login page works. The security behind it doesn't.</div></div></div>
-        <div class="problem"><div class="problem-icon">03</div><div><div class="problem-title">Permissions checked on the wrong side</div><div class="problem-desc">Admin logic in the frontend. Auth middleware on the first three routes but not the rest. Change the user ID in the URL and you own someone else's data.</div></div></div>
-        <div class="problem"><div class="problem-icon">04</div><div><div class="problem-title">Injection bugs solved 20 years ago</div><div class="problem-desc">SQL injection via string concatenation. XSS through dangerouslySetInnerHTML. eval() running user input. The shortest path to working code skips input validation.</div></div></div>
-        <div class="problem"><div class="problem-icon">05</div><div><div class="problem-title">Everything around the app misconfigured</div><div class="problem-desc">CORS wildcard. Debug mode in production. Database ports exposed. Supabase RLS disabled — the same config that caused the Moltbook breach. 1.5M API keys leaked.</div></div></div>
+      <div class="section-tag"><span>//</span> compliance</div>
+      <h2 class="section-heading">Maps to the frameworks that matter</h2>
+      <p class="section-sub">Every failed check links to specific clauses. Turns a technical audit into a business risk conversation.</p>
+      <div class="compliance-grid">
+        <span class="compliance-chip">Privacy Act (APP 11)</span><span class="compliance-chip">OWASP Top 10</span><span class="compliance-chip">SOC 2 Type II</span><span class="compliance-chip">PCI DSS v4.0</span><span class="compliance-chip">GDPR Art. 32</span>
       </div>
+      <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:12px">If you're an Australian business, APP 11 requires "reasonable steps" to protect personal information. These 30 checks are free. Hard to argue they're not reasonable.</p>
     </div>
   </section>
 
@@ -628,58 +692,6 @@
     </div>
   </section>
 
-  <!-- CHECKS -->
-  <section id="checks">
-    <div class="container">
-      <div class="section-tag"><span>//</span> what it catches</div>
-      <h2 class="section-heading">30 checks · 10 categories</h2>
-      <p class="section-sub">Every check targets a vulnerability pattern AI code generators introduce. Each includes detection commands and fix instructions.</p>
-      <div class="checks-grid">
-        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">A</span><span class="check-cat-name">Secrets & Credentials</span></div><ul class="check-items"><li>API keys in frontend code</li><li>.env files in git history</li><li>Weak JWT secrets</li></ul></div>
-        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">B</span><span class="check-cat-name">Auth & Sessions</span></div><ul class="check-items"><li>No rate limiting on auth</li><li>JWTs in localStorage</li><li>Tokens that never expire</li><li>Sessions not invalidated</li><li>Weak password hashing</li></ul></div>
-        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">C</span><span class="check-cat-name">Authorisation</span></div><ul class="check-items"><li>Frontend-only admin auth</li><li>Missing auth middleware</li><li>IDOR vulnerabilities</li></ul></div>
-        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">D</span><span class="check-cat-name">Injection & Input</span></div><ul class="check-items"><li>SQL injection</li><li>XSS via unsafe rendering</li><li>Missing input validation</li><li>eval / exec / pickle</li></ul></div>
-        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">E</span><span class="check-cat-name">Infrastructure</span></div><ul class="check-items"><li>CORS wildcard</li><li>Running as root</li><li>Database port exposed</li><li>No HTTPS enforcement</li><li>Debug mode in production</li></ul></div>
-        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">F</span><span class="check-cat-name">Error Handling</span></div><ul class="check-items"><li>Stack traces in responses</li></ul></div>
-        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">G</span><span class="check-cat-name">BaaS & Third-Party</span></div><ul class="check-items"><li>Supabase/Firebase RLS off</li><li>Unsigned payment webhooks</li><li>Hallucinated dependencies</li></ul></div>
-        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">H</span><span class="check-cat-name">File Handling</span></div><ul class="check-items"><li>Uploads without MIME check</li></ul></div>
-        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">I</span><span class="check-cat-name">Transport & Headers</span></div><ul class="check-items"><li>Open redirects</li><li>Missing security headers</li><li>CSP missing or permissive</li></ul></div>
-        <div class="check-cat"><div class="check-cat-head"><span class="check-cat-letter">J</span><span class="check-cat-name">Ops Security</span></div><ul class="check-items"><li>No logging or monitoring</li><li>No backup or recovery</li></ul></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SCORING -->
-  <section id="scoring">
-    <div class="container">
-      <div class="section-tag"><span>//</span> scoring</div>
-      <h2 class="section-heading">Every check weighted by severity</h2>
-      <p class="section-sub">Your score is the percentage of applicable points you pass. N/A checks excluded.</p>
-      <div class="severity-row">
-        <div class="severity-card critical"><div class="severity-val">10</div><div class="severity-name">Critical</div><div class="severity-weight">10 pts · 12 checks</div></div>
-        <div class="severity-card high"><div class="severity-val">7</div><div class="severity-name">High</div><div class="severity-weight">7 pts · 10 checks</div></div>
-        <div class="severity-card medium"><div class="severity-val">4</div><div class="severity-name">Medium</div><div class="severity-weight">4 pts · 7 checks</div></div>
-        <div class="severity-card low"><div class="severity-val">2</div><div class="severity-name">Low</div><div class="severity-weight">2 pts · 1 check</div></div>
-      </div>
-      <p style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted)">
-        <span style="color:var(--accent)">F &lt;60</span> · <span style="color:var(--yellow)">D 60–69</span> · <span style="color:var(--blue)">C 70–79</span> · <span style="color:var(--green)">B 80–89</span> · <span style="color:rgba(52,211,153,0.8)">A 90–100</span> · max: 220 points
-      </p>
-    </div>
-  </section>
-
-  <!-- COMPLIANCE -->
-  <section>
-    <div class="container">
-      <div class="section-tag"><span>//</span> compliance</div>
-      <h2 class="section-heading">Maps to the frameworks that matter</h2>
-      <p class="section-sub">Every failed check links to specific clauses. Turns a technical audit into a business risk conversation.</p>
-      <div class="compliance-grid">
-        <span class="compliance-chip">Privacy Act (APP 11)</span><span class="compliance-chip">OWASP Top 10</span><span class="compliance-chip">SOC 2 Type II</span><span class="compliance-chip">PCI DSS v4.0</span><span class="compliance-chip">GDPR Art. 32</span>
-      </div>
-      <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;margin-bottom:12px">If you're an Australian business, APP 11 requires "reasonable steps" to protect personal information. These 30 checks are free. Hard to argue they're not reasonable.</p>
-    </div>
-  </section>
-
   <!-- INSTALL -->
   <section id="install">
     <div class="container">
@@ -749,52 +761,57 @@
             </div>
           </div>
           <div class="form-row">
-            <label for="reqProject">Project / repo URL</label>
-            <input type="text" id="reqProject" placeholder="https://github.com/you/your-app">
-          </div>
-          <div class="form-row">
-            <label for="reqCategory">What kind of expert? <span class="req">*</span></label>
-            <select id="reqCategory" required>
-              <option value="">— Pick a category —</option>
-              <option>Security & Compliance</option>
-              <option>Architecture & Scaling</option>
-              <option>Frontend & UX Engineering</option>
-              <option>Backend & Integrations</option>
-              <option>Design & UX</option>
-              <option>Product, Growth & Launch</option>
-              <option>Not sure — help me figure it out</option>
-            </select>
-          </div>
-          <div class="form-row">
             <label for="reqProblem">What do you need help with? <span class="req">*</span></label>
-            <textarea id="reqProblem" required placeholder="The scan flagged 7 critical auth issues — JWTs in localStorage, no rate limiting on /login, frontend-only admin checks. I need someone to walk me through fixing these properly."></textarea>
+            <textarea id="reqProblem" required placeholder="Example: the scan flagged 7 critical auth issues. I need someone to walk me through fixing them properly."></textarea>
           </div>
-          <div class="form-row split">
-            <div>
-              <label for="reqBudget">Budget range</label>
-              <select id="reqBudget">
-                <option value="">— Select —</option>
-                <option>Under $500</option>
-                <option>$500 – $2,000</option>
-                <option>$2,000 – $5,000</option>
-                <option>$5,000 – $15,000</option>
-                <option>$15,000+</option>
-                <option>Unsure — need a quote</option>
-              </select>
+          <details class="optional-details">
+            <summary>Add more context <span class="label-hint">(optional — speeds up matching)</span></summary>
+            <div class="optional-fields">
+              <div class="form-row">
+                <label for="reqProject">Project / repo URL</label>
+                <input type="text" id="reqProject" placeholder="https://github.com/you/your-app">
+              </div>
+              <div class="form-row">
+                <label for="reqCategory">What kind of expert?</label>
+                <select id="reqCategory">
+                  <option value="">— Pick a category —</option>
+                  <option>Security & Compliance</option>
+                  <option>Architecture & Scaling</option>
+                  <option>Frontend & UX Engineering</option>
+                  <option>Backend & Integrations</option>
+                  <option>Design & UX</option>
+                  <option>Product, Growth & Launch</option>
+                  <option>Not sure — help me figure it out</option>
+                </select>
+              </div>
+              <div class="form-row split">
+                <div>
+                  <label for="reqBudget">Budget range</label>
+                  <select id="reqBudget">
+                    <option value="">— Select —</option>
+                    <option>Under $500</option>
+                    <option>$500 – $2,000</option>
+                    <option>$2,000 – $5,000</option>
+                    <option>$5,000 – $15,000</option>
+                    <option>$15,000+</option>
+                    <option>Unsure — need a quote</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="reqTimeline">Timeline</label>
+                  <select id="reqTimeline">
+                    <option value="">— Select —</option>
+                    <option>ASAP (this week)</option>
+                    <option>Within 2 weeks</option>
+                    <option>Within a month</option>
+                    <option>Flexible</option>
+                  </select>
+                </div>
+              </div>
             </div>
-            <div>
-              <label for="reqTimeline">Timeline</label>
-              <select id="reqTimeline">
-                <option value="">— Select —</option>
-                <option>ASAP (this week)</option>
-                <option>Within 2 weeks</option>
-                <option>Within a month</option>
-                <option>Flexible</option>
-              </select>
-            </div>
-          </div>
+          </details>
         </form>
-        <div class="modal-note">We'll email you a shortlist within 48 hours. No spam, no auto-DMs, no profile-scrolling. Submitting opens your email client so you can review before sending.</div>
+        <div class="modal-note">We reply within 48 hours with a shortlist. No spam, no auto-DMs, no profile-scrolling.</div>
       </div>
       <div class="modal-foot">
         <button class="mkt-btn secondary" onclick="closeModal('requestModal')">Cancel</button>
@@ -826,48 +843,53 @@
             </div>
           </div>
           <div class="form-row">
-            <label for="appCategory">Primary category <span class="req">*</span></label>
-            <select id="appCategory" required>
-              <option value="">— Pick your main strength —</option>
-              <option>Security & Compliance</option>
-              <option>Architecture & Scaling</option>
-              <option>Frontend & UX Engineering</option>
-              <option>Backend & Integrations</option>
-              <option>Design & UX</option>
-              <option>Product, Growth & Launch</option>
-              <option>Other (describe below)</option>
-            </select>
-          </div>
-          <div class="form-row">
             <label for="appSkills">Core skills / stack <span class="req">*</span></label>
-            <input type="text" id="appSkills" required placeholder="e.g. Next.js, Postgres, Stripe, AWS, OWASP pen-testing">
+            <input type="text" id="appSkills" required placeholder="e.g. Next.js, Postgres, Stripe, OWASP pen-testing">
           </div>
-          <div class="form-row split">
-            <div>
-              <label for="appRate">Typical hourly rate (USD)</label>
-              <input type="text" id="appRate" placeholder="e.g. $150">
+          <details class="optional-details">
+            <summary>Add more about you <span class="label-hint">(optional — helps us route the right work to you)</span></summary>
+            <div class="optional-fields">
+              <div class="form-row">
+                <label for="appCategory">Primary category</label>
+                <select id="appCategory">
+                  <option value="">— Pick your main strength —</option>
+                  <option>Security & Compliance</option>
+                  <option>Architecture & Scaling</option>
+                  <option>Frontend & UX Engineering</option>
+                  <option>Backend & Integrations</option>
+                  <option>Design & UX</option>
+                  <option>Product, Growth & Launch</option>
+                  <option>Other (describe below)</option>
+                </select>
+              </div>
+              <div class="form-row split">
+                <div>
+                  <label for="appRate">Typical hourly rate (USD)</label>
+                  <input type="text" id="appRate" placeholder="e.g. $150">
+                </div>
+                <div>
+                  <label for="appAvail">Weekly availability</label>
+                  <select id="appAvail">
+                    <option value="">— Select —</option>
+                    <option>&lt; 5 hrs/week</option>
+                    <option>5–10 hrs/week</option>
+                    <option>10–20 hrs/week</option>
+                    <option>Full-time / contracts</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <label for="appPortfolio">Portfolio / LinkedIn / GitHub</label>
+                <input type="text" id="appPortfolio" placeholder="https://…">
+              </div>
+              <div class="form-row">
+                <label for="appBio">Short bio — what makes you a good fit for vibe coders?</label>
+                <textarea id="appBio" placeholder="I've shipped production apps on most modern stacks and I'm comfortable pairing inside Claude Code / Cursor. I like turning half-working prototypes into real products."></textarea>
+              </div>
             </div>
-            <div>
-              <label for="appAvail">Weekly availability</label>
-              <select id="appAvail">
-                <option value="">— Select —</option>
-                <option>&lt; 5 hrs/week</option>
-                <option>5–10 hrs/week</option>
-                <option>10–20 hrs/week</option>
-                <option>Full-time / contracts</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-row">
-            <label for="appPortfolio">Portfolio / LinkedIn / GitHub</label>
-            <input type="text" id="appPortfolio" placeholder="https://…">
-          </div>
-          <div class="form-row">
-            <label for="appBio">Short bio — what makes you a good fit for vibe coders?</label>
-            <textarea id="appBio" placeholder="I've shipped production apps on most modern stacks and I'm comfortable pairing inside Claude Code / Cursor. I like turning half-working prototypes into real products."></textarea>
-          </div>
+          </details>
         </form>
-        <div class="modal-note">Applications are reviewed weekly. We vet for quality, not quantity — we'd rather have 50 great humans than 5,000 profiles. Submitting opens your email client so you can review before sending.</div>
+        <div class="modal-note">Applications reviewed weekly. We vet for quality, not quantity — 50 great humans beats 5,000 profiles.</div>
       </div>
       <div class="modal-foot">
         <button class="mkt-btn secondary" onclick="closeModal('applyModal')">Cancel</button>
@@ -1343,9 +1365,17 @@ document.getElementById('repoInput').addEventListener('keydown', e => {
 });
 
 // ─── MARKETPLACE ───
-// Destination inbox for form submissions. Update here if/when we move off mailto.
-// TODO: swap to a serverless endpoint (Vercel function → Notion/Airtable) once supply
-// side is onboarded; keep mailto as the graceful fallback.
+// Primary submission path — a Formspree endpoint that receives JSON and forwards
+// to the inbox below. Leave empty to fall back to mailto: (works offline, but every
+// cold lead becomes a draft the user has to manually send).
+//
+// To enable Formspree:
+//   1. Sign up at formspree.io, create a form targeting hello@howll.ai
+//   2. Paste the form's endpoint URL here (looks like https://formspree.io/f/xxxxxxxx)
+//   3. Deploy. No other changes needed.
+const FORMSPREE_ENDPOINT = ''; // e.g. 'https://formspree.io/f/xxxxxxxx'
+
+// Fallback inbox for mailto: submissions when FORMSPREE_ENDPOINT isn't set.
 const MARKETPLACE_INBOX = 'hello@howll.ai';
 
 // Last scan context — populated by displayResults(), read by the "match me" flow.
@@ -1482,35 +1512,113 @@ function requestFromScan() {
   ctxEl.style.display = 'block';
 }
 
-// ─── FORM SUBMIT (mailto MVP) ───
+// ─── FORM SUBMIT ───
+// Primary path: POST JSON to FORMSPREE_ENDPOINT. Fallback: mailto: draft. Either
+// way, results surface as an inline modal state — no alerts, no browser tabs, no
+// lost leads.
+
 function buildMailto(subject, bodyLines) {
-  const body = bodyLines.filter(Boolean).join('\n');
+  const body = bodyLines.filter(v => v || v === 0).join('\n');
   return `mailto:${MARKETPLACE_INBOX}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
-function submitRequest(e) {
+// Render an inline success/error state inside the modal body. State is cleared
+// when the modal is opened again (see openModal override further down).
+function setModalState(modalId, kind, message) {
+  const m = document.getElementById(modalId);
+  if (!m) return;
+  const body = m.querySelector('.modal-body');
+  if (!body) return;
+  // Remove any existing state card
+  const existing = body.querySelector('.modal-state');
+  if (existing) existing.remove();
+  if (!kind) return; // caller passed null → just clear
+  const state = document.createElement('div');
+  state.className = `modal-state modal-state-${kind}`;
+  state.textContent = message;
+  body.insertBefore(state, body.firstChild);
+}
+
+function setSubmitting(modalId, isSubmitting) {
+  const m = document.getElementById(modalId);
+  if (!m) return;
+  m.querySelectorAll('button, input, select, textarea').forEach(el => {
+    el.disabled = isSubmitting;
+  });
+  const primary = m.querySelector('.modal-foot .mkt-btn.primary');
+  if (primary) primary.textContent = isSubmitting ? 'Sending…' : primary.dataset.label || primary.textContent;
+}
+
+// POST JSON to Formspree (or any compatible endpoint). Returns true on 2xx.
+async function postToFormspree(payload) {
+  if (!FORMSPREE_ENDPOINT) return false;
+  try {
+    const r = await fetch(FORMSPREE_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    return r.ok;
+  } catch (_err) {
+    return false;
+  }
+}
+
+async function submitRequest(e) {
   if (e && e.preventDefault) e.preventDefault();
   const name = document.getElementById('reqName').value.trim();
   const email = document.getElementById('reqEmail').value.trim();
+  const problem = document.getElementById('reqProblem').value.trim();
   const project = document.getElementById('reqProject').value.trim();
   const category = document.getElementById('reqCategory').value;
-  const problem = document.getElementById('reqProblem').value.trim();
   const budget = document.getElementById('reqBudget').value;
   const timeline = document.getElementById('reqTimeline').value;
+  const triage = document.getElementById('triageCard')?.classList.contains('checked');
 
-  if (!name || !email || !category || !problem) {
-    alert('Please fill in name, email, category, and the problem description.');
+  if (!name || !email || !problem) {
+    setModalState('requestModal', 'error', 'Please fill in your name, email, and what you need help with. Everything else is optional.');
     return;
   }
 
   const ctx = window.lastScanContext;
+  const payload = {
+    _form: 'request',
+    _subject: `[a-vibe-check] Request expert${category ? ' — ' + category : ''}${triage ? ' (triage call)' : ''}`,
+    name, email, problem,
+    project: project || undefined,
+    category: category || undefined,
+    budget: budget || undefined,
+    timeline: timeline || undefined,
+    triageCall: triage || undefined,
+    scanContext: ctx ? {
+      repo: ctx.repoUrl, score: ctx.score, grade: ctx.grade,
+      failed: ctx.failedCount, criticalHigh: ctx.critHighCount,
+      suggestedMatch: ctx.category,
+    } : undefined,
+  };
+
+  setSubmitting('requestModal', true);
+  const sent = await postToFormspree(payload);
+  setSubmitting('requestModal', false);
+
+  if (sent) {
+    setModalState('requestModal', 'success', triage
+      ? 'Request received. We\'ll book your free 15-min triage call within 24 hours.'
+      : 'Request received. We\'ll email you a shortlist within 48 hours.');
+    // Clear form after a short beat
+    setTimeout(() => document.getElementById('requestForm')?.reset(), 100);
+    return;
+  }
+
+  // Fallback: open mailto draft
   const lines = [
     `Name: ${name}`,
     `Email: ${email}`,
     project ? `Project: ${project}` : '',
-    `Category: ${category}`,
+    category ? `Category: ${category}` : '',
     budget ? `Budget: ${budget}` : '',
     timeline ? `Timeline: ${timeline}` : '',
+    triage ? 'Free 15-min triage call requested: YES' : '',
     '',
     'Problem:',
     problem,
@@ -1520,44 +1628,63 @@ function submitRequest(e) {
     ctx ? `Score: ${ctx.score}/100 (Grade ${ctx.grade})` : '',
     ctx ? `Failed: ${ctx.failedCount}, Critical/High: ${ctx.critHighCount}` : '',
   ];
-
-  const href = buildMailto(`[a-vibe-check] Request expert — ${category}`, lines);
-  window.location.href = href;
-  // Give the mail client a moment to open, then show confirmation
-  setTimeout(() => {
-    closeModal('requestModal');
-    alert('Your email client should be opening with your request pre-filled. Review and send — we\'ll reply within 48 hours.');
-  }, 400);
+  window.location.href = buildMailto(payload._subject, lines);
+  setModalState('requestModal', 'success',
+    'Opening your email client with the request pre-filled — just hit send. We\'ll reply within 48 hours.');
 }
 
-function submitApply(e) {
+async function submitApply(e) {
   if (e && e.preventDefault) e.preventDefault();
   const name = document.getElementById('appName').value.trim();
   const email = document.getElementById('appEmail').value.trim();
-  const category = document.getElementById('appCategory').value;
   const skills = document.getElementById('appSkills').value.trim();
+  const category = document.getElementById('appCategory').value;
   const rate = document.getElementById('appRate').value.trim();
   const avail = document.getElementById('appAvail').value;
   const portfolio = document.getElementById('appPortfolio').value.trim();
   const bio = document.getElementById('appBio').value.trim();
 
-  if (!name || !email || !category || !skills) {
-    alert('Please fill in name, email, category, and skills.');
+  if (!name || !email || !skills) {
+    setModalState('applyModal', 'error', 'Please fill in your name, email, and core skills. Everything else helps but is optional.');
     return;
   }
 
-  const slotCtx = window.claimingSlot; // set by claimSlot()
+  const slotCtx = window.claimingSlot;
   const subject = slotCtx
     ? `[a-vibe-check] Founding expert claim — ${slotCtx.title}`
-    : `[a-vibe-check] Expert application — ${category}`;
+    : `[a-vibe-check] Expert application${category ? ' — ' + category : ''}`;
+
+  const payload = {
+    _form: 'apply',
+    _subject: subject,
+    name, email, skills,
+    category: category || undefined,
+    rate: rate || undefined,
+    availability: avail || undefined,
+    portfolio: portfolio || undefined,
+    bio: bio || undefined,
+    claimingSlot: slotCtx ? { id: slotCtx.id, title: slotCtx.title, category: slotCtx.catLabel } : undefined,
+  };
+
+  setSubmitting('applyModal', true);
+  const sent = await postToFormspree(payload);
+  setSubmitting('applyModal', false);
+
+  if (sent) {
+    setModalState('applyModal', 'success', slotCtx
+      ? `Application received for the ${slotCtx.title} founding slot. We'll be in touch within a week.`
+      : 'Application received. We review weekly and reply within a week.');
+    setTimeout(() => document.getElementById('applyForm')?.reset(), 100);
+    window.claimingSlot = null;
+    return;
+  }
 
   const lines = [
     slotCtx ? `Claiming slot: ${slotCtx.title} (${slotCtx.catLabel})` : '',
-    slotCtx ? '' : null,
     `Name: ${name}`,
     `Email: ${email}`,
-    `Category: ${category}`,
     `Skills: ${skills}`,
+    category ? `Category: ${category}` : '',
     rate ? `Rate: ${rate}` : '',
     avail ? `Availability: ${avail}` : '',
     portfolio ? `Portfolio: ${portfolio}` : '',
@@ -1565,14 +1692,10 @@ function submitApply(e) {
     bio ? 'Bio:' : '',
     bio,
   ];
-
-  const href = buildMailto(subject, lines);
-  window.location.href = href;
-  setTimeout(() => {
-    closeModal('applyModal');
-    window.claimingSlot = null;
-    alert('Your email client should be opening with your application pre-filled. Review and send — we review weekly.');
-  }, 400);
+  window.location.href = buildMailto(subject, lines);
+  setModalState('applyModal', 'success',
+    'Opening your email client with the application pre-filled — just hit send. We review weekly.');
+  window.claimingSlot = null;
 }
 
 // ─── TRIAGE TOGGLE ───
@@ -1714,34 +1837,20 @@ function requestArchetype(id) {
   }
 }
 
-// Enhance submitRequest to include triage flag in the email body
-const _origSubmitRequest = submitRequest;
-submitRequest = function(e) {
-  if (e && e.preventDefault) e.preventDefault();
-  const triage = document.getElementById('triageCard')?.classList.contains('checked');
-  // Set a hidden marker by prefixing the problem so it shows up in the email without
-  // changing the existing submit function's data flow
-  if (triage) {
-    const problemEl = document.getElementById('reqProblem');
-    const marker = '[FREE 15-MIN TRIAGE CALL REQUESTED]\n\n';
-    if (problemEl && problemEl.value && !problemEl.value.startsWith(marker)) {
-      problemEl.value = marker + problemEl.value;
-    } else if (problemEl && !problemEl.value) {
-      problemEl.value = marker + 'Please book me a free 15-min triage call — I need help figuring out the shape of the problem before committing to paid work.';
-    }
-  }
-  return _origSubmitRequest(e);
-};
-
-// Reset triage checkbox whenever the request modal is freshly opened from a non-triage path
+// Reset modal state (triage, success/error banners) whenever a modal is freshly
+// opened. openTriageRequest calls openModal first, then re-checks the triage card,
+// so the order stays correct.
 const _origOpenModal = openModal;
 openModal = function(id) {
   if (id === 'requestModal') {
-    // Only auto-reset when opening from the base "Request" buttons — not from openTriageRequest
-    // openTriageRequest calls this first then explicitly checks the box, so the order is fine.
     const card = document.getElementById('triageCard');
     if (card) card.classList.remove('checked');
   }
+  setModalState(id, null);
+  // Cache primary button label for the submitting state
+  const modal = document.getElementById(id);
+  const primary = modal?.querySelector('.modal-foot .mkt-btn.primary');
+  if (primary && !primary.dataset.label) primary.dataset.label = primary.textContent;
   return _origOpenModal(id);
 };
 
